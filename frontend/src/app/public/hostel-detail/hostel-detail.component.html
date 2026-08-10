@@ -1,0 +1,74 @@
+<div class="container" *ngIf="isLoading" style="text-align: center; padding: 4rem;">
+  Loading hostel details...
+</div>
+
+<div class="container" *ngIf="!isLoading && !hostel" style="text-align: center; padding: 4rem;">
+  <h2>Hostel not found.</h2>
+  <a routerLink="/" class="btn btn-outline" style="margin-top: 1rem;">Back to Home</a>
+</div>
+
+<div class="detail-container" *ngIf="!isLoading && hostel">
+  
+  <div class="banner" [style.background-image]="hostel.images.length > 0 ? 'url(' + hostel.images[0] + ')' : 'url(assets/placeholder-hostel.jpg)'"></div>
+  
+  <div class="content">
+    
+    <div class="header-row">
+      <div class="title">
+        <h1>{{ hostel.name }}</h1>
+        <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }} Hostel</span>
+        <p style="color: var(--color-text-muted); margin-top: 0.5rem;">📍 {{ hostel.location || 'University of Sindh, Jamshoro' }}</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 1.5rem; color: #F2C94C;">★ {{ hostel.rating | number:'1.1-1' }}</div>
+        <div style="font-size: 0.85rem; color: var(--color-text-muted);">{{ hostel.reviewCount }} Reviews</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-label">Total Capacity</span>
+        <span class="stat-value">{{ hostel.totalCapacity }} Beds</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Available</span>
+        <span class="stat-value" style="color: #28a745;">{{ hostel.availableBeds }} Beds</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Warden</span>
+        <span class="stat-value">{{ hostel.warden || 'N/A' }}</span>
+      </div>
+    </div>
+
+    <h2 class="section-title">About this Hostel</h2>
+    <p style="white-space: pre-line;">{{ hostel.description || 'No description provided.' }}</p>
+
+    <h2 class="section-title">Facilities & Amenities</h2>
+    <div class="amenities-grid">
+      <div class="amenity-item" *ngFor="let am of hostel.amenities">
+        ✓ {{ am }}
+      </div>
+      <div *ngIf="hostel.amenities.length === 0" style="color: #666;">No specific amenities listed.</div>
+    </div>
+
+    <h2 class="section-title" *ngIf="hostel.eligibilitySummary.length > 0">Eligibility Requirements</h2>
+    <ul *ngIf="hostel.eligibilitySummary.length > 0">
+      <li *ngFor="let req of hostel.eligibilitySummary">{{ req }}</li>
+    </ul>
+
+    <div class="cta-box">
+      <ng-container *ngIf="hostel.isAllocationOpen; else closedState">
+        <h3 style="margin-bottom: 0.5rem;">Ready to apply?</h3>
+        <p style="margin-bottom: 1.5rem; color: var(--color-text-muted);">Applications are currently open for this hostel.</p>
+        <a routerLink="/auth/register" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.1rem;">Apply for this Hostel</a>
+      </ng-container>
+      
+      <ng-template #closedState>
+        <h3 style="margin-bottom: 0.5rem; color: #dc3545;">Hostel allocation is closed for now.</h3>
+        <p style="margin-bottom: 1.5rem; color: var(--color-text-muted);">Please check back later during the official admission period.</p>
+        <a routerLink="/" class="btn btn-outline" style="padding: 1rem 3rem; font-size: 1.1rem;">View Other Hostels</a>
+      </ng-template>
+    </div>
+
+  </div>
+</div>

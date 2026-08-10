@@ -1,0 +1,72 @@
+<!-- student/layout/layout.component.html -->
+<div class="student-portal">
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" [class.sidebar--collapsed]="sidebarCollapsed">
+    <div class="sidebar__header">
+      <div class="sidebar__logo">
+        <span class="sidebar__logo-icon">🏛️</span>
+        <span class="sidebar__logo-text">Sindh University</span>
+      </div>
+      <button class="sidebar__toggle" (click)="sidebarCollapsed = !sidebarCollapsed" id="sidebar-toggle-btn">
+        <span>{{ sidebarCollapsed ? '→' : '←' }}</span>
+      </button>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a class="sidebar__link" routerLink="/student/dashboard" routerLinkActive="sidebar__link--active"
+         id="nav-dashboard">
+        <span class="sidebar__icon">⊞</span>
+        <span class="sidebar__label">Dashboard</span>
+      </a>
+
+      <a class="sidebar__link" routerLink="/student/profile" routerLinkActive="sidebar__link--active"
+         id="nav-profile">
+        <span class="sidebar__icon">👤</span>
+        <span class="sidebar__label">My Profile</span>
+      </a>
+
+      @if (showRoomChange()) {
+        <a class="sidebar__link" routerLink="/student/room-change" routerLinkActive="sidebar__link--active"
+           id="nav-room-change">
+          <span class="sidebar__icon">🔄</span>
+          <span class="sidebar__label">Room Change</span>
+        </a>
+      }
+
+      @if (showApply()) {
+        <a class="sidebar__link" routerLink="/student/apply" routerLinkActive="sidebar__link--active"
+           id="nav-apply">
+          <span class="sidebar__icon">📋</span>
+          <span class="sidebar__label">Apply for Hostel</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="sidebar__avatar">{{ userInitials() }}</div>
+        <div class="sidebar__user-info">
+          <span class="sidebar__username">{{ userName() }}</span>
+          <span class="sidebar__role">Student</span>
+        </div>
+      </div>
+      <button class="sidebar__logout" (click)="logout()" id="logout-btn" title="Logout">⏻</button>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ───────────────────────────────────── -->
+  <main class="portal-main">
+    <header class="portal-header">
+      <div class="portal-header__breadcrumb">
+        <span class="portal-header__title">{{ pageTitle() }}</span>
+      </div>
+      <div class="portal-header__actions">
+        <span class="portal-header__greeting">Good {{ timeOfDay() }}, {{ firstName() }} 👋</span>
+      </div>
+    </header>
+
+    <div class="portal-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

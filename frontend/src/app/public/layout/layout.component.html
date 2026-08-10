@@ -1,0 +1,33 @@
+<div class="public-layout">
+  
+  <header class="header">
+    <div class="header-content">
+      <a routerLink="/" class="brand">
+        <!-- Placeholder for Logo -->
+        <div style="width:40px; height:40px; background:var(--color-primary); border-radius:50%; color:white; display:flex; align-items:center; justify-content:center;">SU</div>
+        University of Sindh Hostels
+      </a>
+
+      <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/hostels" routerLinkActive="active">Hostels</a>
+        <a routerLink="/about" routerLinkActive="active">About</a>
+      </nav>
+
+      <div class="auth-buttons">
+        <a routerLink="/auth/student-login" class="btn btn-outline">Student Login</a>
+        <a routerLink="/auth/admin-login" class="btn btn-primary">Admin Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 University of Sindh, Jamshoro. All rights reserved.</p>
+    <p style="font-size: 0.85rem; color: #ccc;">Merit-based digital hostel allocation system.</p>
+  </footer>
+
+</div>

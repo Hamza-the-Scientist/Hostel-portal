@@ -1,0 +1,227 @@
+<div class="wizard-container container" *ngIf="application">
+
+  <app-status-timeline 
+    [displayStatus]="application.displayStatus" 
+    [timeline]="application.timeline"
+  ></app-status-timeline>
+
+  <!-- Progress Stepper Header -->
+  <div class="stepper-header">
+    <div 
+      *ngFor="let stepName of steps; let i = index" 
+      class="step-item"
+      [class.active]="currentStep === i + 1"
+      [class.completed]="currentStep > i + 1"
+    >
+      <div class="step-number">{{ i + 1 }}</div>
+      <div class="step-label">{{ stepName }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    ⚠️ {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    ✅ {{ successMessage }}
+  </div>
+
+  <!-- STEP 1: Personal Information -->
+  <div *ngIf="currentStep === 1" class="wizard-card">
+    <h3>Step 1: Personal & Verified Information Review</h3>
+    <p class="subtitle">Please confirm your verified academic & contact details. All academic data is locked from your official record.</p>
+
+    <div class="verified-box" *ngIf="studentProfile">
+      <div class="info-grid">
+        <div><strong>Full Name:</strong> {{ studentProfile.verifiedInfo.fullName }}</div>
+        <div><strong>Roll Number:</strong> {{ studentProfile.verifiedInfo.rollNumber }}</div>
+        <div><strong>CNIC:</strong> {{ studentProfile.verifiedInfo.cnic }}</div>
+        <div><strong>Department:</strong> {{ studentProfile.verifiedInfo.department }}</div>
+        <div><strong>Program:</strong> {{ studentProfile.verifiedInfo.program }}</div>
+        <div><strong>District:</strong> {{ studentProfile.verifiedInfo.district }}</div>
+        <div><strong>Phone:</strong> {{ studentProfile.personalInfo.phoneNumber }}</div>
+        <div><strong>Email:</strong> {{ studentProfile.personalInfo.email }}</div>
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-primary" (click)="goToStep(2)">Proceed to Eligibility Check →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Eligibility Check -->
+  <div *ngIf="currentStep === 2" class="wizard-card">
+    <h3>Step 2: Eligibility Criteria Engine</h3>
+    <p class="subtitle">Evaluated server-side against gender, CPN, district, and academic year rules.</p>
+
+    <div class="hostel-eligibility-list">
+      <div *ngFor="let hostel of eligibleHostels" class="hostel-item" [class.ineligible]="!hostel.isEligible">
+        <div class="hostel-info">
+          <h4>{{ hostel.name }}</h4>
+          <span class="badge" [class.badge-success]="hostel.isEligible" [class.badge-danger]="!hostel.isEligible">
+            {{ hostel.isEligible ? 'Eligible' : 'Ineligible' }}
+          </span>
+          <p class="meta">📍 {{ hostel.location }} | 🛏️ {{ hostel.availableBeds }} Available | ⭐ {{ hostel.rating }}/5</p>
+          <p class="reason">{{ hostel.eligibilityReason }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-secondary" (click)="goToStep(1)">← Back</button>
+      <button class="btn btn-primary" (click)="goToStep(3)">Proceed to Processing Fee →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Processing Fee -->
+  <div *ngIf="currentStep === 3" class="wizard-card">
+    <h3>Step 3: Processing Fee Payment</h3>
+    <p class="subtitle"><strong>Important Rule:</strong> Single PKR 100 processing fee per application cycle (not per hostel).</p>
+
+    <div class="challan-box" *ngIf="application.processingFee">
+      <div class="challan-header">
+        <h4>UNIVERSITY OF SINDH DORMITORY CHALLAN</h4>
+        <span class="status-pill" [class.paid]="application.processingFee.status === 'Paid'">
+          {{ application.processingFee.status }}
+        </span>
+      </div>
+
+      <div class="challan-body">
+        <div class="row">
+          <span>Challan Number:</span>
+          <strong>{{ application.processingFee.challanNumber }}</strong>
+        </div>
+        <div class="row">
+          <span>Fee Amount:</span>
+          <strong class="amount">PKR {{ application.processingFee.amount }}</strong>
+        </div>
+        <div class="row">
+          <span>Due Date:</span>
+          <span>{{ application.processingFee.dueDate | date }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="application.processingFee.status !== 'Paid'" class="payment-action">
+        <p>Mock Payment Gateway Demo (Simulate Online Banking Payment):</p>
+        <button class="btn btn-success" (click)="payProcessingFee()" [disabled]="isProcessing">
+          {{ isProcessing ? 'Verifying Payment...' : '💳 Pay PKR 100 & Verify Fee' }}
+        </button>
+      </div>
+
+      <div *ngIf="application.processingFee.status === 'Paid'" class="paid-success">
+        ✅ Fee Verified! You are now eligible to select hostel preferences.
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-secondary" (click)="goToStep(2)">← Back</button>
+      <button 
+        class="btn btn-primary" 
+        [disabled]="application.processingFee?.status !== 'Paid'"
+        (click)="goToStep(4)"
+      >
+        Select Hostel Preferences →
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Hostel Preferences -->
+  <div *ngIf="currentStep === 4" class="wizard-card">
+    <h3>Step 4: Hostel Preference Priority Selection</h3>
+    <p class="subtitle">Select your preferred hostels and set priority order (1st Choice, 2nd Choice, etc.). Only eligible hostels can be selected.</p>
+
+    <div class="preference-selection-container">
+      <div class="available-section">
+        <h4>Eligible Hostels (Click to Add)</h4>
+        <div *ngFor="let hostel of eligibleHostels" class="pref-card">
+          <div *ngIf="hostel.isEligible">
+            <strong>{{ hostel.name }}</strong> ({{ hostel.gender }})
+            <button 
+              class="btn btn-sm btn-outline" 
+              (click)="addPreference(hostel)"
+              [disabled]="isAlreadySelected(hostel.hostelId)"
+            >
+              {{ isAlreadySelected(hostel.hostelId) ? 'Selected ✓' : '+ Add Preference' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="selected-section">
+        <h4>Selected Priority Order</h4>
+        <div *ngIf="selectedPreferences.length === 0" class="empty-msg">
+          No preferences selected yet. Click "+ Add Preference" above.
+        </div>
+
+        <div *ngFor="let pref of selectedPreferences; let idx = index" class="selected-item">
+          <span class="priority-rank">Choice #{{ idx + 1 }}</span>
+          <span class="hostel-title">{{ pref.name }}</span>
+          <div class="order-controls">
+            <button class="btn-icon" (click)="moveUp(idx)" [disabled]="idx === 0">▲</button>
+            <button class="btn-icon" (click)="moveDown(idx)" [disabled]="idx === selectedPreferences.length - 1">▼</button>
+            <button class="btn-icon remove" (click)="removePreference(idx)">✕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-secondary" (click)="goToStep(3)">← Back</button>
+      <button 
+        class="btn btn-primary" 
+        [disabled]="selectedPreferences.length === 0"
+        (click)="savePreferences()"
+      >
+        Save & Review →
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Review -->
+  <div *ngIf="currentStep === 5" class="wizard-card">
+    <h3>Step 5: Application Summary & Review</h3>
+    <p class="subtitle">Review your details and selected hostel choices before final submission.</p>
+
+    <div class="review-box">
+      <div class="review-section">
+        <h4>Applicant Details</h4>
+        <p><strong>Name:</strong> {{ application.studentName }} ({{ application.rollNumber }})</p>
+        <p><strong>Fee Status:</strong> <span class="badge badge-success">PKR 100 Paid & Verified</span></p>
+      </div>
+
+      <div class="review-section">
+        <h4>Selected Hostel Preferences (Priority Order)</h4>
+        <ol>
+          <li *ngFor="let pref of application.preferences">
+            <strong>{{ pref.name }}</strong> ({{ pref.gender }})
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-secondary" (click)="goToStep(4)">← Back</button>
+      <button class="btn btn-success btn-lg" (click)="submitFinalApplication()" [disabled]="isProcessing">
+        {{ isProcessing ? 'Submitting Application...' : '🚀 Submit Application' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Confirmation / Status Track -->
+  <div *ngIf="currentStep === 6" class="wizard-card text-center">
+    <div class="success-icon">🎉</div>
+    <h3>Application Submitted Successfully!</h3>
+    <p class="subtitle">Your application has been registered for merit list evaluation.</p>
+
+    <div class="status-summary-box">
+      <p><strong>Application ID:</strong> #APP-2026-{{ application.applicationId }}</p>
+      <p><strong>Submission Status:</strong> <span class="badge badge-info">In Processing</span></p>
+      <p>Stay tuned for the Merit Allocation list announcement!</p>
+    </div>
+
+    <div class="wizard-actions">
+      <button class="btn btn-primary" (click)="goToStep(1)">View Application Status</button>
+    </div>
+  </div>
+
+</div>

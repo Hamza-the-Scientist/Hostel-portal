@@ -1,0 +1,187 @@
+<!-- student/dashboard/resident-dashboard/resident-dashboard.component.html -->
+
+<div class="resident-dashboard">
+
+  <!-- ── Welcome Banner ──────────────────────────────────────────────────── -->
+  <div class="welcome-banner">
+    <div class="welcome-banner__text">
+      <div class="welcome-banner__badge">🏠 Active Resident</div>
+      <h2 class="welcome-banner__title">Welcome back to {{ residency.hostelName }}</h2>
+      <p class="welcome-banner__sub">
+        Resident since {{ formatDate(residency.checkInDate) }} &nbsp;·&nbsp;
+        {{ residency.blockName }}, Room {{ residency.roomNumber }}, {{ residency.bedLabel }}
+      </p>
+    </div>
+    <div class="welcome-banner__status">
+      <span class="status-pill status-pill--active">{{ residency.residencyStatus }}</span>
+    </div>
+  </div>
+
+  <!-- ── Info Cards Row ──────────────────────────────────────────────────── -->
+  <div class="info-grid">
+
+    <!-- Current Room Card -->
+    <div class="info-card">
+      <div class="info-card__header">
+        <span class="info-card__icon">🏨</span>
+        <h3 class="info-card__title">Current Accommodation</h3>
+      </div>
+      <div class="info-card__body">
+        <div class="info-row">
+          <span class="info-row__label">Hostel</span>
+          <span class="info-row__value">{{ residency.hostelName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row__label">Block</span>
+          <span class="info-row__value">{{ residency.blockName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row__label">Room</span>
+          <span class="info-row__value">{{ residency.roomNumber }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row__label">Bed</span>
+          <span class="info-row__value">{{ residency.bedLabel }}</span>
+        </div>
+      </div>
+      <div class="info-card__footer">
+        <a routerLink="/student/room-change" class="btn btn-outline info-card__action" id="request-room-change-btn">
+          🔄 Request Room Change
+        </a>
+      </div>
+    </div>
+
+    <!-- Annual Fee Card -->
+    <div class="info-card" [class.info-card--warning]="residency.annualFeeStatus === 'Unpaid'"
+         [class.info-card--success]="residency.annualFeeStatus === 'Paid'">
+      <div class="info-card__header">
+        <span class="info-card__icon">💳</span>
+        <h3 class="info-card__title">Annual Hostel Fee</h3>
+        <span class="fee-status-badge" [class]="getFeeStatusClass(residency.annualFeeStatus)">
+          {{ residency.annualFeeStatus }}
+        </span>
+      </div>
+
+      <!-- No challan yet -->
+      @if (!residency.annualChallan) {
+        <div class="info-card__body fee-pending">
+          <p class="fee-pending__msg">
+            Your annual hostel fee for <strong>2025–2026</strong> is due.
+            Generate a challan to proceed with your payment.
+          </p>
+          <p class="fee-pending__amount">Amount Due: <strong>PKR 15,000</strong></p>
+        </div>
+        <div class="info-card__footer">
+          <button class="btn btn-primary" (click)="generateChallan()" [disabled]="challanLoading()"
+                  id="generate-challan-btn">
+            @if (challanLoading()) { ⏳ Generating... } @else { 📄 Generate Challan }
+          </button>
+        </div>
+      }
+
+      <!-- Challan generated -->
+      @if (residency.annualChallan; as challan) {
+        <div class="info-card__body">
+          <div class="info-row">
+            <span class="info-row__label">Challan No.</span>
+            <span class="info-row__value info-row__value--mono">{{ challan.challanNumber }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row__label">Amount</span>
+            <span class="info-row__value">PKR {{ challan.amount | number }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row__label">Due Date</span>
+            <span class="info-row__value" [class.info-row__value--danger]="isPastDue(challan.dueDate)">
+              {{ formatDate(challan.dueDate) }}
+              @if (isPastDue(challan.dueDate)) { ⚠️ Overdue }
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-row__label">Status</span>
+            <span class="info-row__value">
+              <span [class]="getFeeStatusClass(challan.status)">{{ challan.status }}</span>
+            </span>
+          </div>
+        </div>
+
+        @if (challan.status !== 'Paid') {
+          <div class="info-card__footer">
+            <button class="btn btn-primary" (click)="openPaymentModal(challan)" id="verify-payment-btn">
+              ✅ Verify Payment
+            </button>
+          </div>
+        } @else {
+          <div class="info-card__footer">
+            <div class="paid-badge">✅ Fee Paid — You're all set for this academic year!</div>
+          </div>
+        }
+      }
+    </div>
+
+  </div>
+
+  <!-- ── Quick Actions ────────────────────────────────────────────────────── -->
+  <div class="quick-actions">
+    <h3 class="quick-actions__title">Quick Actions</h3>
+    <div class="quick-actions__grid">
+      <a routerLink="/student/room-change" class="action-tile" id="action-room-change">
+        <span class="action-tile__icon">🔄</span>
+        <span class="action-tile__label">Request Room Change</span>
+      </a>
+      <a routerLink="/student/profile" class="action-tile" id="action-profile">
+        <span class="action-tile__icon">👤</span>
+        <span class="action-tile__label">Update Profile</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ Payment Verification Modal ════════════════════════════════════════ -->
+@if (showPaymentModal()) {
+  <div class="modal-overlay" (click)="closePaymentModal()" id="payment-modal-overlay">
+    <div class="modal" (click)="$event.stopPropagation()" id="payment-modal">
+      <div class="modal__header">
+        <h3>Verify Annual Fee Payment</h3>
+        <button class="modal__close" (click)="closePaymentModal()" id="modal-close-btn">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="modal__challan-info">
+          <strong>Challan:</strong> {{ activeChallan()?.challanNumber }}&nbsp;&nbsp;
+          <strong>Amount:</strong> PKR {{ activeChallan()?.amount | number }}
+        </div>
+
+        <div class="form-group">
+          <label for="transaction-ref">Transaction Reference *</label>
+          <input id="transaction-ref" type="text" class="form-control"
+                 [(ngModel)]="paymentForm.transactionReference"
+                 placeholder="e.g. TXN2026XXXXXXXX" />
+        </div>
+
+        <div class="form-group">
+          <label for="payment-method">Payment Method *</label>
+          <select id="payment-method" class="form-control" [(ngModel)]="paymentForm.paymentMethod">
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Easy Paisa">Easy Paisa</option>
+            <option value="JazzCash">JazzCash</option>
+            <option value="HBL Online">HBL Online</option>
+            <option value="MCB Internet Banking">MCB Internet Banking</option>
+            <option value="UBL Omni">UBL Omni</option>
+          </select>
+        </div>
+
+        @if (paymentError()) {
+          <div class="modal__error">⚠️ {{ paymentError() }}</div>
+        }
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-outline" (click)="closePaymentModal()" id="cancel-payment-btn">Cancel</button>
+        <button class="btn btn-primary" (click)="submitPayment()" [disabled]="paymentLoading()"
+                id="submit-payment-btn">
+          @if (paymentLoading()) { ⏳ Verifying... } @else { Confirm Payment }
+        </button>
+      </div>
+    </div>
+  </div>
+}

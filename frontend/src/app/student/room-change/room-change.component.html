@@ -1,0 +1,194 @@
+<!-- student/room-change/room-change.component.html -->
+
+<div class="room-change-page">
+
+  <!-- ── Page Header ─────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div class="page-header__left">
+      <a routerLink="/student/dashboard" class="back-link" id="back-to-dashboard">← Back to Dashboard</a>
+      <h1 class="page-header__title">Room Change Request</h1>
+      <p class="page-header__subtitle">Submit a request to change your current room assignment.</p>
+    </div>
+  </div>
+
+  @if (!isResident()) {
+    <div class="not-resident-notice">
+      ⚠️ Room change requests are only available to existing residents.
+      <a routerLink="/student/dashboard">Go to Dashboard</a>
+    </div>
+  } @else {
+
+    <!-- ── Current Room Banner ──────────────────────────────────────────── -->
+    <div class="current-room-banner">
+      <div class="current-room-banner__label">Your Current Room</div>
+      <div class="current-room-banner__detail">
+        <span>🏨 {{ residency()?.hostelName }}</span>
+        <span class="separator">·</span>
+        <span>{{ residency()?.blockName }}</span>
+        <span class="separator">·</span>
+        <span>Room {{ residency()?.roomNumber }}</span>
+        <span class="separator">·</span>
+        <span>{{ residency()?.bedLabel }}</span>
+      </div>
+    </div>
+
+    <!-- ── Request Form ─────────────────────────────────────────────────── -->
+    <div class="form-card">
+      <div class="form-card__header">
+        <h2>New Request</h2>
+      </div>
+      <form class="request-form" (ngSubmit)="submitRequest()" #requestForm="ngForm">
+
+        <div class="form-row">
+          <div class="form-group form-group--full">
+            <label for="reason">Reason for Room Change *</label>
+            <textarea id="reason" name="reason" class="form-control"
+                      [(ngModel)]="form.reason"
+                      [class.form-control--error]="reasonError()"
+                      rows="4"
+                      maxlength="500"
+                      placeholder="Please describe why you need a room change (min 10 characters)..."
+                      required></textarea>
+            <div class="form-hint">
+              @if (reasonError()) {
+                <span class="form-hint--error">{{ reasonError() }}</span>
+              } @else {
+                <span>{{ form.reason.length }}/500 characters</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="preferred-block">Preferred Block (Optional)</label>
+            <input id="preferred-block" name="preferredBlock" type="text" class="form-control"
+                   [(ngModel)]="form.preferredBlock"
+                   placeholder="e.g. Block B, Block C..." />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group form-group--full">
+            <label for="additional-details">Additional Details (Optional)</label>
+            <textarea id="additional-details" name="additionalDetails" class="form-control"
+                      [(ngModel)]="form.additionalDetails"
+                      rows="3"
+                      maxlength="1000"
+                      placeholder="Any additional information that may support your request..."></textarea>
+          </div>
+        </div>
+
+        <!-- File Upload -->
+        <div class="form-row">
+          <div class="form-group form-group--full">
+            <label>Supporting Document / Image (Optional)</label>
+            <div class="file-upload" [class.file-upload--has-file]="selectedFile()"
+                 [class.file-upload--error]="fileError()">
+              <input type="file" id="attachment" name="attachment" class="file-upload__input"
+                     (change)="onFileSelected($event)"
+                     accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" />
+              <label for="attachment" class="file-upload__label">
+                @if (!selectedFile()) {
+                  <span class="file-upload__icon">📎</span>
+                  <span class="file-upload__text">Click to upload or drag & drop</span>
+                  <span class="file-upload__hint">JPG, PNG, PDF, DOC up to 5 MB</span>
+                } @else {
+                  <span class="file-upload__preview">
+                    @if (filePreviewUrl()) {
+                      <img [src]="filePreviewUrl()" alt="Preview" class="file-upload__img-preview" />
+                    } @else {
+                      <span class="file-upload__file-icon">📄</span>
+                    }
+                    <span class="file-upload__filename">{{ selectedFile()!.name }}</span>
+                    <span class="file-upload__filesize">{{ formatFileSize(selectedFile()!.size) }}</span>
+                  </span>
+                }
+              </label>
+            </div>
+            @if (fileError()) {
+              <div class="form-hint form-hint--error">{{ fileError() }}</div>
+            }
+            @if (selectedFile()) {
+              <button type="button" class="remove-file-btn" (click)="clearFile()" id="remove-file-btn">
+                ✕ Remove file
+              </button>
+            }
+          </div>
+        </div>
+
+        @if (submitError()) {
+          <div class="alert alert--error">⚠️ {{ submitError() }}</div>
+        }
+
+        @if (submitSuccess()) {
+          <div class="alert alert--success">
+            ✅ Your room change request has been submitted successfully! Track the status below.
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="resetForm()" id="reset-form-btn">
+            Reset
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="submitting()" id="submit-request-btn">
+            @if (submitting()) { ⏳ Submitting... } @else { Submit Request }
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── My Requests History ──────────────────────────────────────────── -->
+    <div class="requests-section">
+      <h2 class="requests-section__title">My Requests</h2>
+
+      @if (requestsLoading()) {
+        <div class="requests-skeleton">
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row"></div>
+        </div>
+      } @else if (requests().length === 0) {
+        <div class="empty-requests">
+          <p>🔄 No room change requests yet.</p>
+        </div>
+      } @else {
+        <div class="requests-list">
+          @for (req of requests(); track req.requestId) {
+            <div class="request-card" [class]="'request-card--' + getStatusClass(req.status)">
+              <div class="request-card__header">
+                <div class="request-card__meta">
+                  <span class="request-card__id">#{{ req.requestId }}</span>
+                  <span class="request-card__date">{{ formatDate(req.createdAt) }}</span>
+                </div>
+                <span class="status-badge" [class]="'status-badge--' + getStatusClass(req.status)">
+                  {{ req.status }}
+                </span>
+              </div>
+              <div class="request-card__body">
+                <p class="request-card__reason">{{ req.reason }}</p>
+                @if (req.preferredBlock) {
+                  <p class="request-card__preferred">Preferred: <strong>{{ req.preferredBlock }}</strong></p>
+                }
+              </div>
+              @if (req.adminRemarks) {
+                <div class="request-card__remarks">
+                  <span class="request-card__remarks-label">Admin Remarks:</span>
+                  <span>{{ req.adminRemarks }}</span>
+                </div>
+              }
+              @if (req.attachmentUrl) {
+                <div class="request-card__attachment">
+                  <a [href]="req.attachmentUrl" target="_blank" class="attachment-link">
+                    📎 View Attachment
+                  </a>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  }
+
+</div>

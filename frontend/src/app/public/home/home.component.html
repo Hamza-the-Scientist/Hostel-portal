@@ -1,0 +1,60 @@
+<!-- Announcements Ticker -->
+<div class="ticker-wrap" *ngIf="announcements.length > 0">
+  <div class="ticker">
+    <div class="ticker-item" *ngFor="let ann of announcements">
+      📢 <strong>{{ ann.title }}</strong>: {{ ann.content }}
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1>Your Hostel. Your Place. Your University.</h1>
+  <p>Apply for hostel accommodation through a transparent, merit-based digital system. Experience comfortable living at the University of Sindh.</p>
+  <div class="btn-group">
+    <a routerLink="/auth/register" class="btn btn-secondary">Apply for Hostel</a>
+    <a href="#hostels" class="btn btn-outline" style="border-color: white; color: white;">Explore Hostels</a>
+  </div>
+</section>
+
+<!-- Overview -->
+<section class="overview">
+  <h2>University of Sindh Hostels</h2>
+  <p>
+    Located in the scenic Jamshoro campus, the University of Sindh offers state-of-the-art dormitory facilities for both male and female students. 
+    Our allocation process is strictly merit-based, transparent, and fully digitized to ensure a smooth transition into university life.
+  </p>
+</section>
+
+<!-- Hostel Cards -->
+<section id="hostels" class="hostels-section">
+  <h2>Available Accommodations</h2>
+  
+  <div class="grid">
+    <div class="card" *ngFor="let hostel of hostels">
+      <!-- Fallback image logic via style -->
+      <div class="card-img" [style.background-image]="hostel.mainImageUrl ? 'url(' + hostel.mainImageUrl + ')' : 'url(assets/placeholder-hostel.jpg)'"></div>
+      
+      <div class="card-body">
+        <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }}</span>
+        <h3 class="card-title">{{ hostel.name }}</h3>
+        
+        <div class="card-info">
+          <p>📍 {{ hostel.location || 'Jamshoro Campus' }}</p>
+          <p>🛏️ Capacity: {{ hostel.totalCapacity }} ({{ hostel.availableBeds }} Available)</p>
+          <p>⭐ Rating: {{ hostel.rating | number:'1.1-1' }}/5</p>
+        </div>
+
+        <div class="amenities">
+          <span class="amenity-tag" *ngFor="let amenity of hostel.keyAmenities">{{ amenity }}</span>
+        </div>
+
+        <a [routerLink]="['/hostel', hostel.hostelId]" class="btn btn-outline" style="width: 100%; box-sizing: border-box;">View Details</a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="hostels.length === 0" style="text-align: center; color: #666; padding: 2rem;">
+    No hostels available at the moment.
+  </div>
+</section>

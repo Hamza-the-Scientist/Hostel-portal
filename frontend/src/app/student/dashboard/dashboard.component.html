@@ -1,0 +1,45 @@
+<!-- student/dashboard/dashboard.component.html -->
+
+@if (loading()) {
+  <!-- Loading Skeleton -->
+  <div class="dashboard-skeleton">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card skeleton-card--wide"></div>
+    <div class="skeleton-card"></div>
+  </div>
+} @else if (error()) {
+  <div class="error-state">
+    <p class="error-state__icon">⚠️</p>
+    <h3>Unable to Load Dashboard</h3>
+    <p>{{ error() }}</p>
+    <button class="btn btn-primary" (click)="reload()" id="retry-btn">Try Again</button>
+  </div>
+} @else if (residency()?.isExistingResident) {
+  <!-- ══ EXISTING RESIDENT VIEW ══════════════════════════════════════════ -->
+  <app-resident-dashboard [residency]="residency()!" (residencyChange)="onResidencyChange($event)" />
+} @else {
+  <!-- ══ FRESH APPLICANT CTA ════════════════════════════════════════════ -->
+  <div class="fresh-applicant">
+    <div class="fresh-applicant__hero">
+      <div class="fresh-applicant__badge">New Applicant</div>
+      <h1 class="fresh-applicant__title">Apply for Hostel Accommodation</h1>
+      <p class="fresh-applicant__subtitle">
+        You are not currently assigned to any hostel. Complete the application process to
+        get a room for this academic year.
+      </p>
+      <a routerLink="/student/apply" class="btn btn-primary fresh-applicant__cta" id="apply-now-btn">
+        Start Application →
+      </a>
+    </div>
+
+    <div class="fresh-applicant__steps">
+      <div class="step-card" *ngFor="let step of applicationSteps; let i = index">
+        <div class="step-card__number">{{ i + 1 }}</div>
+        <div class="step-card__content">
+          <h4>{{ step.title }}</h4>
+          <p>{{ step.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+}

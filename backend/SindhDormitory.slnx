@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SindhDormitory.API/SindhDormitory.API.csproj" />
+  <Project Path="SindhDormitory.Application/SindhDormitory.Application.csproj" />
+  <Project Path="SindhDormitory.Domain/SindhDormitory.Domain.csproj" />
+  <Project Path="SindhDormitory.Infrastructure/SindhDormitory.Infrastructure.csproj" />
+</Solution>
