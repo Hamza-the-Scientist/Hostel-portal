@@ -16,6 +16,12 @@ public static class DependencyInjection
         services.AddScoped<IApplicationService, ApplicationService>();
         services.AddScoped<IResidencyService, ResidencyService>();
 
+        // Phase 7 — Merit & Allocation Engine
+        services.AddScoped<IMeritService, MeritService>();
+        services.AddScoped<IAllocationService, AllocationService>();
+        services.AddScoped<IFinalChallanService, FinalChallanService>();
+
         return services;
     }
+
 }

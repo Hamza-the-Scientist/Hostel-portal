@@ -16,7 +16,8 @@ export class LayoutComponent {
   private residencyService = inject(ResidencyService);
   private router = inject(Router);
 
-  sidebarCollapsed = false;
+  sidebarCollapsed = signal(false);
+  mobileMenuOpen   = signal(false);
 
   private residency = signal<StudentResidencyDto | null>(null);
 
@@ -35,38 +36,48 @@ export class LayoutComponent {
     return `${u.firstName?.charAt(0) ?? ''}${u.lastName?.charAt(0) ?? ''}`.toUpperCase();
   });
 
-  /** Show Room Change link only for existing residents */
-  readonly showRoomChange = computed(() => {
-    const r = this.residency();
-    return r?.isExistingResident ?? false;
-  });
-
-  /** Show Apply link only for non-residents (or if admin has unlocked fresh application) */
-  readonly showApply = computed(() => {
-    const r = this.residency();
-    if (!r) return true; // default: show until we know status
-    return !r.isExistingResident || r.allowFreshApplication;
+  /** Show Room Change link for residents */
+  readonly isResident = computed(() => {
+    return this.residency()?.isExistingResident ?? false;
   });
 
   readonly pageTitle = computed(() => {
     const url = this.router.url;
-    if (url.includes('dashboard')) return 'Dashboard';
-    if (url.includes('room-change')) return 'Room Change Request';
-    if (url.includes('profile')) return 'My Profile';
-    if (url.includes('apply')) return 'Apply for Hostel';
+    if (url.includes('dashboard'))    return 'Dashboard';
+    if (url.includes('profile'))      return 'My Profile';
+    if (url.includes('apply'))        return 'Hostel Application';
+    if (url.includes('hostel'))       return 'My Hostel';
+    if (url.includes('room-change'))  return 'Room Change Request';
+    if (url.includes('merit-result')) return 'Merit Result';
+    if (url.includes('challans'))     return 'Challans & Payments';
+    if (url.includes('notifications'))return 'Notifications';
+    if (url.includes('complaints'))   return 'Complaints & Support';
+    if (url.includes('feedback'))     return 'Feedback';
+    if (url.includes('settings'))     return 'Settings';
     return 'Student Portal';
   });
 
   timeOfDay(): string {
     const h = new Date().getHours();
-    if (h < 12) return 'morning';
-    if (h < 17) return 'afternoon';
-    return 'evening';
+    if (h < 12) return 'Morning';
+    if (h < 17) return 'Afternoon';
+    return 'Evening';
   }
 
   constructor() {
-    // Load residency status to determine which nav links to show
     this.residencyService.getResidencyStatus().subscribe(r => this.residency.set(r));
+  }
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed.update(v => !v);
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(v => !v);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
   }
 
   logout(): void {

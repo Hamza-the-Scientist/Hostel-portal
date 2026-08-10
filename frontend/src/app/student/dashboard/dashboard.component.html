@@ -1,45 +1,124 @@
 <!-- student/dashboard/dashboard.component.html -->
+<div class="dashboard-page">
 
-@if (loading()) {
-  <!-- Loading Skeleton -->
-  <div class="dashboard-skeleton">
-    <div class="skeleton-card"></div>
-    <div class="skeleton-card skeleton-card--wide"></div>
-    <div class="skeleton-card"></div>
-  </div>
-} @else if (error()) {
-  <div class="error-state">
-    <p class="error-state__icon">⚠️</p>
-    <h3>Unable to Load Dashboard</h3>
-    <p>{{ error() }}</p>
-    <button class="btn btn-primary" (click)="reload()" id="retry-btn">Try Again</button>
-  </div>
-} @else if (residency()?.isExistingResident) {
-  <!-- ══ EXISTING RESIDENT VIEW ══════════════════════════════════════════ -->
-  <app-resident-dashboard [residency]="residency()!" (residencyChange)="onResidencyChange($event)" />
-} @else {
-  <!-- ══ FRESH APPLICANT CTA ════════════════════════════════════════════ -->
-  <div class="fresh-applicant">
-    <div class="fresh-applicant__hero">
-      <div class="fresh-applicant__badge">New Applicant</div>
-      <h1 class="fresh-applicant__title">Apply for Hostel Accommodation</h1>
-      <p class="fresh-applicant__subtitle">
-        You are not currently assigned to any hostel. Complete the application process to
-        get a room for this academic year.
+  <!-- ── Greeting Banner ─────────────────────────────────────────── -->
+  <div class="greeting-banner">
+    <div class="greeting-banner__content">
+      <h1 class="greeting-banner__title">{{ greetingTime() }}, {{ studentName() }} 👋</h1>
+      <p class="greeting-banner__subtitle">
+        Welcome to your Sindh University Hostel Portal overview. Here is your latest status.
       </p>
-      <a routerLink="/student/apply" class="btn btn-primary fresh-applicant__cta" id="apply-now-btn">
-        Start Application →
-      </a>
     </div>
+    <div class="greeting-banner__meta">
+      <span class="portal-badge">Academic Session 2025–2026</span>
+    </div>
+  </div>
 
-    <div class="fresh-applicant__steps">
-      <div class="step-card" *ngFor="let step of applicationSteps; let i = index">
-        <div class="step-card__number">{{ i + 1 }}</div>
-        <div class="step-card__content">
-          <h4>{{ step.title }}</h4>
-          <p>{{ step.desc }}</p>
+  @if (loading()) {
+    <!-- Skeleton loader for 4 metric cards -->
+    <div class="cards-grid">
+      <div class="skeleton-card" *ngFor="let i of [1,2,3,4]"></div>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <p class="error-state__icon">⚠️</p>
+      <h3>Unable to Load Dashboard Data</h3>
+      <p>{{ error() }}</p>
+      <button class="btn btn-primary" (click)="reload()" id="retry-btn">Try Again</button>
+    </div>
+  } @else {
+
+    <!-- ── 4 Metric Cards (Real Backend Data) ─────────────────────── -->
+    <div class="cards-grid">
+      <!-- Card 1: Application Status -->
+      <div class="metric-card" id="card-app-status">
+        <div class="metric-card__header">
+          <span class="metric-card__icon">{{ cardAppStatus().icon }}</span>
+          <span class="metric-card__badge" [ngClass]="cardAppStatus().badgeClass">
+            {{ cardAppStatus().value }}
+          </span>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">{{ cardAppStatus().title }}</span>
+          <h3 class="metric-card__value">{{ cardAppStatus().value }}</h3>
+          <p class="metric-card__sub">{{ cardAppStatus().sub }}</p>
+        </div>
+      </div>
+
+      <!-- Card 2: Current Hostel -->
+      <div class="metric-card" id="card-hostel">
+        <div class="metric-card__header">
+          <span class="metric-card__icon">{{ cardHostel().icon }}</span>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">{{ cardHostel().title }}</span>
+          <h3 class="metric-card__value">{{ cardHostel().value }}</h3>
+          <p class="metric-card__sub">{{ cardHostel().sub }}</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Current Room -->
+      <div class="metric-card" id="card-room">
+        <div class="metric-card__header">
+          <span class="metric-card__icon">{{ cardRoom().icon }}</span>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">{{ cardRoom().title }}</span>
+          <h3 class="metric-card__value">{{ cardRoom().value }}</h3>
+          <p class="metric-card__sub">{{ cardRoom().sub }}</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Merit / CPN -->
+      <div class="metric-card" id="card-merit">
+        <div class="metric-card__header">
+          <span class="metric-card__icon">{{ cardMerit().icon }}</span>
+        </div>
+        <div class="metric-card__body">
+          <span class="metric-card__label">{{ cardMerit().title }}</span>
+          <h3 class="metric-card__value">{{ cardMerit().value }}</h3>
+          <p class="metric-card__sub">{{ cardMerit().sub }}</p>
         </div>
       </div>
     </div>
-  </div>
-}
+
+    <!-- ── Main Section: Variant logic per Phase 6 ───────────────── -->
+    @if (residency()?.isExistingResident) {
+      <!-- ══ EXISTING RESIDENT VARIANT ═════════════════════════════ -->
+      <div class="variant-section">
+        <app-resident-dashboard [residency]="residency()!" (residencyChange)="onResidencyChange($event)" />
+      </div>
+    } @else {
+      <!-- ══ FRESH APPLICANT VARIANT ═══════════════════════════════ -->
+      <div class="variant-section fresh-applicant">
+        <div class="fresh-applicant__hero">
+          <div class="fresh-applicant__badge">Fresh Applicant Workflow</div>
+          <h2 class="fresh-applicant__title">Hostel Admission & Merit Process</h2>
+          <p class="fresh-applicant__subtitle">
+            Complete the 5-step hostel application wizard to submit your preferences for the upcoming academic year.
+          </p>
+          <div class="fresh-actions">
+            <a routerLink="/student/apply" class="btn btn-primary fresh-applicant__cta" id="apply-now-btn">
+              Start Application →
+            </a>
+            <a routerLink="/student/merit-result" class="btn btn-outline fresh-applicant__cta" id="check-merit-btn">
+              Check Merit Card 🏆
+            </a>
+          </div>
+        </div>
+
+        <div class="fresh-applicant__steps">
+          <div class="step-card" *ngFor="let step of applicationSteps; let i = index">
+            <div class="step-card__number">{{ i + 1 }}</div>
+            <div class="step-card__content">
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+  }
+
+</div>

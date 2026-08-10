@@ -12,12 +12,17 @@ namespace SindhDormitory.API.Controllers;
 public class PaymentsController : ControllerBase
 {
     private readonly IApplicationService _applicationService;
-    private readonly IResidencyService _residencyService;
+    private readonly IResidencyService   _residencyService;
+    private readonly IFinalChallanService _finalChallanService;
 
-    public PaymentsController(IApplicationService applicationService, IResidencyService residencyService)
+    public PaymentsController(
+        IApplicationService applicationService,
+        IResidencyService residencyService,
+        IFinalChallanService finalChallanService)
     {
-        _applicationService = applicationService;
-        _residencyService = residencyService;
+        _applicationService  = applicationService;
+        _residencyService    = residencyService;
+        _finalChallanService = finalChallanService;
     }
 
     // ── Fresh Applicant: Processing Fee ──────────────────────────────────────
@@ -78,6 +83,22 @@ public class PaymentsController : ControllerBase
             return Ok(updatedResidency);
         }
         catch (InvalidOperationException ex) { return BadRequest(new { message = ex.Message }); }
+        catch (KeyNotFoundException ex) { return NotFound(new { message = ex.Message }); }
+        catch (Exception ex) { return StatusCode(500, new { message = ex.Message }); }
+    }
+
+    // ── Both Challans ─────────────────────────────────────────────────────────
+
+    /// <summary>GET /api/payments/challans — Returns both the processing fee and final hostel challan.</summary>
+    [HttpGet("challans")]
+    public async Task<IActionResult> GetChallans()
+    {
+        try
+        {
+            var userId  = GetCurrentUserId();
+            var challans = await _finalChallanService.GetAllChallansAsync(userId);
+            return Ok(challans);
+        }
         catch (KeyNotFoundException ex) { return NotFound(new { message = ex.Message }); }
         catch (Exception ex) { return StatusCode(500, new { message = ex.Message }); }
     }

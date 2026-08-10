@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 export interface VerifiedUniversityInfo {
   fullName: string;
   rollNumber: string;
@@ -54,7 +56,7 @@ export interface UpdateStudentProfileRequest {
 })
 export class StudentProfileService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/students/profile';
+  private apiUrl = `${environment.apiBaseUrl}/students/profile`;
 
   getProfile(): Observable<StudentProfileDto> {
     return this.http.get<StudentProfileDto>(this.apiUrl);

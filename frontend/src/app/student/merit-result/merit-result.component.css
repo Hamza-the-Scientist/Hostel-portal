@@ -1,0 +1,461 @@
+/* ============================================================
+   merit-result.component.css — Premium Merit Result Page
+   ============================================================ */
+
+:host {
+  display: block;
+}
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.merit-page {
+  padding: 28px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #1a1a2e;
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ── Status badges ───────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.badge-pending   { background: rgba(234, 179, 8, 0.15); color: #a16207; }
+.badge-allocated { background: rgba(34, 197, 94, 0.15); color: #15803d; }
+.badge-wait      { background: rgba(59, 130, 246, 0.15); color: #1d4ed8; }
+.badge-rejected  { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
+
+/* ── Hero card ───────────────────────────────────────────────── */
+.hero-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.06) 0%, rgba(114, 9, 183, 0.06) 100%);
+  z-index: 0;
+}
+
+.hero-card > * { position: relative; z-index: 1; }
+
+.badge-allocated-card { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #86efac; }
+.badge-pending-card   { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-color: #fde047; }
+.badge-wait-card      { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #93c5fd; }
+.badge-rejected-card  { background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-color: #fca5a5; }
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.status-icon {
+  font-size: 42px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.hero-text h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 2px;
+  color: #1a1a2e;
+}
+
+.roll {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+/* ── Rank box ────────────────────────────────────────────────── */
+.rank-box {
+  text-align: center;
+  min-width: 180px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 16px;
+  padding: 18px 24px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.rank-num {
+  display: block;
+  font-size: 40px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #4361ee, #7209b7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.rank-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.rank-bar-wrap {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.rank-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4361ee, #7209b7);
+  border-radius: 999px;
+  transition: width 1s ease;
+}
+
+.rank-pct {
+  font-size: 11px;
+  color: #888;
+}
+
+/* ── Content grid ────────────────────────────────────────────── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Info cards ──────────────────────────────────────────────── */
+.info-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #e8e8f0;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.info-card:hover {
+  box-shadow: 0 8px 32px rgba(67, 97, 238, 0.1);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f8;
+}
+
+.card-icon {
+  font-size: 20px;
+}
+
+.card-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+/* ── Info rows ───────────────────────────────────────────────── */
+.info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5fa;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 13px;
+  color: #1a1a2e;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ── Score tiles ─────────────────────────────────────────────── */
+.score-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.score-tile {
+  flex: 1;
+  min-width: 100px;
+  background: #f8f8fd;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #e8e8f0;
+  transition: background 0.2s;
+}
+
+.score-tile.highlight {
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.08), rgba(114, 9, 183, 0.08));
+  border-color: rgba(67, 97, 238, 0.3);
+}
+
+.score-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+}
+
+.score-val {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4361ee, #7209b7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.score-sub {
+  display: block;
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* ── Allocation result ───────────────────────────────────────── */
+.allocation-result {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alloc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8f8fd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: 1px solid #e8e8f0;
+}
+
+.alloc-icon {
+  font-size: 22px;
+}
+
+.alloc-label {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+}
+
+.alloc-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.alloc-pending {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  background: #f8f8fd;
+  border-radius: 10px;
+}
+
+.alloc-pending.waitlisted { background: #eff6ff; color: #1d4ed8; }
+.alloc-pending p { margin: 4px 0; font-size: 14px; }
+.alloc-pending .hint { font-size: 12px; color: #888; margin-top: 8px; }
+
+/* ── Final challan card ──────────────────────────────────────── */
+.challan-card { grid-column: span 1; }
+
+.challan-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.challan-amount {
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #4361ee, #7209b7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.challan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e8e8f0;
+}
+
+.challan-status {
+  font-weight: 700;
+  color: #d97706;
+  background: rgba(234, 179, 8, 0.15);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.challan-status.paid {
+  color: #15803d;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.overdue { color: #dc2626; }
+
+.challan-pending {
+  text-align: center;
+  padding: 20px;
+  background: #f8f8fd;
+  border-radius: 10px;
+  color: #888;
+  font-size: 13px;
+}
+
+/* ── Download button ─────────────────────────────────────────── */
+.download-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.download-btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.download-btn:disabled {
+  background: linear-gradient(135deg, #15803d, #166534);
+  cursor: default;
+}
+
+/* ── Skeleton loader ─────────────────────────────────────────── */
+.skeleton-wrap { display: flex; flex-direction: column; gap: 20px; }
+
+.skeleton-hero {
+  height: 140px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #f0f0f8 25%, #e8e8f5 50%, #f0f0f8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.skeleton-card {
+  height: 200px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f0f0f8 25%, #e8e8f5 50%, #f0f0f8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Error state ─────────────────────────────────────────────── */
+.error-state {
+  text-align: center;
+  padding: 60px 40px;
+  color: #888;
+}
+
+.error-icon { font-size: 48px; margin-bottom: 16px; }
+.error-state h2 { color: #1a1a2e; font-weight: 700; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .merit-page { padding: 16px; }
+  .hero-card { flex-direction: column; gap: 16px; }
+  .content-grid { grid-template-columns: 1fr; }
+  .challan-card { grid-column: span 1; }
+  .score-grid { flex-direction: column; }
+}

@@ -17,6 +17,13 @@ public class SimulatedUniversityRecord : BaseEntity
     public DegreeType DegreeType { get; set; }
     public int Semester { get; set; }
     public decimal Cgpa { get; set; }
+
+    /// <summary>
+    /// CPN / Entry-test score (0–200 scale, as used by Sindh University admission system).
+    /// This is the primary merit criterion for first-year applicants.
+    /// </summary>
+    public decimal Cpn { get; set; } = 0m;
+
     public string AcademicYear { get; set; } = "2025-2026";
     public Gender Gender { get; set; }
     public DateOnly DateOfBirth { get; set; }

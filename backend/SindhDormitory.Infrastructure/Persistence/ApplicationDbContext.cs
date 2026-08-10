@@ -38,6 +38,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ApplicationHostelPreference>   ApplicationHostelPreferences   { get; set; }
     public DbSet<ApplicationStatusHistory>      ApplicationStatusHistories     { get; set; }
     public DbSet<MeritResult>                   MeritResults                   { get; set; }
+    public DbSet<AllocationCycle>               AllocationCycles               { get; set; }
+    public DbSet<MeritWeightConfig>             MeritWeightConfigs             { get; set; }
+    public DbSet<DistrictSeatRule>              DistrictSeatRules              { get; set; }
     public DbSet<Allocation>                    Allocations                    { get; set; }
     public DbSet<Resident>                      Residents                      { get; set; }
     public DbSet<ProcessingFee>                 ProcessingFees                 { get; set; }
@@ -174,6 +177,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     DegreeType = DegreeType.BS,
                     Semester = 5,
                     Cgpa = 3.75m,
+                    Cpn = 168.5m,
                     AcademicYear = "2025-2026",
                     Gender = Gender.Male,
                     DateOfBirth = new DateOnly(2003, 5, 14),
@@ -195,6 +199,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     DegreeType = DegreeType.BS,
                     Semester = 5,
                     Cgpa = 3.88m,
+                    Cpn = 174.0m,
                     AcademicYear = "2025-2026",
                     Gender = Gender.Female,
                     DateOfBirth = new DateOnly(2003, 8, 22),
@@ -216,6 +221,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     DegreeType = DegreeType.BS,
                     Semester = 3,
                     Cgpa = 3.42m,
+                    Cpn = 155.0m,
                     AcademicYear = "2025-2026",
                     Gender = Gender.Male,
                     DateOfBirth = new DateOnly(2004, 2, 10),
@@ -237,6 +243,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     DegreeType = DegreeType.BS,
                     Semester = 7,
                     Cgpa = 3.65m,
+                    Cpn = 161.5m,
                     AcademicYear = "2025-2026",
                     Gender = Gender.Female,
                     DateOfBirth = new DateOnly(2002, 11, 30),
@@ -439,10 +446,72 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         {
             e.HasKey(m => m.MeritId);
             e.Property(m => m.MeritScore).HasPrecision(8, 4);
+            e.Property(m => m.Cpn).HasPrecision(6, 2);
+            e.Property(m => m.Cgpa).HasPrecision(4, 2);
+            e.Property(m => m.AllocationStatus).HasConversion<string>().HasMaxLength(20);
+            e.Property(m => m.Department).HasMaxLength(150);
+            e.Property(m => m.Program).HasMaxLength(150);
+            e.Property(m => m.AcademicYear).HasMaxLength(20);
+            e.Property(m => m.District).HasMaxLength(100);
+            e.Property(m => m.Gender).HasMaxLength(10);
+            e.Property(m => m.RollNumber).HasMaxLength(50);
+            e.Property(m => m.AllocatedHostel).HasMaxLength(150);
+            e.Property(m => m.AllocatedRoom).HasMaxLength(20);
+            e.Property(m => m.AllocatedBed).HasMaxLength(10);
             e.HasOne(m => m.Application)
                 .WithOne(a => a.MeritResult)
                 .HasForeignKey<MeritResult>(m => m.ApplicationId)
                 .OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(m => m.Cycle)
+                .WithMany(c => c.MeritResults)
+                .HasForeignKey(m => m.CycleId)
+                .OnDelete(DeleteBehavior.SetNull);
+            e.HasIndex(m => new { m.ApplicationId, m.CycleId });
+            e.HasIndex(m => m.MeritRank);
+        });
+
+        // ── AllocationCycles ──────────────────────────────────────────────────
+        modelBuilder.Entity<AllocationCycle>(e =>
+        {
+            e.HasKey(c => c.CycleId);
+            e.Property(c => c.Status).HasMaxLength(20).IsRequired();
+            e.Property(c => c.Remarks).HasMaxLength(500);
+            e.HasOne(c => c.AcademicYear)
+                .WithMany()
+                .HasForeignKey(c => c.AcademicYearId)
+                .OnDelete(DeleteBehavior.Restrict);
+            e.HasIndex(c => c.RunAt);
+        });
+
+        // ── MeritWeightConfigs ────────────────────────────────────────────────
+        modelBuilder.Entity<MeritWeightConfig>(e =>
+        {
+            e.HasKey(w => w.ConfigId);
+            e.Property(w => w.CpnWeight).HasPrecision(5, 4);
+            e.Property(w => w.CgpaWeight).HasPrecision(5, 4);
+            e.Property(w => w.Notes).HasMaxLength(500);
+            e.HasOne(w => w.AcademicYear)
+                .WithMany()
+                .HasForeignKey(w => w.AcademicYearId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // ── DistrictSeatRules ─────────────────────────────────────────────────
+        modelBuilder.Entity<DistrictSeatRule>(e =>
+        {
+            e.HasKey(d => d.RuleId);
+            e.HasOne(d => d.AcademicYear)
+                .WithMany()
+                .HasForeignKey(d => d.AcademicYearId)
+                .OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(d => d.District)
+                .WithMany()
+                .HasForeignKey(d => d.DistrictId)
+                .OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(d => d.Hostel)
+                .WithMany()
+                .HasForeignKey(d => d.HostelId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         // ── Allocations ───────────────────────────────────────────────────────
@@ -464,6 +533,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                 .WithMany(b => b.Allocations)
                 .HasForeignKey(a => a.BedId)
                 .OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(a => a.Cycle)
+                .WithMany(c => c.Allocations)
+                .HasForeignKey(a => a.CycleId)
+                .OnDelete(DeleteBehavior.SetNull);
             // One active allocation per student
             e.HasIndex(a => new { a.StudentId, a.IsActive }).IsUnique();
             // One active allocation per bed

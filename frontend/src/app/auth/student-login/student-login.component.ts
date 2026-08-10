@@ -44,7 +44,7 @@ export class StudentLoginComponent {
       password: this.loginForm.value.password!
     }).subscribe({
       next: () => {
-        this.router.navigate(['/student']);
+        this.router.navigate(['/student/dashboard']);
       },
       error: (err) => {
         this.serverError = err.error?.message || 'Login failed. Please check your credentials.';

@@ -1,0 +1,208 @@
+<!-- merit-result.component.html -->
+<div class="merit-page">
+
+  <!-- ── Loading skeleton ────────────────────────────────────────── -->
+  @if (loading()) {
+    <div class="skeleton-wrap">
+      <div class="skeleton-hero"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6]"></div>
+      </div>
+    </div>
+  }
+
+  <!-- ── Error state ─────────────────────────────────────────────── -->
+  @else if (error()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h2>Unable to Load Merit Result</h2>
+      <p>{{ error() }}</p>
+    </div>
+  }
+
+  <!-- ── Main content ────────────────────────────────────────────── -->
+  @else if (result(); as r) {
+    <div class="page-header">
+      <h1>Merit Result</h1>
+      <p class="subtitle">Academic Year {{ r.academicYear || '2025-2026' }}</p>
+    </div>
+
+    <!-- ── Status hero card ─────────────────────────────────────── -->
+    <div class="hero-card" [class]="statusConfig.cls + '-card'">
+      <div class="hero-left">
+        <div class="status-icon">{{ statusConfig.icon }}</div>
+        <div class="hero-text">
+          <span class="badge" [class]="statusConfig.cls">{{ statusConfig.label }}</span>
+          <h2>{{ r.studentName }}</h2>
+          <p class="roll">{{ r.rollNumber }}</p>
+        </div>
+      </div>
+      <div class="hero-right">
+        @if (r.meritRank && r.meritRank < 9000) {
+          <div class="rank-box">
+            <span class="rank-num">#{{ r.meritRank }}</span>
+            <span class="rank-label">Merit Rank</span>
+            <div class="rank-bar-wrap">
+              <div class="rank-bar" [style.width.%]="rankPercentile"></div>
+            </div>
+            <span class="rank-pct">Top {{ 100 - rankPercentile + 1 }}% of {{ r.totalApplicants }} applicants</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- ── Main grid ────────────────────────────────────────────── -->
+    <div class="content-grid">
+
+      <!-- ── Academic Info ──────────────────────────────────────── -->
+      <div class="info-card">
+        <div class="card-header">
+          <span class="card-icon">🎓</span>
+          <h3>Academic Information</h3>
+        </div>
+        <div class="info-rows">
+          <div class="info-row">
+            <span class="label">Department</span>
+            <span class="value">{{ r.department || '—' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Program</span>
+            <span class="value">{{ r.program || '—' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Academic Year</span>
+            <span class="value">{{ r.academicYear || '—' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">District</span>
+            <span class="value">{{ r.district || '—' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Gender</span>
+            <span class="value">{{ r.gender || '—' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Merit Scores ───────────────────────────────────────── -->
+      <div class="info-card">
+        <div class="card-header">
+          <span class="card-icon">📊</span>
+          <h3>Merit Scores</h3>
+        </div>
+        <div class="score-grid">
+          <div class="score-tile">
+            <span class="score-label">CPN / Entry Test</span>
+            <span class="score-val">{{ r.cpn | number:'1.1-1' }}</span>
+            <span class="score-sub">/ 200</span>
+          </div>
+          @if (r.cgpa) {
+            <div class="score-tile">
+              <span class="score-label">CGPA</span>
+              <span class="score-val">{{ r.cgpa | number:'1.2-2' }}</span>
+              <span class="score-sub">/ 4.00</span>
+            </div>
+          }
+          <div class="score-tile highlight">
+            <span class="score-label">Merit Score</span>
+            <span class="score-val">{{ r.meritScore | number:'1.2-2' }}</span>
+            <span class="score-sub">/ 100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Hostel Allocation ──────────────────────────────────── -->
+      <div class="info-card">
+        <div class="card-header">
+          <span class="card-icon">🏠</span>
+          <h3>Hostel Allocation</h3>
+        </div>
+
+        @if (r.allocationStatus === 'Allocated') {
+          <div class="allocation-result">
+            <div class="alloc-item">
+              <span class="alloc-icon">🏢</span>
+              <div>
+                <span class="alloc-label">Allocated Hostel</span>
+                <span class="alloc-value">{{ r.allocatedHostel }}</span>
+              </div>
+            </div>
+            <div class="alloc-item">
+              <span class="alloc-icon">🚪</span>
+              <div>
+                <span class="alloc-label">Room Number</span>
+                <span class="alloc-value">{{ r.allocatedRoom }}</span>
+              </div>
+            </div>
+            <div class="alloc-item">
+              <span class="alloc-icon">🛏️</span>
+              <div>
+                <span class="alloc-label">Bed</span>
+                <span class="alloc-value">{{ r.allocatedBed }}</span>
+              </div>
+            </div>
+          </div>
+        }
+
+        @else if (r.allocationStatus === 'Waitlisted') {
+          <div class="alloc-pending waitlisted">
+            <p>📋 You are on the <strong>waitlist</strong>.</p>
+            <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
+            <p class="hint">A second-round allocation will be conducted after the payment deadline.</p>
+          </div>
+        }
+
+        @else {
+          <div class="alloc-pending">
+            <p>⏳ Allocation is currently being processed.</p>
+            <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
+          </div>
+        }
+      </div>
+
+      <!-- ── Final Challan ─────────────────────────────────────── -->
+      <div class="info-card challan-card">
+        <div class="card-header">
+          <span class="card-icon">🧾</span>
+          <h3>Final Hostel Challan</h3>
+        </div>
+
+        @if (hasFinalChallan && finalChallan; as c) {
+          <div class="challan-detail">
+            <div class="challan-amount">PKR {{ c.amount | number }}</div>
+            <div class="challan-row">
+              <span>Challan #</span>
+              <strong>{{ c.challanNumber }}</strong>
+            </div>
+            <div class="challan-row">
+              <span>Status</span>
+              <span class="challan-status" [class.paid]="c.status === 'Paid'">{{ c.status }}</span>
+            </div>
+            <div class="challan-row">
+              <span>Due Date</span>
+              <strong [class.overdue]="c.isExpired">{{ c.expiresAt | date:'dd MMM yyyy' }}</strong>
+            </div>
+            <button
+              class="download-btn"
+              (click)="downloadChallan()"
+              [disabled]="c.status === 'Paid'">
+              @if (c.status === 'Paid') {
+                ✅ Challan Paid
+              } @else {
+                ⬇ Download Final Challan
+              }
+            </button>
+          </div>
+        }
+
+        @else {
+          <div class="challan-pending">
+            <p>Your final hostel challan will appear here once a room has been allocated.</p>
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+</div>

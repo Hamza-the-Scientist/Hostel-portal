@@ -1,47 +1,108 @@
 <!-- student/layout/layout.component.html -->
 <div class="student-portal">
-  <!-- ── Sidebar ─────────────────────────────────────────── -->
-  <aside class="sidebar" [class.sidebar--collapsed]="sidebarCollapsed">
+
+  <!-- ── Backdrop for Mobile Drawer ────────────────────────── -->
+  @if (mobileMenuOpen()) {
+    <div class="mobile-backdrop" (click)="closeMobileMenu()" id="mobile-backdrop"></div>
+  }
+
+  <!-- ── Fixed Left Sidebar ────────────────────────────────── -->
+  <aside class="sidebar"
+         [class.sidebar--collapsed]="sidebarCollapsed()"
+         [class.sidebar--mobile-open]="mobileMenuOpen()">
     <div class="sidebar__header">
       <div class="sidebar__logo">
         <span class="sidebar__logo-icon">🏛️</span>
         <span class="sidebar__logo-text">Sindh University</span>
       </div>
-      <button class="sidebar__toggle" (click)="sidebarCollapsed = !sidebarCollapsed" id="sidebar-toggle-btn">
-        <span>{{ sidebarCollapsed ? '→' : '←' }}</span>
+      <button class="sidebar__toggle" (click)="toggleSidebar()" id="sidebar-toggle-btn">
+        <span>{{ sidebarCollapsed() ? '→' : '←' }}</span>
+      </button>
+      <button class="sidebar__close-mobile" (click)="closeMobileMenu()" id="sidebar-close-mobile-btn">
+        ✕
       </button>
     </div>
 
     <nav class="sidebar__nav">
+      <!-- 1. Dashboard -->
       <a class="sidebar__link" routerLink="/student/dashboard" routerLinkActive="sidebar__link--active"
-         id="nav-dashboard">
+         (click)="closeMobileMenu()" id="nav-dashboard">
         <span class="sidebar__icon">⊞</span>
         <span class="sidebar__label">Dashboard</span>
       </a>
 
+      <!-- 2. My Profile -->
       <a class="sidebar__link" routerLink="/student/profile" routerLinkActive="sidebar__link--active"
-         id="nav-profile">
+         (click)="closeMobileMenu()" id="nav-profile">
         <span class="sidebar__icon">👤</span>
         <span class="sidebar__label">My Profile</span>
       </a>
 
-      @if (showRoomChange()) {
-        <a class="sidebar__link" routerLink="/student/room-change" routerLinkActive="sidebar__link--active"
-           id="nav-room-change">
-          <span class="sidebar__icon">🔄</span>
-          <span class="sidebar__label">Room Change</span>
-        </a>
-      }
+      <!-- 3. Hostel Application -->
+      <a class="sidebar__link" routerLink="/student/apply" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-apply">
+        <span class="sidebar__icon">📋</span>
+        <span class="sidebar__label">Hostel Application</span>
+      </a>
 
-      @if (showApply()) {
-        <a class="sidebar__link" routerLink="/student/apply" routerLinkActive="sidebar__link--active"
-           id="nav-apply">
-          <span class="sidebar__icon">📋</span>
-          <span class="sidebar__label">Apply for Hostel</span>
-        </a>
-      }
+      <!-- 4. My Hostel -->
+      <a class="sidebar__link" routerLink="/student/hostel" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-hostel">
+        <span class="sidebar__icon">🏢</span>
+        <span class="sidebar__label">My Hostel</span>
+      </a>
+
+      <!-- 5. Room Change -->
+      <a class="sidebar__link" routerLink="/student/room-change" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-room-change">
+        <span class="sidebar__icon">🔄</span>
+        <span class="sidebar__label">Room Change</span>
+      </a>
+
+      <!-- Merit Result -->
+      <a class="sidebar__link" routerLink="/student/merit-result" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-merit-result">
+        <span class="sidebar__icon">🏆</span>
+        <span class="sidebar__label">Merit Result</span>
+      </a>
+
+      <!-- 6. Challans -->
+      <a class="sidebar__link" routerLink="/student/challans" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-challans">
+        <span class="sidebar__icon">💳</span>
+        <span class="sidebar__label">Challans</span>
+      </a>
+
+      <!-- 7. Notifications -->
+      <a class="sidebar__link" routerLink="/student/notifications" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-notifications">
+        <span class="sidebar__icon">🔔</span>
+        <span class="sidebar__label">Notifications</span>
+      </a>
+
+      <!-- 8. Complaints -->
+      <a class="sidebar__link" routerLink="/student/complaints" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-complaints">
+        <span class="sidebar__icon">📝</span>
+        <span class="sidebar__label">Complaints</span>
+      </a>
+
+      <!-- 9. Feedback -->
+      <a class="sidebar__link" routerLink="/student/feedback" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-feedback">
+        <span class="sidebar__icon">💬</span>
+        <span class="sidebar__label">Feedback</span>
+      </a>
+
+      <!-- 10. Settings -->
+      <a class="sidebar__link" routerLink="/student/settings" routerLinkActive="sidebar__link--active"
+         (click)="closeMobileMenu()" id="nav-settings">
+        <span class="sidebar__icon">⚙️</span>
+        <span class="sidebar__label">Settings</span>
+      </a>
     </nav>
 
+    <!-- 11. Logout in Footer -->
     <div class="sidebar__footer">
       <div class="sidebar__user">
         <div class="sidebar__avatar">{{ userInitials() }}</div>
@@ -54,19 +115,55 @@
     </div>
   </aside>
 
-  <!-- ── Main Content ───────────────────────────────────── -->
+  <!-- ── Main Content Area ─────────────────────────────────── -->
   <main class="portal-main">
+
+    <!-- Top Header -->
     <header class="portal-header">
-      <div class="portal-header__breadcrumb">
+      <div class="portal-header__left">
+        <button class="hamburger-btn" (click)="toggleMobileMenu()" id="hamburger-menu-btn" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <span class="portal-header__title">{{ pageTitle() }}</span>
       </div>
-      <div class="portal-header__actions">
+
+      <div class="portal-header__right">
         <span class="portal-header__greeting">Good {{ timeOfDay() }}, {{ firstName() }} 👋</span>
+        <a routerLink="/student/notifications" class="header-icon-btn" title="Notifications">
+          🔔
+        </a>
       </div>
     </header>
 
+    <!-- Page Content Router Outlet -->
     <div class="portal-content">
       <router-outlet></router-outlet>
     </div>
+
+    <!-- Mobile Bottom Navigation Bar (< 640px) -->
+    <nav class="mobile-bottom-nav">
+      <a routerLink="/student/dashboard" routerLinkActive="active" class="bottom-nav__item">
+        <span class="bottom-nav__icon">⊞</span>
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a routerLink="/student/apply" routerLinkActive="active" class="bottom-nav__item">
+        <span class="bottom-nav__icon">📋</span>
+        <span class="bottom-nav__label">Apply</span>
+      </a>
+      <a routerLink="/student/hostel" routerLinkActive="active" class="bottom-nav__item">
+        <span class="bottom-nav__icon">🏢</span>
+        <span class="bottom-nav__label">Hostel</span>
+      </a>
+      <a routerLink="/student/challans" routerLinkActive="active" class="bottom-nav__item">
+        <span class="bottom-nav__icon">💳</span>
+        <span class="bottom-nav__label">Fees</span>
+      </a>
+      <a routerLink="/student/profile" routerLinkActive="active" class="bottom-nav__item">
+        <span class="bottom-nav__icon">👤</span>
+        <span class="bottom-nav__label">Profile</span>
+      </a>
+    </nav>
   </main>
 </div>

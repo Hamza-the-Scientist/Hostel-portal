@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 export interface EligibleHostel {
   hostelId: number;
   name: string;
@@ -66,7 +68,7 @@ export interface VerifyPaymentRequest {
 })
 export class ApplicationWorkflowService {
   private http = inject(HttpClient);
-  private apiBase = 'http://localhost:5000/api';
+  private apiBase = `${environment.apiBaseUrl}`;
 
   getEligibleHostels(): Observable<EligibleHostel[]> {
     return this.http.get<EligibleHostel[]>(`${this.apiBase}/hostels/eligible`);

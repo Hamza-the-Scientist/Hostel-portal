@@ -12,10 +12,14 @@ namespace SindhDormitory.API.Controllers;
 public class StudentsController : ControllerBase
 {
     private readonly IStudentProfileService _profileService;
+    private readonly IMeritService          _meritService;
 
-    public StudentsController(IStudentProfileService profileService)
+    public StudentsController(
+        IStudentProfileService profileService,
+        IMeritService meritService)
     {
         _profileService = profileService;
+        _meritService   = meritService;
     }
 
     [HttpGet("profile")]
@@ -32,6 +36,20 @@ public class StudentsController : ControllerBase
         var userId = GetCurrentUserId();
         var updatedProfile = await _profileService.UpdateProfileByUserIdAsync(userId, request);
         return Ok(updatedProfile);
+    }
+
+    /// <summary>GET /api/students/merit-result — Returns the student's full merit card.</summary>
+    [HttpGet("merit-result")]
+    public async Task<IActionResult> GetMeritResult()
+    {
+        try
+        {
+            var userId = GetCurrentUserId();
+            var result = await _meritService.GetStudentMeritResultAsync(userId);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex) { return NotFound(new { message = ex.Message }); }
+        catch (Exception ex) { return StatusCode(500, new { message = ex.Message }); }
     }
 
     private int GetCurrentUserId()

@@ -25,9 +25,44 @@ export const STUDENT_ROUTES: Routes = [
           ),
       },
       {
+        path: 'hostel',
+        loadComponent: () =>
+          import('./views/hostel-view.component').then((m) => m.HostelViewComponent),
+      },
+      {
         path: 'room-change',
         loadComponent: () =>
           import('./room-change/room-change.component').then((m) => m.RoomChangeComponent),
+      },
+      {
+        path: 'merit-result',
+        loadComponent: () =>
+          import('./merit-result/merit-result.component').then((m) => m.MeritResultComponent),
+      },
+      {
+        path: 'challans',
+        loadComponent: () =>
+          import('./views/challans-view.component').then((m) => m.ChallansViewComponent),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./views/notifications-view.component').then((m) => m.NotificationsViewComponent),
+      },
+      {
+        path: 'complaints',
+        loadComponent: () =>
+          import('./views/complaints-view.component').then((m) => m.ComplaintsViewComponent),
+      },
+      {
+        path: 'feedback',
+        loadComponent: () =>
+          import('./views/feedback-view.component').then((m) => m.FeedbackViewComponent),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./views/settings-view.component').then((m) => m.SettingsViewComponent),
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],

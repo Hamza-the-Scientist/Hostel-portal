@@ -1,12 +1,14 @@
 // =============================================================================
-// API/Program.cs — Application entry point with full middleware stack
+// API/Program.cs — Application entry point with full middleware stack & DB Seeding
 // =============================================================================
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SindhDormitory.Application;
 using SindhDormitory.Infrastructure;
+using SindhDormitory.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +94,22 @@ builder.Services.AddHealthChecks();
 var app = builder.Build();
 // ═════════════════════════════════════════════════════════════════════════════
 
+// ── Seed Demo Data on Startup ────────────────────────────────────────────────
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        await DbInitializer.SeedAsync(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -99,7 +117,10 @@ if (app.Environment.IsDevelopment())
         "Sindh Dormitory Portal API v1"));
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseCors("AllowAngularDev");
 app.UseAuthentication();
 app.UseAuthorization();
