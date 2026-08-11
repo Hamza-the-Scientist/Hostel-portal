@@ -1,0 +1,91 @@
+// src/app/core/models/admin.model.ts
+export interface DashboardStats {
+  totalStudents: number;
+  totalResidents: number;
+  totalApplicants: number;
+  availableSeats: number;
+  pendingApplications: number;
+  pendingPayments: number;
+  roomChangeRequests: number;
+  openComplaints: number;
+}
+
+export interface AllocationStatusDto {
+  open: boolean;
+  deadline?: string; // ISO date string
+}
+
+export interface HostelDto {
+  hostelId?: number;
+  name: string;
+  gender: 'Male' | 'Female';
+  address: string;
+  description?: string;
+  totalRooms?: number;
+  amenities?: string[];
+  images?: string[];
+  isActive?: boolean;
+}
+
+export interface RoomDto {
+  roomId?: number;
+  block: string;
+  floor: number;
+  number: string;
+  totalBeds: number;
+  isUnderMaintenance?: boolean;
+}
+
+export interface EligibilityRuleDto {
+  ruleId?: number;
+  field: string;
+  operator: string;
+  value: any;
+}
+
+export interface StudentDto {
+  studentId?: number;
+  cnic: string;
+  rollNumber: string;
+  name: string;
+  department: string;
+  academicYear: string;
+  district: string;
+  gender: string;
+}
+
+export interface ResidentDto {
+  residentId?: number;
+  studentId: number;
+  hostelId: number;
+  block: string;
+  room: string;
+  bed: number;
+  status: string;
+}
+
+export interface ApplicationDto {
+  applicationId?: number;
+  studentId: number;
+  hostelId: number;
+  preferenceOrder: number;
+  status: string;
+}
+
+export interface MeritResultDto {
+  rank: number;
+  studentId: number;
+  meritScore: number;
+  allocatedHostelId?: number;
+}
+
+export interface AdminSettingsDto {
+  processingFee: number;
+  hostelFee: number;
+  applicationDeadline: string | null;
+  allocationOpen: boolean;
+  academicYear: string;
+  meritRules?: any;
+  notificationSettings?: any;
+  emailConfig?: any;
+}

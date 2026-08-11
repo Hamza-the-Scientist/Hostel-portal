@@ -30,7 +30,7 @@ export interface AuthResponse {
   email: string;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: number;
 }
 
 export type UserRole = 'Student' | 'Admin' | 'SuperAdmin';

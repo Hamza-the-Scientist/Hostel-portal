@@ -79,8 +79,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             e.Property(u => u.LastName).HasMaxLength(100).IsRequired();
             e.Property(u => u.Role).HasConversion<string>().HasMaxLength(20);
             e.Property(u => u.PhoneNumber).HasMaxLength(20);
-            e.Property(u => u.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-            e.Property(u => u.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
+            e.Property(u => u.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            e.Property(u => u.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
         });
 

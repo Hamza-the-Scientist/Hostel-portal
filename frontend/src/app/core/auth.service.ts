@@ -18,7 +18,11 @@ export class AuthService {
   private _currentUser = signal<AuthResponse | null>(this.loadUser());
   readonly currentUser  = this._currentUser.asReadonly();
   readonly isLoggedIn   = computed(() => this._currentUser() !== null);
-  readonly userRole     = computed(() => this._currentUser()?.role ?? null);
+  readonly userRole = computed(() => {
+    const roleNum = this._currentUser()?.role;
+    const roleMap: Record<number, string> = { 1: 'Student', 2: 'Admin', 3: 'SuperAdmin' };
+    return roleNum ? roleMap[roleNum] ?? null : null;
+  });
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -53,9 +57,7 @@ export class AuthService {
 
   private handleAuthResponse(response: AuthResponse) {
     localStorage.setItem(TOKEN_KEY, response.token);
-    // Remove token from user object to not double store it
-    const user = { ...response };
-    (user as any).token = undefined;
+    const { token, ...user } = response; // store user without token
     localStorage.setItem(USER_KEY, JSON.stringify(user));
     this._currentUser.set(response);
   }

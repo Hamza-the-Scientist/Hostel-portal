@@ -77,10 +77,10 @@ var frontendUrl = builder.Configuration["App:FrontendUrl"] ?? "http://localhost:
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev", policy =>
-        policy.WithOrigins(frontendUrl)
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials());
+        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 // ── Infrastructure (EF Core + MySQL) ─────────────────────────────────────────

@@ -1,19 +1,31 @@
-// admin/admin.routes.ts
+// src/app/admin/admin.routes.ts
 import { Routes } from '@angular/router';
+import { AdminLayoutComponent } from './layout/admin-layout.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard.component';
+import { HostelListComponent } from './hostels/hostel-list.component';
+import { RoomListComponent } from './rooms/room-list.component';
+import { EligibilityBuilderComponent } from './eligibility/eligibility-builder.component';
+import { StudentManagementComponent } from './students/student-management.component';
+import { ResidentManagementComponent } from './residents/resident-management.component';
+import { AdminApplicationViewComponent } from './applications/admin-application-view.component';
+import { AdminMeritAllocationComponent } from './merit/admin-merit-allocation.component';
+import { AdminSettingsComponent } from './settings/admin-settings.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    children: [],
-    // TODO Phase 2:
-    // { path: 'dashboard',   loadComponent: ... }
-    // { path: 'students',    loadComponent: ... }
-    // { path: 'hostels',     loadComponent: ... }
-    // { path: 'allocations', loadComponent: ... }
-    // { path: 'applications',loadComponent: ... }
-    // { path: 'payments',    loadComponent: ... }
-    // { path: 'complaints',  loadComponent: ... }
-    // { path: 'reports',     loadComponent: ... }
-    // { path: 'settings',    loadComponent: ... }
-  },
+    component: AdminLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'hostels', component: HostelListComponent },
+      { path: 'rooms', component: RoomListComponent },
+      { path: 'eligibility', component: EligibilityBuilderComponent },
+      { path: 'students', component: StudentManagementComponent },
+      { path: 'residents', component: ResidentManagementComponent },
+      { path: 'applications', component: AdminApplicationViewComponent },
+      { path: 'merit', component: AdminMeritAllocationComponent },
+      { path: 'settings', component: AdminSettingsComponent }
+    ]
+  }
 ];
