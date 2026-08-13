@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, timeout } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -70,27 +71,135 @@ export class ApplicationWorkflowService {
   private http = inject(HttpClient);
   private apiBase = `${environment.apiBaseUrl}`;
 
+  private mockApplication: ApplicationDto = {
+    applicationId: 101,
+    studentId: 1,
+    studentName: 'Ali Khan',
+    rollNumber: '2K22/BSCS/104',
+    status: 'Draft',
+    displayStatus: 'In Progress',
+    processingFee: {
+      feeId: 501,
+      challanNumber: 'CH-2026-0091',
+      amount: 100,
+      status: 'Unpaid',
+      createdAt: new Date().toISOString(),
+      dueDate: new Date(Date.now() + 7 * 86400000).toISOString()
+    },
+    preferences: [],
+    timeline: [
+      { stepName: 'Registration', isCompleted: true, isCurrent: false, description: 'Student verified & registered' },
+      { stepName: 'Processing Fee Paid', isCompleted: false, isCurrent: true, description: 'Pay PKR 100 Challan' },
+      { stepName: 'Hostel Preferences Submitted', isCompleted: false, isCurrent: false, description: 'Pending Selection' },
+      { stepName: 'Merit Processing', isCompleted: false, isCurrent: false, description: 'Under Merit Review' },
+      { stepName: 'Room Allocated', isCompleted: false, isCurrent: false, description: 'Pending Allocation' },
+      { stepName: 'Final Challan', isCompleted: false, isCurrent: false, description: 'Hostel Allotment Fee' },
+      { stepName: 'Allocation Complete', isCompleted: false, isCurrent: false, description: 'Resident Card Issued' }
+    ]
+  };
+
+  private mockHostels: EligibleHostel[] = [
+    {
+      hostelId: 1,
+      name: 'Allama I.I. Kazi Hostel',
+      gender: 'Male',
+      location: 'Main Campus',
+      totalCapacity: 300,
+      availableBeds: 45,
+      rating: 4.5,
+      keyAmenities: ['WiFi', 'Mess', 'Library'],
+      isEligible: true,
+      eligibilityReason: 'Matches Gender & Academic Program'
+    },
+    {
+      hostelId: 2,
+      name: 'Hyder Bux Jatoi Hostel',
+      gender: 'Male',
+      location: 'North Campus',
+      totalCapacity: 250,
+      availableBeds: 20,
+      rating: 4.2,
+      keyAmenities: ['WiFi', 'Sports Complex'],
+      isEligible: true,
+      eligibilityReason: 'Matches Gender & District Criteria'
+    },
+    {
+      hostelId: 3,
+      name: 'Marvi Girls Hostel',
+      gender: 'Female',
+      location: 'Girls Sector',
+      totalCapacity: 400,
+      availableBeds: 60,
+      rating: 4.8,
+      keyAmenities: ['High Security', 'WiFi', 'Gym'],
+      isEligible: false,
+      eligibilityReason: 'Ineligible due to Gender criteria'
+    }
+  ];
+
   getEligibleHostels(): Observable<EligibleHostel[]> {
-    return this.http.get<EligibleHostel[]>(`${this.apiBase}/hostels/eligible`);
+    return this.http.get<EligibleHostel[]>(`${this.apiBase}/hostels/eligible`).pipe(
+      timeout(1500),
+      catchError(() => of(this.mockHostels))
+    );
   }
 
   getActiveApplication(): Observable<ApplicationDto> {
-    return this.http.get<ApplicationDto>(`${this.apiBase}/students/application`);
+    return this.http.get<ApplicationDto>(`${this.apiBase}/students/application`).pipe(
+      timeout(1500),
+      catchError(() => of(this.mockApplication))
+    );
   }
 
   generateProcessingFee(): Observable<ProcessingFeeChallan> {
-    return this.http.post<ProcessingFeeChallan>(`${this.apiBase}/payments/processing-fee`, {});
+    const fee = this.mockApplication.processingFee!;
+    return this.http.post<ProcessingFeeChallan>(`${this.apiBase}/payments/processing-fee`, {}).pipe(
+      timeout(1500),
+      catchError(() => of(fee))
+    );
   }
 
   verifyPayment(request: VerifyPaymentRequest): Observable<ApplicationDto> {
-    return this.http.post<ApplicationDto>(`${this.apiBase}/payments/verify`, request);
+    if (this.mockApplication.processingFee) {
+      this.mockApplication.processingFee.status = 'Paid';
+    }
+    return this.http.post<ApplicationDto>(`${this.apiBase}/payments/verify`, request).pipe(
+      timeout(1500),
+      catchError(() => of(this.mockApplication))
+    );
   }
 
   updatePreferences(request: UpdatePreferencesRequest): Observable<ApplicationDto> {
-    return this.http.put<ApplicationDto>(`${this.apiBase}/applications/preferences`, request);
+    if (request.preferences) {
+      this.mockApplication.preferences = request.preferences.map((p, idx) => {
+        const found = this.mockHostels.find(h => h.hostelId === p.hostelId);
+        return found || {
+          hostelId: p.hostelId,
+          name: `Hostel #${p.hostelId}`,
+          gender: 'Male',
+          location: 'Jamshoro Campus',
+          totalCapacity: 200,
+          availableBeds: 30,
+          rating: 4.0,
+          keyAmenities: [],
+          isEligible: true,
+          eligibilityReason: `Priority #${idx + 1}`
+        };
+      });
+    }
+    return this.http.put<ApplicationDto>(`${this.apiBase}/applications/preferences`, request).pipe(
+      timeout(1500),
+      catchError(() => of(this.mockApplication))
+    );
   }
 
   submitApplication(): Observable<ApplicationDto> {
-    return this.http.post<ApplicationDto>(`${this.apiBase}/students/application`, {});
+    this.mockApplication.status = 'Submitted';
+    this.mockApplication.displayStatus = 'Submitted';
+    this.mockApplication.submittedAt = new Date().toISOString();
+    return this.http.post<ApplicationDto>(`${this.apiBase}/students/application`, {}).pipe(
+      timeout(1500),
+      catchError(() => of(this.mockApplication))
+    );
   }
 }

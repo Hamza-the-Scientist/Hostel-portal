@@ -16,7 +16,8 @@ import { HostelDetail } from '../public.model';
       background: white;
       border-radius: var(--radius-card);
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      color: #001832;
     }
     .banner {
       width: 100%;
@@ -27,6 +28,7 @@ import { HostelDetail } from '../public.model';
     }
     .content {
       padding: 3rem;
+      color: #001832;
     }
     .header-row {
       display: flex;
@@ -37,6 +39,8 @@ import { HostelDetail } from '../public.model';
     .title h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
+      color: #001832;
+      font-weight: 800;
     }
     .badge {
       display: inline-block;
@@ -53,16 +57,16 @@ import { HostelDetail } from '../public.model';
       gap: 2rem;
       margin-bottom: 2rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid #E2E8F0;
     }
     .stat-item {
       display: flex;
       flex-direction: column;
     }
-    .stat-label { font-size: 0.85rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-value { font-size: 1.25rem; font-weight: 600; color: var(--color-primary-dark); }
+    .stat-label { font-size: 0.85rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; color: #001832; }
     
-    .section-title { font-size: 1.5rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .section-title { font-size: 1.5rem; margin-bottom: 1rem; margin-top: 2rem; color: #001832; font-weight: 800; }
     
     .amenities-grid {
       display: grid;
@@ -70,20 +74,26 @@ import { HostelDetail } from '../public.model';
       gap: 1rem;
     }
     .amenity-item {
-      background: var(--color-bg);
+      background: #F1F5F9;
       padding: 0.75rem 1rem;
       border-radius: 6px;
-      border: 1px solid var(--color-border);
-      font-weight: 500;
+      border: 1px solid #CBD5E1;
+      font-weight: 600;
+      color: #001832;
     }
 
     .cta-box {
       margin-top: 3rem;
       padding: 2rem;
-      background: #F8F9FA;
+      background: #F8FAFC;
       border-radius: 8px;
       text-align: center;
-      border: 1px solid #E9ECEF;
+      border: 1px solid #E2E8F0;
+      color: #001832;
+    }
+    .cta-box h3 {
+      color: #001832;
+      font-weight: 700;
     }
     
     @media (max-width: 768px) {

@@ -199,7 +199,7 @@ public class ApplicationService : IApplicationService
         var isFeePaid = fee?.Status == FeeStatus.Paid;
         var hasPreferences = app.Preferences.Any();
         var isSubmitted = app.Status == ApplicationStatus.Submitted;
-        var isAllocated = app.Allocations.Any(a => a.IsActive);
+        var isAllocated = isSubmitted && app.Allocations.Any(a => a.IsActive);
 
         var timeline = new List<ApplicationTimelineStepDto>
         {

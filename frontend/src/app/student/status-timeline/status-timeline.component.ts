@@ -31,41 +31,52 @@ import { ApplicationTimelineStep } from '../application-workflow.service';
             <div class="step-title">{{ step.stepName }}</div>
             <div class="step-desc">{{ step.description }}</div>
           </div>
-          <div *ngIf="i < timeline.length - 1" class="line" [class.filled]="step.isCompleted"></div>
+          <div 
+            *ngIf="i < timeline.length - 1" 
+            class="line" 
+            [class.filled]="step.isCompleted && (timeline[i+1]?.isCompleted || timeline[i+1]?.isCurrent)"
+          ></div>
         </div>
       </div>
     </div>
   `,
   styles: [`
     .timeline-card {
-      background: white;
-      border-radius: 12px;
+      background: #001C3B;
+      border-radius: 14px;
       padding: 1.5rem;
-      border: 1px solid #e0e0e0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #002D5A;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
       margin-bottom: 1.5rem;
+      color: #FFFFFF;
     }
     .header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid #002D5A;
       padding-bottom: 0.85rem;
     }
-    .header-row h3 { margin: 0; font-size: 1.15rem; color: #333; }
+    .header-row h3 { margin: 0; font-size: 1.15rem; color: #FFFFFF; font-weight: 700; }
     .status-badge {
       padding: 0.35rem 0.85rem;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
-    .badge-not-processed { background: #f5f5f5; color: #666; border: 1px solid #ccc; }
-    .badge-in-processing { background: #e3f2fd; color: #0288d1; border: 1px solid #b3e5fc; }
-    .badge-room-allocated { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-    .badge-allocation-complete { background: #d1c4e9; color: #4527a0; border: 1px solid #b39ddb; }
-    .badge-room-not-assigned { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+    .badge-not-processed { background: #00142A; color: #CBD5E1; border: 1px solid #002D5A; }
+    .badge-in-processing { 
+      background: rgba(253, 224, 71, 0.2); 
+      color: #FEF08A; 
+      border: 1px solid #FACC15; 
+      box-shadow: 0 0 8px rgba(250, 204, 21, 0.25);
+    }
+    .badge-room-allocated { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .badge-allocation-complete { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .badge-room-not-assigned { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
 
     .timeline-container {
       display: flex;
@@ -86,53 +97,58 @@ import { ApplicationTimelineStep } from '../application-workflow.service';
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: #eee;
-      color: #777;
+      background: #00142A;
+      color: #CBD5E1;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
       font-size: 0.9rem;
       z-index: 2;
-      border: 2px solid #fff;
-      box-shadow: 0 0 0 2px #ccc;
+      border: 2px solid #001C3B;
+      box-shadow: 0 0 0 2px #002D5A;
     }
     .timeline-step.completed .node {
-      background: #015C3A;
-      color: white;
-      box-shadow: 0 0 0 2px #015C3A;
+      background: #00C7B6;
+      color: #001832;
+      box-shadow: 0 0 0 2px #00C7B6;
     }
     .timeline-step.current .node {
-      background: #D4AF37;
-      color: white;
-      box-shadow: 0 0 0 2px #D4AF37;
+      background: #facc15;
+      color: #001832;
+      box-shadow: 0 0 0 2px #facc15;
     }
     .content { text-align: center; margin-top: 0.75rem; }
-    .step-title { font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.2rem; }
-    .step-desc { font-size: 0.75rem; color: #777; }
+    .step-title { font-size: 0.85rem; font-weight: 600; color: #FFFFFF; margin-bottom: 0.2rem; }
+    .step-desc { font-size: 0.75rem; color: #CBD5E1; }
     .line {
       position: absolute;
       top: 16px;
       left: 50%;
       width: 100%;
       height: 3px;
-      background: #e0e0e0;
+      background: #002D5A;
       z-index: 1;
     }
-    .line.filled { background: #015C3A; }
+    .line.filled { background: #00C7B6; }
   `]
 })
 export class StatusTimelineComponent {
-  @Input() displayStatus: string = 'Not Processed';
+  @Input() displayStatus: string = 'In Progress';
   @Input() timeline: ApplicationTimelineStep[] = [];
 
   getBadgeClass(status: string): string {
     switch (status) {
-      case 'In Processing': return 'badge-in-processing';
+      case 'In Processing':
+      case 'In Progress':
+      case 'Submitted':
+      case 'Under Review':
+      case 'Draft':
+        return 'badge-in-processing';
       case 'Room Allocated': return 'badge-room-allocated';
       case 'Allocation Complete': return 'badge-allocation-complete';
       case 'Room Not Assigned': return 'badge-room-not-assigned';
-      default: return 'badge-not-processed';
+      default: return 'badge-in-processing';
     }
   }
 }

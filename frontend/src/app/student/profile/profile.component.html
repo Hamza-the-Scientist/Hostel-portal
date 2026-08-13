@@ -1,4 +1,4 @@
-<div class="profile-page container" *ngIf="profile">
+<div class="profile-page container">
   
   <div class="header">
     <h2>Student Profile</h2>
@@ -13,7 +13,7 @@
     ⚠️ {{ errorMessage }}
   </div>
 
-  <div class="grid">
+  <div class="grid" *ngIf="profile">
     <!-- Verified Information Section (Locked) -->
     <div class="card card-locked">
       <div class="card-header">
@@ -21,7 +21,7 @@
         <span class="locked-badge">🔒 Verified & Locked</span>
       </div>
 
-      <div class="verified-grid">
+      <div class="verified-grid" *ngIf="profile.verifiedInfo">
         <div class="info-group">
           <label>Full Name</label>
           <div class="read-only-field">{{ profile.verifiedInfo.fullName }}</div>

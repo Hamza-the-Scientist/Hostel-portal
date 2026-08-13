@@ -1,12 +1,90 @@
-/* Admin layout – uses the global design system */
-.admin-shell { height: 100vh; }
-.admin-sidebar { width: 240px; background: var(--color-surface); }
+/* Admin layout – unified dark theme styling with high contrast light sidebar text */
+.admin-shell { 
+  height: 100vh; 
+  background: #00142A; 
+}
+
+.admin-sidebar { 
+  width: 250px; 
+  background: #001C3B !important; 
+  border-right: 1px solid #002D5A; 
+}
+
+.sidebar-brand {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #002D5A;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+  color: #00C7B6;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* Force light text color on all Material nav list elements */
+.admin-sidebar ::ng-deep .mat-mdc-list-item,
+.admin-sidebar ::ng-deep .mat-mdc-list-item .mdc-list-item__primary-text,
+.admin-sidebar ::ng-deep .mat-mdc-list-item .mat-mdc-list-item-title,
+.admin-sidebar ::ng-deep a.mat-mdc-list-item,
+.admin-sidebar ::ng-deep a span,
+.admin-sidebar ::ng-deep .mat-mdc-list-item-unscoped-content { 
+  color: #FFFFFF !important; 
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  opacity: 1 !important;
+}
+
+.admin-sidebar ::ng-deep .mat-icon { 
+  color: #00C7B6 !important; 
+  margin-right: 0.75rem !important;
+  opacity: 1 !important;
+}
+
+.admin-sidebar ::ng-deep .mat-mdc-list-item:hover {
+  background: rgba(0, 199, 182, 0.15) !important;
+  border-radius: 8px;
+}
+
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link {
+  background: #00C7B6 !important;
+  border-radius: 8px;
+}
+
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link,
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link .mdc-list-item__primary-text,
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link .mat-mdc-list-item-title,
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link span {
+  color: #001832 !important;
+  font-weight: 700 !important;
+}
+
+.admin-sidebar ::ng-deep .mat-mdc-list-item.active-link .mat-icon {
+  color: #001832 !important;
+}
+
 .admin-header {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: #001C3B !important;
+  color: #FFFFFF !important;
+  border-bottom: 1px solid #002D5A;
   position: sticky; top: 0; z-index: 10;
 }
-.breadcrumb { font-weight: 500; }
+
+.breadcrumb { 
+  font-weight: 700; 
+  color: #00C7B6; 
+  font-size: 1.1rem; 
+}
+
 .spacer { flex: 1; }
-.admin-content { padding: 1.5rem; background: var(--color-bg); min-height: calc(100vh - 64px); }
-.logout { color: var(--color-warn); margin-top: auto; }
+
+.admin-content { 
+  padding: 1.5rem; 
+  background: #00142A; 
+  min-height: calc(100vh - 64px); 
+  color: #FFFFFF; 
+}
+
+.logout ::ng-deep .mat-icon { color: #FF5252 !important; }
+.logout ::ng-deep span { color: #FF5252 !important; }

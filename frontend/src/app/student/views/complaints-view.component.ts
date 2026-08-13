@@ -36,14 +36,16 @@ import { FormsModule } from '@angular/forms';
   `,
   styles: [`
     .view-container { max-width: 800px; margin: 0 auto; }
-    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: #013828; margin-bottom: 0.25rem; }
-    .subtitle { color: #6b7280; font-size: 0.9rem; margin-bottom: 1.5rem; }
-    .complaint-form-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-    .complaint-form-card h3 { font-size: 1.1rem; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 1.25rem; }
+    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.25rem; }
+    .subtitle { color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .complaint-form-card { background: #001C3B; border: 1px solid #002D5A; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+    .complaint-form-card h3 { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin-top: 0; margin-bottom: 1.25rem; }
     .form-group { margin-bottom: 1.25rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 0.35rem; }
-    .form-control { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; box-sizing: border-border-box; }
-    .btn-primary { background: #015C3A; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.35rem; }
+    .form-control { width: 100%; padding: 0.75rem; background: #00142A; border: 1px solid #002D5A; border-radius: 8px; font-size: 0.9rem; color: #FFFFFF; box-sizing: border-box; outline: none; }
+    .form-control option { background: #001832; color: #FFFFFF; }
+    .btn-primary { background: transparent; border: 2px solid #00C7B6; color: #00C7B6; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn-primary:hover { background: #00C7B6; color: #001832; box-shadow: 0 4px 12px rgba(0, 199, 182, 0.35); }
   `]
 })
 export class ComplaintsViewComponent {

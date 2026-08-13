@@ -27,7 +27,7 @@
 .page-header__title {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-primary-dark);
+  color: #FFFFFF;
   margin-bottom: 0.375rem;
 }
 
@@ -38,23 +38,24 @@
 
 /* ── Not Resident Notice ─────────────────────────────────────────────────── */
 .not-resident-notice {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
   border-radius: var(--radius-card);
   padding: 1.5rem;
-  color: #c2410c;
+  color: #fbbf24;
   font-size: 0.9rem;
 }
 
 .not-resident-notice a {
   font-weight: 600;
-  color: var(--color-primary);
+  color: #00C7B6;
   margin-left: 0.5rem;
 }
 
 /* ── Current Room Banner ─────────────────────────────────────────────────── */
 .current-room-banner {
-  background: linear-gradient(135deg, #013828, #015C3A);
+  background: linear-gradient(135deg, #001832, #00254D);
+  border: 1px solid #002D5A;
   border-radius: 12px;
   padding: 1.25rem 2rem;
   color: white;
@@ -99,13 +100,13 @@
 .form-card__header {
   padding: 1.25rem 1.75rem;
   border-bottom: 1px solid var(--color-border);
-  background: #fafafa;
+  background: #00142A;
 }
 
 .form-card__header h2 {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-primary-dark);
+  color: #FFFFFF;
   margin: 0;
 }
 
@@ -141,11 +142,18 @@
   resize: vertical;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
+  background: #00142A;
+  color: #FFFFFF;
 }
 
 .form-control:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(1, 92, 58, 0.1);
+  border-color: #00C7B6;
+  box-shadow: 0 0 0 3px rgba(0, 199, 182, 0.15);
+}
+
+.form-control option {
+  background: #001832;
+  color: #FFFFFF;
 }
 
 .form-control--error { border-color: #dc2626; }
@@ -297,7 +305,7 @@
 .requests-section__title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--color-primary-dark);
+  color: #FFFFFF;
   margin-bottom: 1.25rem;
 }
 

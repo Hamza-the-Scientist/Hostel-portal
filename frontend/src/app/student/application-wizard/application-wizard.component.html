@@ -1,6 +1,7 @@
-<div class="wizard-container container" *ngIf="application">
+<div class="wizard-container container">
 
   <app-status-timeline 
+    *ngIf="application"
     [displayStatus]="application.displayStatus" 
     [timeline]="application.timeline"
   ></app-status-timeline>
@@ -78,37 +79,37 @@
     <h3>Step 3: Processing Fee Payment</h3>
     <p class="subtitle"><strong>Important Rule:</strong> Single PKR 100 processing fee per application cycle (not per hostel).</p>
 
-    <div class="challan-box" *ngIf="application.processingFee">
+    <div class="challan-box" *ngIf="application?.processingFee">
       <div class="challan-header">
         <h4>UNIVERSITY OF SINDH DORMITORY CHALLAN</h4>
-        <span class="status-pill" [class.paid]="application.processingFee.status === 'Paid'">
-          {{ application.processingFee.status }}
+        <span class="status-pill" [class.paid]="application.processingFee?.status === 'Paid'">
+          {{ application.processingFee?.status }}
         </span>
       </div>
 
       <div class="challan-body">
         <div class="row">
           <span>Challan Number:</span>
-          <strong>{{ application.processingFee.challanNumber }}</strong>
+          <strong>{{ application.processingFee?.challanNumber }}</strong>
         </div>
         <div class="row">
           <span>Fee Amount:</span>
-          <strong class="amount">PKR {{ application.processingFee.amount }}</strong>
+          <strong class="amount">PKR {{ application.processingFee?.amount }}</strong>
         </div>
         <div class="row">
           <span>Due Date:</span>
-          <span>{{ application.processingFee.dueDate | date }}</span>
+          <span>{{ application.processingFee?.dueDate | date }}</span>
         </div>
       </div>
 
-      <div *ngIf="application.processingFee.status !== 'Paid'" class="payment-action">
+      <div *ngIf="application.processingFee?.status !== 'Paid'" class="payment-action">
         <p>Mock Payment Gateway Demo (Simulate Online Banking Payment):</p>
         <button class="btn btn-success" (click)="payProcessingFee()" [disabled]="isProcessing">
           {{ isProcessing ? 'Verifying Payment...' : '💳 Pay PKR 100 & Verify Fee' }}
         </button>
       </div>
 
-      <div *ngIf="application.processingFee.status === 'Paid'" class="paid-success">
+      <div *ngIf="application.processingFee?.status === 'Paid'" class="paid-success">
         ✅ Fee Verified! You are now eligible to select hostel preferences.
       </div>
     </div>
@@ -117,7 +118,7 @@
       <button class="btn btn-secondary" (click)="goToStep(2)">← Back</button>
       <button 
         class="btn btn-primary" 
-        [disabled]="application.processingFee?.status !== 'Paid'"
+        [disabled]="application?.processingFee?.status !== 'Paid'"
         (click)="goToStep(4)"
       >
         Select Hostel Preferences →
@@ -182,7 +183,7 @@
     <h3>Step 5: Application Summary & Review</h3>
     <p class="subtitle">Review your details and selected hostel choices before final submission.</p>
 
-    <div class="review-box">
+    <div class="review-box" *ngIf="application">
       <div class="review-section">
         <h4>Applicant Details</h4>
         <p><strong>Name:</strong> {{ application.studentName }} ({{ application.rollNumber }})</p>
@@ -213,7 +214,7 @@
     <h3>Application Submitted Successfully!</h3>
     <p class="subtitle">Your application has been registered for merit list evaluation.</p>
 
-    <div class="status-summary-box">
+    <div class="status-summary-box" *ngIf="application">
       <p><strong>Application ID:</strong> #APP-2026-{{ application.applicationId }}</p>
       <p><strong>Submission Status:</strong> <span class="badge badge-info">In Processing</span></p>
       <p>Stay tuned for the Merit Allocation list announcement!</p>

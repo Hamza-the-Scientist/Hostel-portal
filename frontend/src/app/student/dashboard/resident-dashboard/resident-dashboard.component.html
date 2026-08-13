@@ -2,21 +2,6 @@
 
 <div class="resident-dashboard">
 
-  <!-- ── Welcome Banner ──────────────────────────────────────────────────── -->
-  <div class="welcome-banner">
-    <div class="welcome-banner__text">
-      <div class="welcome-banner__badge">🏠 Active Resident</div>
-      <h2 class="welcome-banner__title">Welcome back to {{ residency.hostelName }}</h2>
-      <p class="welcome-banner__sub">
-        Resident since {{ formatDate(residency.checkInDate) }} &nbsp;·&nbsp;
-        {{ residency.blockName }}, Room {{ residency.roomNumber }}, {{ residency.bedLabel }}
-      </p>
-    </div>
-    <div class="welcome-banner__status">
-      <span class="status-pill status-pill--active">{{ residency.residencyStatus }}</span>
-    </div>
-  </div>
-
   <!-- ── Info Cards Row ──────────────────────────────────────────────────── -->
   <div class="info-grid">
 

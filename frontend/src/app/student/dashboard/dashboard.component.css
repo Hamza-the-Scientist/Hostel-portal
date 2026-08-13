@@ -12,31 +12,23 @@
 
 /* ── Greeting Banner ────────────────────────────────────────────────────── */
 .greeting-banner {
-  background: linear-gradient(135deg, #013828 0%, #015C3A 50%, #017a4a 100%);
+  background: linear-gradient(135deg, #001020 0%, #001832 50%, #002B56 100%);
   border-radius: 16px;
+  border: 1px solid var(--color-border);
   padding: 1.75rem 2rem;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 20px rgba(1, 60, 42, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
-}
-
-.greeting-banner::after {
-  content: '🏛️';
-  position: absolute;
-  right: -10px;
-  bottom: -20px;
-  font-size: 8rem;
-  opacity: 0.08;
-  pointer-events: none;
 }
 
 .greeting-banner__title {
   font-size: 1.6rem;
   font-weight: 800;
+  color: #00C7B6;
   margin: 0 0 0.35rem 0;
   letter-spacing: -0.02em;
 }
@@ -48,9 +40,9 @@
 }
 
 .portal-badge {
-  background: rgba(212, 175, 55, 0.2);
-  color: #fce8a6;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(0, 199, 182, 0.15);
+  color: #00C7B6;
+  border: 1px solid rgba(0, 199, 182, 0.4);
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.82rem;
@@ -65,11 +57,11 @@
 }
 
 .metric-card {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 14px;
   padding: 1.25rem 1.4rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
@@ -78,8 +70,8 @@
 
 .metric-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(1, 92, 58, 0.1);
-  border-color: #015C3A;
+  box-shadow: 0 8px 24px rgba(0, 199, 182, 0.15);
+  border-color: #00C7B6;
 }
 
 .metric-card__header {
@@ -102,13 +94,13 @@
   letter-spacing: 0.3px;
 }
 
-.badge-success { background: #e6f4ea; color: #137333; }
-.badge-info { background: #e8f0fe; color: #1a73e8; }
-.badge-warning { background: #fef7e0; color: #b06000; }
+.badge-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+.badge-info { background: rgba(0, 199, 182, 0.2); color: #00C7B6; }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
 .metric-card__label {
   font-size: 0.78rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -119,7 +111,7 @@
 .metric-card__value {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #111827;
+  color: #FFFFFF;
   margin: 0 0 0.2rem 0;
   white-space: nowrap;
   overflow: hidden;
@@ -128,7 +120,7 @@
 
 .metric-card__sub {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -140,17 +132,17 @@
 }
 
 .fresh-applicant__hero {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  box-shadow: var(--shadow-sm);
 }
 
 .fresh-applicant__badge {
   display: inline-block;
-  background: #e8f5e9;
-  color: #015C3A;
+  background: rgba(0, 199, 182, 0.15);
+  color: #00C7B6;
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.3rem 0.8rem;
@@ -163,13 +155,13 @@
 .fresh-applicant__title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #013828;
+  color: #FFFFFF;
   margin: 0 0 0.5rem 0;
 }
 
 .fresh-applicant__subtitle {
   font-size: 0.92rem;
-  color: #4b5563;
+  color: var(--color-text-muted);
   margin: 0 0 1.25rem 0;
   max-width: 700px;
 }
@@ -195,22 +187,22 @@
 }
 
 .btn-primary {
-  background: #015C3A;
-  color: #ffffff;
+  background: #00C7B6;
+  color: #001832;
 }
 
 .btn-primary:hover {
-  background: #01432A;
+  background: #00E5D2;
 }
 
 .btn-outline {
   background: transparent;
-  border: 1px solid #015C3A;
-  color: #015C3A;
+  border: 1px solid #00C7B6;
+  color: #00C7B6;
 }
 
 .btn-outline:hover {
-  background: #f0f7f4;
+  background: rgba(0, 199, 182, 0.15);
 }
 
 .fresh-applicant__steps {
@@ -220,22 +212,22 @@
 }
 
 .step-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  box-shadow: var(--shadow-sm);
 }
 
 .step-card__number {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #015C3A;
-  color: #ffffff;
+  background: #00C7B6;
+  color: #001832;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -247,13 +239,13 @@
 .step-card__content h4 {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #111827;
+  color: #FFFFFF;
   margin: 0 0 0.35rem 0;
 }
 
 .step-card__content p {
   font-size: 0.78rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.35;
 }
@@ -261,7 +253,7 @@
 /* ── Skeleton Loaders ───────────────────────────────────────────────────── */
 .skeleton-card {
   height: 110px;
-  background: linear-gradient(90deg, #f0f0f5 25%, #e5e5f0 50%, #f0f0f5 75%);
+  background: linear-gradient(90deg, #001F3F 25%, #002850 50%, #001F3F 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 14px;
@@ -275,9 +267,9 @@
 .error-state {
   text-align: center;
   padding: 3rem;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 16px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .error-state__icon {
