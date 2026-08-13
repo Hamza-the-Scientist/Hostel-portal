@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     // ── DbSets ────────────────────────────────────────────────────────────────
     public DbSet<User>                          Users                          { get; set; }
     public DbSet<Student>                       Students                       { get; set; }
-    public DbSet<Admin>                         Admins                         { get; set; }
+    public DbSet<AdminSettings> AdminSettings { get; set; }
     public DbSet<StudentProfile>                StudentProfiles                { get; set; }
     public DbSet<UniversityStudentRecord>       UniversityStudentRecords       { get; set; }
     public DbSet<SimulatedUniversityRecord>    SimulatedUniversityRecords    { get; set; }
@@ -30,6 +30,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<HostelImage>                   HostelImages                   { get; set; }
     public DbSet<EligibilityRule>               EligibilityRules               { get; set; }
     public DbSet<EligibilityRuleValue>          EligibilityRuleValues          { get; set; }
+    public DbSet<Admin>                         Admins                         { get; set; }
+
     public DbSet<Block>                         Blocks                         { get; set; }
     public DbSet<Floor>                         Floors                         { get; set; }
     public DbSet<Room>                          Rooms                          { get; set; }

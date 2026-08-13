@@ -1,0 +1,38 @@
+<div class="grid">
+  <mat-card class="card primary" *ngIf="stats as s">
+    <h3>Total Students</h3><p>{{ s.totalStudents }}</p>
+  </mat-card>
+  <mat-card class="card primary" *ngIf="stats as s">
+    <h3>Total Residents</h3><p>{{ s.totalResidents }}</p>
+  </mat-card>
+  <mat-card class="card primary" *ngIf="stats as s">
+    <h3>Total Applicants</h3><p>{{ s.totalApplicants }}</p>
+  </mat-card>
+  <mat-card class="card primary" *ngIf="stats as s">
+    <h3>Available Seats</h3><p>{{ s.availableSeats }}</p>
+  </mat-card>
+  <mat-card class="card secondary" *ngIf="stats as s">
+    <h3>Pending Applications</h3><p>{{ s.pendingApplications }}</p>
+  </mat-card>
+  <mat-card class="card secondary" *ngIf="stats as s">
+    <h3>Pending Payments</h3><p>{{ s.pendingPayments }}</p>
+  </mat-card>
+  <mat-card class="card secondary" *ngIf="stats as s">
+    <h3>Room Change Requests</h3><p>{{ s.roomChangeRequests }}</p>
+  </mat-card>
+  <mat-card class="card secondary" *ngIf="stats as s">
+    <h3>Open Complaints</h3><p>{{ s.openComplaints }}</p>
+  </mat-card>
+</div>
+<div class="allocation-switch" *ngIf="allocationStatus$ | async as status">
+  <h4>Global Allocation Status</h4>
+  <p>
+    <span [class]="status.open ? 'open' : 'closed'">
+      {{ status.open ? 'OPEN' : 'CLOSED' }}
+    </span>
+    <small *ngIf="status.deadline"> - deadline: {{ status.deadline | date:'short' }}</small>
+  </p>
+  <button mat-raised-button color="primary" (click)="toggle(true)" *ngIf="!status.open">Open Allocation</button>
+  <button mat-raised-button color="warn" (click)="toggle(false)" *ngIf="status.open">Close Allocation</button>
+  <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+</div>

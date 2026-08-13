@@ -1,0 +1,12 @@
+/* Admin layout – uses the global design system */
+.admin-shell { height: 100vh; }
+.admin-sidebar { width: 240px; background: var(--color-surface); }
+.admin-header {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  position: sticky; top: 0; z-index: 10;
+}
+.breadcrumb { font-weight: 500; }
+.spacer { flex: 1; }
+.admin-content { padding: 1.5rem; background: var(--color-bg); min-height: calc(100vh - 64px); }
+.logout { color: var(--color-warn); margin-top: auto; }

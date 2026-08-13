@@ -1,6 +1,6 @@
 // src/app/admin/layout/admin-layout.component.ts
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -49,17 +49,8 @@ import { MatButtonModule } from '@angular/material/button';
     </mat-sidenav-content>
   </mat-sidenav-container>
   `,
-  styles: [`
-    .admin-shell { height: 100vh; }
-    .admin-sidebar { width: 240px; }
-    .admin-header { position: sticky; top: 0; z-index: 10; }
-    .breadcrumb { font-weight: 500; }
-    .spacer { flex: 1; }
-    .admin-content { padding: 1rem; }
-    .logout { margin-top: auto; }
-  `]
-})
+  styleUrls: ['./admin-layout.component.css']})
 export class AdminLayoutComponent {
-  private router = inject(RouterLink);
+  private router = inject(Router);
   logout() { window.location.href = '/auth/admin-login'; }
 }

@@ -200,6 +200,20 @@ public static class DbInitializer
             await context.SaveChangesAsync();
         }
 
+        // 6b. Seed AdminSettings
+        if (!await context.AdminSettings.AnyAsync())
+        {
+            context.AdminSettings.Add(new AdminSettings
+            {
+                AllocationOpen = true,
+                AllocationDeadline = DateTime.UtcNow.AddDays(30),
+                MaxAllocationPerCycle = 100,
+                AllocationEnabled = true,
+                EffectiveFrom = DateTime.UtcNow
+            });
+            await context.SaveChangesAsync();
+        }
+
         // 7. Seed Student 1 — Existing Resident (CNIC: 4130412345671, Password: Student@123)
         var residentUser = await context.Users.FirstOrDefaultAsync(u => u.Email == "ali.khan@usindh.edu.pk");
         if (residentUser == null)
