@@ -56,8 +56,7 @@ export class DashboardComponent implements OnInit {
         title: 'Application Status',
         value: 'Active Resident',
         sub: `Hostel: ${res.hostelName}`,
-        badgeClass: 'badge-success',
-        icon: '📋'
+        badgeClass: 'badge-success'
       };
     }
 
@@ -66,8 +65,7 @@ export class DashboardComponent implements OnInit {
         title: 'Application Status',
         value: 'Room Allocated',
         sub: merit.allocatedHostel || 'Allocation confirmed',
-        badgeClass: 'badge-success',
-        icon: '🏠'
+        badgeClass: 'badge-success'
       };
     }
 
@@ -76,8 +74,7 @@ export class DashboardComponent implements OnInit {
         title: 'Application Status',
         value: app.displayStatus || app.status,
         sub: app.submittedAt ? `Submitted on ${new Date(app.submittedAt).toLocaleDateString()}` : 'In progress',
-        badgeClass: 'badge-info',
-        icon: '📋'
+        badgeClass: 'badge-info'
       };
     }
 
@@ -85,8 +82,7 @@ export class DashboardComponent implements OnInit {
       title: 'Application Status',
       value: 'Not Applied',
       sub: 'Start application wizard below',
-      badgeClass: 'badge-warning',
-      icon: '📋'
+      badgeClass: 'badge-warning'
     };
   });
 
@@ -100,8 +96,7 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Current Hostel',
         value: res.hostelName || 'Assigned',
-        sub: res.blockName ? `${res.blockName}` : 'Main Campus',
-        icon: '🏢'
+        sub: res.blockName ? `${res.blockName}` : 'Main Campus'
       };
     }
 
@@ -109,8 +104,7 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Allocated Hostel',
         value: merit.allocatedHostel,
-        sub: 'Merit allocation',
-        icon: '🏢'
+        sub: 'Merit allocation'
       };
     }
 
@@ -119,16 +113,14 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Hostel Preference',
         value: topPref || 'Pending',
-        sub: '1st Choice Selected',
-        icon: '🏢'
+        sub: '1st Choice Selected'
       };
     }
 
     return {
       title: 'Current Hostel',
       value: 'None Assigned',
-      sub: 'Application required',
-      icon: '🏢'
+      sub: 'Application required'
     };
   });
 
@@ -141,8 +133,7 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Current Room',
         value: `Room ${res.roomNumber}`,
-        sub: `${res.bedLabel}`,
-        icon: '🛏️'
+        sub: `${res.bedLabel}`
       };
     }
 
@@ -150,16 +141,14 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Allocated Room',
         value: `Room ${merit.allocatedRoom}`,
-        sub: merit.allocatedBed || 'Bed assigned',
-        icon: '🛏️'
+        sub: merit.allocatedBed || 'Bed assigned'
       };
     }
 
     return {
       title: 'Current Room',
       value: 'Unassigned',
-      sub: 'Awaiting allocation',
-      icon: '🛏️'
+      sub: 'Awaiting allocation'
     };
   });
 
@@ -172,16 +161,14 @@ export class DashboardComponent implements OnInit {
       return {
         title: 'Merit / CPN',
         value: `CPN: ${merit.cpn.toFixed(1)}`,
-        sub: `${rankText} (${merit.allocationStatus || 'Processed'})`,
-        icon: '📊'
+        sub: `${rankText} (${merit.allocationStatus || 'Processed'})`
       };
     }
 
     return {
       title: 'Merit / CPN',
       value: 'Pending Run',
-      sub: 'Merit engine pending',
-      icon: '📊'
+      sub: 'Merit engine pending'
     };
   });
 

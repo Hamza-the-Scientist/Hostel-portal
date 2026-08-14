@@ -39,14 +39,29 @@ import { RouterModule } from '@angular/router';
     
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 0.6rem;
+      align-items: center;
     }
     .nav-links a {
-      color: #FFFFFF;
-      font-weight: 500;
+      color: #94A3B8;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
     }
-    .nav-links a:hover, .nav-links a.active {
-      color: #00C7B6;
+    .nav-links a:hover {
+      color: #00D4B2;
+      background: rgba(0, 212, 178, 0.08);
+      transform: translateY(-1px);
+    }
+    .nav-links a.active {
+      color: #00D4B2;
+      background: rgba(0, 212, 178, 0.15);
+      border-color: rgba(0, 212, 178, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 212, 178, 0.15);
     }
     
     .auth-buttons {
@@ -76,6 +91,7 @@ import { RouterModule } from '@angular/router';
     .main-content {
       flex: 1;
       background-color: #001832;
+      position: relative;
     }
     
     .footer {

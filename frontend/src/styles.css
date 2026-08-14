@@ -29,6 +29,10 @@
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -120,4 +124,24 @@ a:hover {
 /* Form Styles Override */
 input, select, textarea {
   font-family: var(--font-family);
+}
+
+/* ==========================================================================
+   Global Smooth Route Page Transitions
+   ========================================================================== */
+@keyframes pageSmoothFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-content > * {
+  display: block;
+  animation: pageSmoothFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
 }

@@ -35,3 +35,16 @@ export interface Announcement {
   content: string;
   publishedAt?: string;
 }
+
+export interface HostelReview {
+  id: number;
+  hostelId: number;
+  hostelName: string;
+  studentName: string;
+  studentDept: string;
+  avatarUrl?: string;
+  rating: number;
+  date: string;
+  comment: string;
+  helpfulCount: number;
+}

@@ -20,7 +20,12 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
       } @else if (residency()?.isExistingResident) {
         <div class="hostel-card">
           <div class="hostel-hero">
-            <span class="hero-icon">🏢</span>
+            <span class="hero-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12" y2="22"></line>
+              </svg>
+            </span>
             <div>
               <h3>{{ residency()?.hostelName }}</h3>
               <p>{{ residency()?.blockName }} — Room {{ residency()?.roomNumber }}, Bed {{ residency()?.bedLabel }}</p>
@@ -30,28 +35,48 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
 
           <div class="details-grid">
             <div class="detail-box">
-              <span class="box-icon">🔑</span>
+              <span class="box-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 2l-2 2m-1.5 1.5L4 19l-2 3 3-2 13.5-13.5z"></path>
+                </svg>
+              </span>
               <div>
                 <strong>Room Number</strong>
                 <p>{{ residency()?.roomNumber }}</p>
               </div>
             </div>
             <div class="detail-box">
-              <span class="box-icon">🛏️</span>
+              <span class="box-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
+                </svg>
+              </span>
               <div>
                 <strong>Assigned Bed</strong>
                 <p>{{ residency()?.bedLabel }}</p>
               </div>
             </div>
             <div class="detail-box">
-              <span class="box-icon">📅</span>
+              <span class="box-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
               <div>
                 <strong>Check-In Date</strong>
                 <p>{{ residency()?.checkInDate || '2024-09-01' }}</p>
               </div>
             </div>
             <div class="detail-box">
-              <span class="box-icon">💳</span>
+              <span class="box-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                  <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+              </span>
               <div>
                 <strong>Annual Fee Status</strong>
                 <p>{{ residency()?.annualFeeStatus }}</p>
@@ -60,13 +85,31 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
           </div>
 
           <div class="actions-row">
-            <a routerLink="/student/room-change" class="btn btn-primary">Request Room Change 🔄</a>
-            <a routerLink="/student/complaints" class="btn btn-outline">Report Maintenance Issue ⚠️</a>
+            <a routerLink="/student/room-change" class="btn btn-primary">
+              Request Room Change
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 4px;">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+            </a>
+            <a routerLink="/student/complaints" class="btn btn-outline">
+              Report Maintenance Issue
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 4px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </a>
           </div>
         </div>
       } @else {
         <div class="empty-state">
-          <span class="empty-icon">🏢</span>
+          <span class="empty-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+            </svg>
+          </span>
           <h3>No Hostel Currently Assigned</h3>
           <p>You have not been allocated a hostel room yet for this session.</p>
           <a routerLink="/student/apply" class="btn btn-primary">Submit Hostel Application →</a>
@@ -80,14 +123,14 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
     .subtitle { color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1.5rem; }
     .hostel-card { background: #001C3B; border: 1px solid #002D5A; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
     .hostel-hero { display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #002D5A; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
-    .hero-icon { font-size: 2.5rem; }
+    .hero-icon { display: flex; align-items: center; justify-content: center; }
     .hostel-hero h3 { font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0; }
     .hostel-hero p { color: #CBD5E1; margin: 0.2rem 0 0 0; }
     .status-badge { margin-left: auto; padding: 0.35rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
     .status-badge.active { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.5); }
     .details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
     .detail-box { display: flex; align-items: center; gap: 0.85rem; background: #00142A; padding: 1rem; border-radius: 12px; border: 1px solid #002D5A; }
-    .box-icon { font-size: 1.5rem; }
+    .box-icon { display: flex; align-items: center; justify-content: center; }
     .detail-box strong { font-size: 0.8rem; color: #94A3B8; text-transform: uppercase; }
     .detail-box p { font-size: 1rem; font-weight: 700; color: #FFFFFF; margin: 0.1rem 0 0 0; }
     .actions-row { display: flex; gap: 1rem; }
@@ -97,7 +140,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
     .btn-outline { background: transparent; border: 1px solid #00C7B6; color: #00C7B6; }
     .btn-outline:hover { background: #00C7B6; color: #001832; box-shadow: 0 4px 14px rgba(0, 199, 182, 0.4); }
     .empty-state { text-align: center; padding: 3rem; background: #001C3B; border-radius: 16px; border: 1px solid #002D5A; color: #FFFFFF; }
-    .empty-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+    .empty-icon { display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
     .loading-state { text-align: center; padding: 3rem; color: #CBD5E1; }
   `]
 })

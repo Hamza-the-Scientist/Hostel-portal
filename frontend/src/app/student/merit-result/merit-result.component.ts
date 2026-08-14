@@ -47,10 +47,10 @@ export class MeritResultComponent implements OnInit {
   get statusConfig() {
     const s = this.result()?.allocationStatus ?? 'Pending';
     const configs: Record<string, { label: string; cls: string; icon: string }> = {
-      'Pending':   { label: 'Under Processing', cls: 'badge-pending',   icon: '⏳' },
-      'Allocated': { label: 'Room Allocated',   cls: 'badge-allocated', icon: '🏠' },
-      'Waitlisted':{ label: 'Waitlisted',        cls: 'badge-wait',      icon: '📋' },
-      'Rejected':  { label: 'Not Allocated',    cls: 'badge-rejected',  icon: '❌' }
+      'Pending':   { label: 'Under Processing', cls: 'badge-pending',   icon: '' },
+      'Allocated': { label: 'Room Allocated',   cls: 'badge-allocated', icon: '' },
+      'Waitlisted':{ label: 'Waitlisted',        cls: 'badge-wait',      icon: '' },
+      'Rejected':  { label: 'Not Allocated',    cls: 'badge-rejected',  icon: '' }
     };
     return configs[s] ?? configs['Pending'];
   }

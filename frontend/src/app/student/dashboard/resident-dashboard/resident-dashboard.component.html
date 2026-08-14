@@ -8,7 +8,11 @@
     <!-- Current Room Card -->
     <div class="info-card">
       <div class="info-card__header">
-        <span class="info-card__icon">🏨</span>
+        <span class="info-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"></path>
+          </svg>
+        </span>
         <h3 class="info-card__title">Current Accommodation</h3>
       </div>
       <div class="info-card__body">
@@ -31,7 +35,11 @@
       </div>
       <div class="info-card__footer">
         <a routerLink="/student/room-change" class="btn btn-outline info-card__action" id="request-room-change-btn">
-          🔄 Request Room Change
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          Request Room Change
         </a>
       </div>
     </div>
@@ -40,7 +48,12 @@
     <div class="info-card" [class.info-card--warning]="residency.annualFeeStatus === 'Unpaid'"
          [class.info-card--success]="residency.annualFeeStatus === 'Paid'">
       <div class="info-card__header">
-        <span class="info-card__icon">💳</span>
+        <span class="info-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+        </span>
         <h3 class="info-card__title">Annual Hostel Fee</h3>
         <span class="fee-status-badge" [class]="getFeeStatusClass(residency.annualFeeStatus)">
           {{ residency.annualFeeStatus }}
@@ -59,7 +72,11 @@
         <div class="info-card__footer">
           <button class="btn btn-primary" (click)="generateChallan()" [disabled]="challanLoading()"
                   id="generate-challan-btn">
-            @if (challanLoading()) { ⏳ Generating... } @else { 📄 Generate Challan }
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            @if (challanLoading()) { Generating... } @else { Generate Challan }
           </button>
         </div>
       }
@@ -79,7 +96,7 @@
             <span class="info-row__label">Due Date</span>
             <span class="info-row__value" [class.info-row__value--danger]="isPastDue(challan.dueDate)">
               {{ formatDate(challan.dueDate) }}
-              @if (isPastDue(challan.dueDate)) { ⚠️ Overdue }
+              @if (isPastDue(challan.dueDate)) { (Overdue) }
             </span>
           </div>
           <div class="info-row">
@@ -93,12 +110,20 @@
         @if (challan.status !== 'Paid') {
           <div class="info-card__footer">
             <button class="btn btn-primary" (click)="openPaymentModal(challan)" id="verify-payment-btn">
-              ✅ Verify Payment
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Verify Payment
             </button>
           </div>
         } @else {
           <div class="info-card__footer">
-            <div class="paid-badge">✅ Fee Paid — You're all set for this academic year!</div>
+            <div class="paid-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Fee Paid — You're all set for this academic year!
+            </div>
           </div>
         }
       }
@@ -111,11 +136,21 @@
     <h3 class="quick-actions__title">Quick Actions</h3>
     <div class="quick-actions__grid">
       <a routerLink="/student/room-change" class="action-tile" id="action-room-change">
-        <span class="action-tile__icon">🔄</span>
+        <span class="action-tile__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </span>
         <span class="action-tile__label">Request Room Change</span>
       </a>
       <a routerLink="/student/profile" class="action-tile" id="action-profile">
-        <span class="action-tile__icon">👤</span>
+        <span class="action-tile__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </span>
         <span class="action-tile__label">Update Profile</span>
       </a>
     </div>
@@ -157,14 +192,21 @@
         </div>
 
         @if (paymentError()) {
-          <div class="modal__error">⚠️ {{ paymentError() }}</div>
+          <div class="modal__error">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            {{ paymentError() }}
+          </div>
         }
       </div>
       <div class="modal__footer">
         <button class="btn btn-outline" (click)="closePaymentModal()" id="cancel-payment-btn">Cancel</button>
         <button class="btn btn-primary" (click)="submitPayment()" [disabled]="paymentLoading()"
                 id="submit-payment-btn">
-          @if (paymentLoading()) { ⏳ Verifying... } @else { Confirm Payment }
+          @if (paymentLoading()) { Verifying... } @else { Confirm Payment }
         </button>
       </div>
     </div>

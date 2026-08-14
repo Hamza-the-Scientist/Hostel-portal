@@ -2,59 +2,276 @@
 <div class="ticker-wrap" *ngIf="announcements.length > 0">
   <div class="ticker">
     <div class="ticker-item" *ngFor="let ann of announcements">
-      📢 <strong>{{ ann.title }}</strong>: {{ ann.content }}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+      <strong>{{ ann.title }}</strong>: {{ ann.content }}
     </div>
   </div>
 </div>
 
 <!-- Hero Section -->
-<section class="hero">
-  <h1>Your Hostel. Your Place. Your University.</h1>
-  <p>Apply for hostel accommodation through a transparent, merit-based digital system. Experience comfortable living at the University of Sindh.</p>
-  <div class="btn-group">
-    <a routerLink="/auth/register" class="btn-primary-light">Apply for Hostel</a>
-    <a href="#hostels" class="btn-outline-light">Explore Hostels</a>
+<section class="hero" (mouseenter)="pauseHeroSlider()" (mouseleave)="resumeHeroSlider()" (focusin)="pauseHeroSlider()"
+  (focusout)="resumeHeroSlider()">
+  <!-- Left Hero Navigation Arrow -->
+  <button class="hero-nav-arrow left" (click)="prevSlide()" aria-label="Previous Slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Text Slider Wrapper (Zero Layout Shift via Dedicated Grid Box) -->
+  <div class="hero-slider-wrapper">
+    <div *ngFor="let slide of heroSlides; let i = index" class="hero-slide" [class.active]="i === currentSlideIndex"
+      [attr.aria-hidden]="i !== currentSlideIndex">
+      <h1 class="hero-header">{{ slide.header }}</h1>
+      <p class="hero-subheader">{{ slide.subheader }}</p>
+    </div>
+  </div>
+
+  <!-- Right Hero Navigation Arrow -->
+  <button class="hero-nav-arrow right" (click)="nextSlideManual()" aria-label="Next Slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Slide Indicators / Dots -->
+  <div class="dots-container" role="tablist" aria-label="Hero text slides">
+    <button *ngFor="let slide of heroSlides; let i = index" class="dot" [class.active]="i === currentSlideIndex"
+      (click)="goToSlide(i)" [attr.aria-label]="'Go to slide ' + (i + 1)" [attr.aria-selected]="i === currentSlideIndex"
+      role="tab"></button>
+  </div>
+
+  <!-- Persistent Static CTA Buttons -->
+  <div class="hero-btn-group">
+    <a routerLink="/auth/register" class="btn-cta-teal">Apply for Hostel</a>
+    <a routerLink="/hostels" class="btn-cta-teal">Explore Hostels</a>
   </div>
 </section>
 
-<!-- Overview -->
-<section class="overview">
-  <h2>University of Sindh Hostels</h2>
-  <p>
-    Located in the scenic Jamshoro campus, the University of Sindh offers state-of-the-art dormitory facilities for both male and female students. 
-    Our allocation process is strictly merit-based, transparent, and fully digitized to ensure a smooth transition into university life.
-  </p>
-</section>
+<!-- Responsive Info Banner with Left-Aligned Content & Right-Side Dissolving Study Hall Slider -->
+<section class="info-banner">
+  <!-- Minimal Left Navigation Arrow -->
+  <button class="info-nav-arrow left" (click)="prevInfoSlide()" aria-label="Previous Info Slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
 
-<!-- Hostel Cards -->
-<section id="hostels" class="hostels-section">
-  <h2>Available Accommodations</h2>
-  
-  <div class="grid">
-    <div class="card" *ngFor="let hostel of hostels">
-      <!-- Fallback image logic via style -->
-      <div class="card-img" [style.background-image]="hostel.mainImageUrl ? 'url(' + hostel.mainImageUrl + ')' : 'url(assets/placeholder-hostel.jpg)'"></div>
-      
-      <div class="card-body">
-        <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }}</span>
-        <h3 class="card-title">{{ hostel.name }}</h3>
-        
-        <div class="card-info">
-          <p>📍 {{ hostel.location || 'Jamshoro Campus' }}</p>
-          <p>🛏️ Capacity: {{ hostel.totalCapacity }} ({{ hostel.availableBeds }} Available)</p>
-          <p>⭐ Rating: {{ hostel.rating | number:'1.1-1' }}/5</p>
+  <div class="info-banner-container">
+    <!-- Left-Aligned Content Area -->
+    <div class="info-banner-left">
+      <div *ngFor="let slide of infoBannerSlides; let i = index"
+        [style.display]="i === currentInfoSlideIndex ? 'block' : 'none'">
+        <h2 class="info-title">{{ slide.title }}</h2>
+        <p class="info-subtitle">{{ slide.subtitle }}</p>
+
+        <div class="info-bullets">
+          <div class="info-bullet-item" *ngFor="let bullet of slide.bullets">
+            <div class="info-bullet-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="info-bullet-text">
+              <span class="info-bullet-label">{{ bullet.label }}</span>
+              <span class="info-bullet-desc">{{ bullet.desc }}</span>
+            </div>
+          </div>
         </div>
-
-        <div class="amenities">
-          <span class="amenity-tag" *ngFor="let amenity of hostel.keyAmenities">{{ amenity }}</span>
-        </div>
-
-        <a [routerLink]="['/hostel', hostel.hostelId]" class="btn-dark-details">View Details</a>
       </div>
     </div>
   </div>
 
-  <div *ngIf="hostels.length === 0" style="text-align: center; color: #666; padding: 2rem;">
-    No hostels available at the moment.
+  <!-- Minimal Right Navigation Arrow -->
+  <button class="info-nav-arrow right" (click)="nextInfoSlideManual()" aria-label="Next Info Slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Minimal Slide Indicators / Circles (Matching Image 2) -->
+  <div class="info-dots-container" role="tablist" aria-label="Info banner slides">
+    <button *ngFor="let slide of infoBannerSlides; let i = index" class="info-dot"
+      [class.active]="i === currentInfoSlideIndex" (click)="goToInfoSlide(i)"
+      [attr.aria-label]="'Go to info slide ' + (i + 1)" [attr.aria-selected]="i === currentInfoSlideIndex"
+      role="tab"></button>
+  </div>
+
+  <!-- Right-Side Dissolving Slider & Gradient Overlay -->
+  <div class="info-banner-right-slider">
+    <div class="info-dissolve-overlay"></div>
+    <img *ngFor="let slide of infoBannerSlides; let i = index" [src]="slide.image" [alt]="slide.title"
+      class="info-slide-img" [class.active]="i === currentInfoSlideIndex" />
+  </div>
+</section>
+
+<!-- Hostel Slider Section -->
+<section id="hostels" class="hostels-section">
+  <h2>Available Accommodations</h2>
+  <p class="section-subtitle">Explore 17 residential blocks across Jamshoro Main Campus. Use the navigation controls to
+    scroll through available hostels.</p>
+
+  <!-- Filter Tabs -->
+  <div class="filter-bar">
+    <button class="filter-btn" [class.active]="activeFilter === 'All'" (click)="setFilter('All')">
+      All Hostels ({{ hostels.length }})
+    </button>
+    <button class="filter-btn" [class.active]="activeFilter === 'Male'" (click)="setFilter('Male')">
+      Boys Hostels (9)
+    </button>
+    <button class="filter-btn" [class.active]="activeFilter === 'Female'" (click)="setFilter('Female')">
+      Girls Hostels (8)
+    </button>
+  </div>
+
+  <!-- Slider Wrapper -->
+  <div class="slider-wrapper">
+    <!-- Left Navigation Arrow -->
+    <button class="slider-arrow left" (click)="scrollSlider('left')" aria-label="Previous Hostels">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Sliding Container -->
+    <div class="slider-container" #sliderContainer>
+      <div class="card" *ngFor="let hostel of filteredHostels">
+        <!-- Fallback image logic via style -->
+        <div class="card-img"
+          [style.background-image]="hostel.mainImageUrl ? 'url(' + hostel.mainImageUrl + ')' : 'url(assets/placeholder-hostel.jpg)'">
+        </div>
+
+        <div class="card-body">
+          <div class="badge-row">
+            <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }}</span>
+            <span class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              {{ hostel.rating | number:'1.1-1' }}
+            </span>
+          </div>
+
+          <h3 class="card-title">{{ hostel.name }}</h3>
+
+          <div class="card-info">
+            <p>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              {{ hostel.location || 'Main Campus, Jamshoro' }}
+            </p>
+            <p>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
+              </svg>
+              Capacity: {{ hostel.totalCapacity }} ({{ hostel.availableBeds }} Available)
+            </p>
+          </div>
+
+          <div class="amenities">
+            <span class="amenity-tag" *ngFor="let amenity of hostel.keyAmenities">
+              <span class="amenity-icon" [innerHTML]="getAmenityIcon(amenity)"></span>
+              <span>{{ amenity }}</span>
+            </span>
+          </div>
+
+          <a [routerLink]="['/hostel', hostel.hostelId]" class="btn-dark-details">View Details</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Navigation Arrow -->
+    <button class="slider-arrow right" (click)="scrollSlider('right')" aria-label="Next Hostels">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <div *ngIf="filteredHostels.length === 0" style="text-align: center; color: #8CA5BD; padding: 2rem;">
+    No hostels available for the selected category.
+  </div>
+</section>
+
+<!-- Student Reviews Slider Banner ("What Our Residents Say") -->
+<section class="reviews-banner-section">
+  <div class="section-header-wrap">
+    <span class="section-badge">COMMUNITY VOICES</span>
+    <h2 class="section-heading">What Our Residents Say</h2>
+    <p class="section-subheading">
+      Real feedback and living experiences shared by current students residing across all university hostels.
+    </p>
+  </div>
+
+  <div class="reviews-slider-wrapper">
+    <!-- Left Navigation Arrow -->
+    <button class="rev-arrow left" (click)="scrollReviewSlider('left')" aria-label="Previous Reviews">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Sliding Container -->
+    <div class="reviews-slider-container" #reviewsSliderContainer>
+      <div class="review-slide-card" *ngFor="let review of randomReviews">
+        <div class="quote-mark">“</div>
+        <div class="rev-card-header">
+          <div class="avatar-badge">{{ getInitials(review.studentName) }}</div>
+          <div class="meta">
+            <h4 class="name">{{ review.studentName }}</h4>
+            <p class="dept">{{ review.studentDept }}</p>
+          </div>
+          <div class="star-rating">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span class="score">{{ review.rating | number:'1.1-1' }}</span>
+          </div>
+        </div>
+
+        <a [routerLink]="['/hostel', review.hostelId]" class="hostel-pill-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+          <span>{{ review.hostelName }}</span>
+        </a>
+
+        <p class="rev-comment">"{{ review.comment }}"</p>
+
+        <div class="rev-card-footer">
+          <span class="date-badge">{{ review.date }}</span>
+          <a [routerLink]="['/reviews']" [queryParams]="{ hostelId: review.hostelId }" class="read-all-link">
+            Hostel Reviews &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Navigation Arrow -->
+    <button class="rev-arrow right" (click)="scrollReviewSlider('right')" aria-label="Next Reviews">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Bottom CTA button -->
+  <div class="reviews-cta-bar">
+    <a routerLink="/reviews" class="btn-all-reviews">
+      Explore All Student Reviews
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </a>
   </div>
 </section>

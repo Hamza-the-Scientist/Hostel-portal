@@ -17,12 +17,23 @@
       <div class="title">
         <h1>{{ hostel.name }}</h1>
         <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }} Hostel</span>
-        <p style="color: var(--color-text-muted); margin-top: 0.5rem;">📍 {{ hostel.location || 'University of Sindh, Jamshoro' }}</p>
+        <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          {{ hostel.location || 'University of Sindh, Jamshoro' }}
+        </p>
       </div>
-      <div style="text-align: right;">
-        <div style="font-size: 1.5rem; color: #F2C94C;">★ {{ hostel.rating | number:'1.1-1' }}</div>
-        <div style="font-size: 0.85rem; color: var(--color-text-muted);">{{ hostel.reviewCount }} Reviews</div>
-      </div>
+      <a [routerLink]="['/reviews']" [queryParams]="{ hostelId: hostel.hostelId }" class="rating-reviews-link" title="Click to view all student reviews for this hostel">
+        <div class="rating-star">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          {{ hostel.rating | number:'1.1-1' }}
+        </div>
+        <div class="reviews-count-text">{{ hostel.reviewCount }} Reviews &rarr;</div>
+      </a>
     </div>
 
     <div class="stats">
@@ -46,7 +57,8 @@
     <h2 class="section-title">Facilities & Amenities</h2>
     <div class="amenities-grid">
       <div class="amenity-item" *ngFor="let am of hostel.amenities">
-        ✓ {{ am }}
+        <span class="amenity-icon" [innerHTML]="getAmenityIcon(am)"></span>
+        <span>{{ am }}</span>
       </div>
       <div *ngIf="hostel.amenities.length === 0" style="color: #666;">No specific amenities listed.</div>
     </div>
@@ -55,6 +67,36 @@
     <ul *ngIf="hostel.eligibilitySummary.length > 0">
       <li *ngFor="let req of hostel.eligibilitySummary">{{ req }}</li>
     </ul>
+
+    <!-- Student Reviews for this Hostel -->
+    <div class="reviews-section-wrap">
+      <div class="section-title-row">
+        <h2 class="section-title" style="margin: 0;">Resident Feedback &amp; Reviews</h2>
+        <a [routerLink]="['/reviews']" [queryParams]="{ hostelId: hostel.hostelId }" class="view-all-reviews-link">
+          View All {{ hostelReviews.length }} Reviews &rarr;
+        </a>
+      </div>
+
+      <div class="detail-reviews-grid" *ngIf="hostelReviews.length > 0">
+        <div class="detail-review-card" *ngFor="let rev of hostelReviews.slice(0, 3)">
+          <div class="rev-header">
+            <div class="avatar">{{ getInitials(rev.studentName) }}</div>
+            <div class="rev-user">
+              <h4>{{ rev.studentName }}</h4>
+              <p>{{ rev.studentDept }}</p>
+            </div>
+            <div class="rev-star">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              {{ rev.rating | number:'1.1-1' }}
+            </div>
+          </div>
+          <p class="rev-body">"{{ rev.comment }}"</p>
+          <span class="rev-date">{{ rev.date }}</span>
+        </div>
+      </div>
+    </div>
 
     <div class="cta-box">
       <ng-container *ngIf="hostel.isAllocationOpen; else closedState">

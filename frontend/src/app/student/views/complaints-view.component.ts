@@ -30,7 +30,7 @@ import { FormsModule } from '@angular/forms';
           <label>Description</label>
           <textarea [(ngModel)]="description" rows="4" class="form-control" placeholder="Describe the issue in detail..."></textarea>
         </div>
-        <button class="btn btn-primary" (click)="submitComplaint()">Submit Complaint 📝</button>
+        <button class="btn btn-primary" (click)="submitComplaint()">Submit Complaint</button>
       </div>
     </div>
   `,

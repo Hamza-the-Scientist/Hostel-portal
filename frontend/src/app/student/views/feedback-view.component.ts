@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
           <textarea [(ngModel)]="feedbackText" rows="4" class="form-control" placeholder="Write your thoughts here..."></textarea>
         </div>
 
-        <button class="btn-submit" (click)="submit()">Send Feedback 💬</button>
+        <button class="btn-submit" (click)="submit()">Send Feedback</button>
       </div>
     </div>
   `,

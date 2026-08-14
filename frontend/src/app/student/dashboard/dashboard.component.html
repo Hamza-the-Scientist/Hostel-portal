@@ -4,7 +4,7 @@
   <!-- ── Greeting Banner ─────────────────────────────────────────── -->
   <div class="greeting-banner">
     <div class="greeting-banner__content">
-      <h1 class="greeting-banner__title">{{ greetingTime() }}, {{ studentName() }} 👋</h1>
+      <h1 class="greeting-banner__title">{{ greetingTime() }}, {{ studentName() }}</h1>
       <p class="greeting-banner__subtitle">
         Welcome to your Sindh University Hostel Portal overview. Here is your latest status.
       </p>
@@ -21,7 +21,13 @@
     </div>
   } @else if (error()) {
     <div class="error-state">
-      <p class="error-state__icon">⚠️</p>
+      <p class="error-state__icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </p>
       <h3>Unable to Load Dashboard Data</h3>
       <p>{{ error() }}</p>
       <button class="btn btn-primary" (click)="reload()" id="retry-btn">Try Again</button>
@@ -33,7 +39,14 @@
       <!-- Card 1: Application Status -->
       <div class="metric-card" id="card-app-status">
         <div class="metric-card__header">
-          <span class="metric-card__icon">{{ cardAppStatus().icon }}</span>
+          <span class="metric-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </span>
           <span class="metric-card__badge" [ngClass]="cardAppStatus().badgeClass">
             {{ cardAppStatus().value }}
           </span>
@@ -48,7 +61,15 @@
       <!-- Card 2: Current Hostel -->
       <div class="metric-card" id="card-hostel">
         <div class="metric-card__header">
-          <span class="metric-card__icon">{{ cardHostel().icon }}</span>
+          <span class="metric-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="8" y1="6" x2="8.01" y2="6"></line>
+              <line x1="12" y1="6" x2="12.01" y2="6"></line>
+              <line x1="16" y1="6" x2="16.01" y2="6"></line>
+            </svg>
+          </span>
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">{{ cardHostel().title }}</span>
@@ -60,7 +81,11 @@
       <!-- Card 3: Current Room -->
       <div class="metric-card" id="card-room">
         <div class="metric-card__header">
-          <span class="metric-card__icon">{{ cardRoom().icon }}</span>
+          <span class="metric-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
+            </svg>
+          </span>
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">{{ cardRoom().title }}</span>
@@ -72,7 +97,13 @@
       <!-- Card 4: Merit / CPN -->
       <div class="metric-card" id="card-merit">
         <div class="metric-card__header">
-          <span class="metric-card__icon">{{ cardMerit().icon }}</span>
+          <span class="metric-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">{{ cardMerit().title }}</span>
@@ -102,7 +133,7 @@
               Start Application →
             </a>
             <a routerLink="/student/merit-result" class="btn btn-outline fresh-applicant__cta" id="check-merit-btn">
-              Check Merit Card 🏆
+              Check Merit Card
             </a>
           </div>
         </div>

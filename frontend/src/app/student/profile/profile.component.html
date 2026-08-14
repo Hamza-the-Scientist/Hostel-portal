@@ -6,19 +6,38 @@
   </div>
 
   <div *ngIf="message" class="alert alert-success">
-    ✅ {{ message }}
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    {{ message }}
   </div>
 
   <div *ngIf="errorMessage" class="alert alert-error">
-    ⚠️ {{ errorMessage }}
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    {{ errorMessage }}
   </div>
 
   <div class="grid" *ngIf="profile">
     <!-- Verified Information Section (Locked) -->
     <div class="card card-locked">
       <div class="card-header">
-        <h3>🏛️ Verified University Information</h3>
-        <span class="locked-badge">🔒 Verified & Locked</span>
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"></path>
+          </svg>
+          Verified University Information
+        </h3>
+        <span class="locked-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Verified &amp; Locked
+        </span>
       </div>
 
       <div class="verified-grid" *ngIf="profile.verifiedInfo">
@@ -77,7 +96,13 @@
     <!-- Personal Information Section (Editable) -->
     <div class="card">
       <div class="card-header">
-        <h3>✏️ Personal & Emergency Information</h3>
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Personal &amp; Emergency Information
+        </h3>
         <span class="editable-badge">Editable Section</span>
       </div>
 
