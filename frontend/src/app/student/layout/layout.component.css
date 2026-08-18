@@ -5,7 +5,7 @@
 .student-portal {
   display: flex;
   min-height: 100vh;
-  background: var(--color-bg, #f4f6f9);
+  background: var(--color-bg);
   position: relative;
 }
 
@@ -28,7 +28,7 @@
 .sidebar {
   width: 72px;
   min-height: 100vh;
-  background: linear-gradient(180deg, #001020 0%, #001832 60%, #002244 100%);
+  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
   display: flex;
   flex-direction: column;
   transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,7 +37,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 1100;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -48,12 +48,12 @@
 
 .sidebar:hover {
   width: 260px;
-  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 8px 0 30px rgba(1, 56, 40, 0.3);
 }
 
 .sidebar__close-mobile {
   display: none;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border: none;
   color: #ffffff;
   width: 28px;
@@ -79,7 +79,7 @@
   align-items: center;
   padding: 0.65rem 0;
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
@@ -90,19 +90,20 @@
 }
 
 .sidebar__link:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(212, 175, 55, 0.2);
   color: #ffffff;
 }
 
 .sidebar__link--active {
-  background: rgba(0, 199, 182, 0.18);
-  color: #00C7B6;
-  border: 1px solid rgba(0, 199, 182, 0.4);
-  font-weight: 600;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
+  border: none;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebar__link--active:hover {
-  color: #00C7B6;
+  color: #013828;
 }
 
 .sidebar__icon {
@@ -128,7 +129,7 @@
 /* ── Footer ─────────────────────────────────────────────────────────────── */
 .sidebar__footer {
   padding: 1rem 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -147,14 +148,15 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00C7B6, #009E91);
-  color: #001832;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebar__user-info {
@@ -181,13 +183,13 @@
 
 .sidebar__role {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .sidebar__logout {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
   border: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   width: 34px;
   height: 34px;
   border-radius: 8px;
@@ -201,8 +203,8 @@
 }
 
 .sidebar__logout:hover {
-  background: rgba(220, 60, 60, 0.3);
-  color: #ff6b6b;
+  background: rgba(220, 38, 38, 0.3);
+  color: #ffffff;
 }
 
 /* ── Main Content ───────────────────────────────────────────────────────── */
@@ -214,8 +216,8 @@
 }
 
 .portal-header {
-  background: #001832;
-  border-bottom: 1px solid #002D5A;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   padding: 0 1.75rem;
   height: 64px;
   display: flex;
@@ -224,7 +226,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-sm);
 }
 
 .portal-header__left {
@@ -249,7 +251,7 @@
   display: block;
   height: 2px;
   width: 100%;
-  background-color: #00C7B6;
+  background-color: var(--color-primary);
   border-radius: 2px;
 }
 
@@ -262,21 +264,22 @@
 .header-logo__badge {
   width: 40px;
   height: 40px;
-  background: #00C7B6;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
   border-radius: 50%;
-  color: #001832;
-  font-weight: 700;
+  color: #013828;
+  font-weight: 800;
   font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .header-logo__text {
   font-weight: 800;
   font-size: 1.65rem;
-  color: #00C7B6;
+  color: var(--color-primary-deep);
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
@@ -297,14 +300,15 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00C7B6, #009E91);
-  color: #001832;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.82rem;
   font-weight: 800;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .header-user-info {
@@ -315,20 +319,20 @@
 .header-username {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-main);
   line-height: 1.2;
 }
 
 .header-role {
   font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
   line-height: 1.2;
 }
 
 .header-logout-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.85);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -342,9 +346,9 @@
 }
 
 .header-logout-btn:hover {
-  background: rgba(220, 38, 38, 0.3);
-  color: #ff8888;
-  border-color: rgba(220, 38, 38, 0.5);
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.3);
   transform: translateY(-1px);
 }
 
@@ -355,21 +359,24 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #002D56;
-  color: #00C7B6;
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
   text-decoration: none;
   font-size: 1.1rem;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .header-icon-btn:hover {
-  background: #00396B;
+  background: rgba(1, 92, 58, 0.08);
+  border-color: var(--color-primary);
 }
 
 .portal-content {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
+  background: var(--color-bg);
 }
 
 /* ── Mobile Bottom Navigation Bar ────────────────────────────────────────── */
@@ -380,12 +387,12 @@
   left: 0;
   right: 0;
   height: 60px;
-  background: #001C3B;
-  border-top: 1px solid #003366;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
   z-index: 900;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .bottom-nav__item {
@@ -394,7 +401,7 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #8CA5BD;
+  color: var(--color-text-muted);
   font-size: 0.72rem;
   gap: 2px;
   flex: 1;
@@ -407,7 +414,7 @@
 }
 
 .bottom-nav__item.active {
-  color: #00C7B6;
+  color: var(--color-primary);
   font-weight: 700;
 }
 
@@ -465,3 +472,4 @@
     display: none;
   }
 }
+

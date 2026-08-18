@@ -14,11 +14,12 @@ import { HostelDetail, HostelReview } from '../public.model';
     .detail-container {
       max-width: 1000px;
       margin: 2rem auto;
-      background: white;
+      background: #FFFFFF;
       border-radius: var(--radius-card);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      color: #001832;
+      box-shadow: var(--shadow-sm);
+      color: var(--color-text-main);
+      border: 1px solid var(--color-border);
     }
     .banner {
       width: 100%;
@@ -29,7 +30,7 @@ import { HostelDetail, HostelReview } from '../public.model';
     }
     .content {
       padding: 3rem;
-      color: #001832;
+      color: var(--color-text-main);
     }
     .header-row {
       display: flex;
@@ -40,7 +41,7 @@ import { HostelDetail, HostelReview } from '../public.model';
     .title h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
-      color: #001832;
+      color: var(--color-primary-deep);
       font-weight: 800;
     }
     .badge {
@@ -50,8 +51,8 @@ import { HostelDetail, HostelReview } from '../public.model';
       font-size: 0.8rem;
       font-weight: 600;
     }
-    .badge.male { background: #E3F2FD; color: #1565C0; }
-    .badge.female { background: #FCE4EC; color: #C2185B; }
+    .badge.male { background: rgba(1, 92, 58, 0.1); color: var(--color-primary); border: 1px solid rgba(1, 92, 58, 0.25); }
+    .badge.female { background: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; }
 
     .rating-reviews-link {
       display: inline-block;
@@ -63,7 +64,7 @@ import { HostelDetail, HostelReview } from '../public.model';
     }
 
     .rating-reviews-link:hover {
-      background: rgba(0, 199, 182, 0.08);
+      background: rgba(1, 92, 58, 0.08);
     }
 
     .rating-star {
@@ -74,7 +75,7 @@ import { HostelDetail, HostelReview } from '../public.model';
 
     .reviews-count-text {
       font-size: 0.85rem;
-      color: #00A389;
+      color: var(--color-primary);
       font-weight: 700;
     }
 
@@ -83,16 +84,16 @@ import { HostelDetail, HostelReview } from '../public.model';
       gap: 2rem;
       margin-bottom: 2rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid #E2E8F0;
+      border-bottom: 1px solid var(--color-border);
     }
     .stat-item {
       display: flex;
       flex-direction: column;
     }
-    .stat-label { font-size: 0.85rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-    .stat-value { font-size: 1.25rem; font-weight: 800; color: #001832; }
+    .stat-label { font-size: 0.85rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; color: var(--color-primary-deep); }
     
-    .section-title { font-size: 1.5rem; margin-bottom: 1rem; margin-top: 2rem; color: #001832; font-weight: 800; }
+    .section-title { font-size: 1.5rem; margin-bottom: 1rem; margin-top: 2rem; color: var(--color-primary-deep); font-weight: 800; }
     
     .amenities-grid {
       display: grid;
@@ -103,24 +104,24 @@ import { HostelDetail, HostelReview } from '../public.model';
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: #F1F5F9;
+      background: #F4FBF7;
       padding: 0.75rem 1rem;
       border-radius: 8px;
-      border: 1px solid #CBD5E1;
+      border: 1px solid var(--color-border);
       font-weight: 600;
-      color: #001832;
+      color: var(--color-text-main);
     }
     .amenity-icon {
       display: flex;
       align-items: center;
-      color: #00887A;
+      color: var(--color-primary);
     }
 
     /* Reviews Section in Detail Page */
     .reviews-section-wrap {
       margin-top: 2.5rem;
       padding-top: 2rem;
-      border-top: 1px solid #E2E8F0;
+      border-top: 1px solid var(--color-border);
     }
 
     .section-title-row {
@@ -131,7 +132,7 @@ import { HostelDetail, HostelReview } from '../public.model';
     }
 
     .view-all-reviews-link {
-      color: #00A389;
+      color: var(--color-primary);
       font-weight: 700;
       font-size: 0.9rem;
       text-decoration: none;
@@ -148,8 +149,8 @@ import { HostelDetail, HostelReview } from '../public.model';
     }
 
     .detail-review-card {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
       border-radius: 10px;
       padding: 1.25rem;
       display: flex;
@@ -168,8 +169,8 @@ import { HostelDetail, HostelReview } from '../public.model';
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: #001832;
-      color: #00C7B6;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+      color: #013828;
       font-weight: 800;
       font-size: 0.85rem;
       display: flex;
@@ -178,8 +179,8 @@ import { HostelDetail, HostelReview } from '../public.model';
       flex-shrink: 0;
     }
 
-    .rev-user h4 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.15rem 0; color: #001832; }
-    .rev-user p { font-size: 0.78rem; color: #64748B; margin: 0; }
+    .rev-user h4 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.15rem 0; color: var(--color-primary-deep); }
+    .rev-user p { font-size: 0.78rem; color: var(--color-text-muted); margin: 0; }
 
     .rev-star {
       margin-left: auto;
@@ -193,7 +194,7 @@ import { HostelDetail, HostelReview } from '../public.model';
 
     .rev-body {
       font-size: 0.88rem;
-      color: #334155;
+      color: var(--color-text-main);
       line-height: 1.5;
       font-style: italic;
       margin-bottom: 0.85rem;
@@ -201,20 +202,20 @@ import { HostelDetail, HostelReview } from '../public.model';
 
     .rev-date {
       font-size: 0.78rem;
-      color: #94A3B8;
+      color: var(--color-text-muted);
     }
 
     .cta-box {
       margin-top: 3rem;
       padding: 2rem;
-      background: #F8FAFC;
+      background: #F4FBF7;
       border-radius: 8px;
       text-align: center;
-      border: 1px solid #E2E8F0;
-      color: #001832;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
     }
     .cta-box h3 {
-      color: #001832;
+      color: var(--color-primary-deep);
       font-weight: 700;
     }
     

@@ -31,17 +31,18 @@ import { FormsModule } from '@angular/forms';
   `,
   styles: [`
     .view-container { max-width: 700px; margin: 0 auto; }
-    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.25rem; }
-    .subtitle { color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1.5rem; }
-    .card { background: #001C3B; border: 1px solid #002D5A; border-radius: 16px; padding: 1.75rem; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
-    .card h3 { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; margin-top: 0; margin-bottom: 1.25rem; }
-    .rating-row { font-size: 2rem; color: #002D5A; cursor: pointer; margin-bottom: 1.25rem; }
+    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: var(--color-primary-deep); margin-bottom: 0.25rem; }
+    .subtitle { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .card { background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 1.75rem; box-shadow: var(--shadow-sm); }
+    .card h3 { font-size: 1.1rem; font-weight: 700; color: var(--color-primary-deep); margin-top: 0; margin-bottom: 1.25rem; }
+    .rating-row { font-size: 2rem; color: #CBD5E1; cursor: pointer; margin-bottom: 1.25rem; }
     .star.active { color: #f59e0b; }
     .form-group { margin-bottom: 1.25rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.35rem; }
-    .form-control { width: 100%; padding: 0.75rem; background: #00142A; border: 1px solid #002D5A; border-radius: 8px; font-size: 0.9rem; color: #FFFFFF; box-sizing: border-box; outline: none; }
-    .btn-submit { background: transparent; border: 2px solid #00C7B6; color: #00C7B6; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-    .btn-submit:hover { background: #00C7B6; color: #001832; box-shadow: 0 4px 12px rgba(0, 199, 182, 0.35); }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.35rem; }
+    .form-control { width: 100%; padding: 0.75rem; background: #F7F8FA; border: 1px solid var(--color-border); border-radius: 8px; font-size: 0.9rem; color: var(--color-text-main); box-sizing: border-box; outline: none; }
+    .form-control:focus { border-color: var(--color-primary); background: #FFFFFF; }
+    .btn-submit { background: var(--color-primary); border: none; color: #FFFFFF; padding: 0.75rem 1.5rem; border-radius: var(--radius-btn); font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn-submit:hover { background: var(--color-primary-dark); box-shadow: var(--shadow-sm); }
   `]
 })
 export class FeedbackViewComponent {

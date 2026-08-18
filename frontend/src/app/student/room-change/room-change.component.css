@@ -26,8 +26,8 @@
 
 .page-header__title {
   font-size: 1.75rem;
-  font-weight: 700;
-  color: #FFFFFF;
+  font-weight: 800;
+  color: var(--color-primary-deep);
   margin-bottom: 0.375rem;
 }
 
@@ -38,39 +38,40 @@
 
 /* ── Not Resident Notice ─────────────────────────────────────────────────── */
 .not-resident-notice {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--color-secondary);
   border-radius: var(--radius-card);
   padding: 1.5rem;
-  color: #fbbf24;
+  color: var(--color-secondary-dark);
   font-size: 0.9rem;
 }
 
 .not-resident-notice a {
   font-weight: 600;
-  color: #00C7B6;
+  color: var(--color-primary);
   margin-left: 0.5rem;
 }
 
 /* ── Current Room Banner ─────────────────────────────────────────────────── */
 .current-room-banner {
-  background: linear-gradient(135deg, #001832, #00254D);
-  border: 1px solid #002D5A;
-  border-radius: 12px;
+  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-card);
   padding: 1.25rem 2rem;
   color: white;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
+  box-shadow: var(--shadow-md);
 }
 
 .current-room-banner__label {
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.6);
+  color: var(--color-secondary);
   white-space: nowrap;
 }
 
@@ -79,20 +80,20 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.925rem;
-  font-weight: 500;
+  font-weight: 600;
   color: white;
   flex-wrap: wrap;
 }
 
 .separator {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.4);
 }
 
 /* ── Form Card ───────────────────────────────────────────────────────────── */
 .form-card {
-  background: var(--color-surface);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
   overflow: hidden;
 }
@@ -100,12 +101,12 @@
 .form-card__header {
   padding: 1.25rem 1.75rem;
   border-bottom: 1px solid var(--color-border);
-  background: #00142A;
+  background: linear-gradient(135deg, #013828 0%, #015C3A 100%);
 }
 
 .form-card__header h2 {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #FFFFFF;
   margin: 0;
 }
@@ -135,25 +136,25 @@
 
 .form-control {
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
   padding: 0.625rem 0.875rem;
   font-size: 0.875rem;
   font-family: var(--font-family);
   resize: vertical;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
-  background: #00142A;
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: var(--color-text-main);
 }
 
 .form-control:focus {
-  border-color: #00C7B6;
-  box-shadow: 0 0 0 3px rgba(0, 199, 182, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 92, 58, 0.12);
 }
 
 .form-control option {
-  background: #001832;
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: var(--color-text-main);
 }
 
 .form-control--error { border-color: #dc2626; }
@@ -175,18 +176,19 @@
   border-radius: 10px;
   transition: border-color 0.2s, background 0.2s;
   cursor: pointer;
+  background: #FFFFFF;
 }
 
 .file-upload:hover,
 .file-upload:focus-within {
   border-color: var(--color-primary);
-  background: rgba(1, 92, 58, 0.02);
+  background: rgba(1, 92, 58, 0.03);
 }
 
 .file-upload--has-file {
   border-style: solid;
   border-color: var(--color-primary);
-  background: rgba(1, 92, 58, 0.03);
+  background: rgba(1, 92, 58, 0.04);
 }
 
 .file-upload--error { border-color: #dc2626; }
@@ -295,7 +297,7 @@
 
 /* ── Requests Section ────────────────────────────────────────────────────── */
 .requests-section {
-  background: var(--color-surface);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
   border-radius: var(--radius-card);
   padding: 1.5rem;
   border: 1px solid var(--color-border);
@@ -304,8 +306,8 @@
 
 .requests-section__title {
   font-size: 1.1rem;
-  font-weight: 600;
-  color: #FFFFFF;
+  font-weight: 700;
+  color: var(--color-primary-deep);
   margin-bottom: 1.25rem;
 }
 
@@ -363,8 +365,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.875rem 1.25rem;
-  border-bottom: 1px solid #f5f5f5;
-  background: #fafafa;
+  border-bottom: 1px solid var(--color-border);
+  background: #F4FBF7;
 }
 
 .request-card__meta {
@@ -431,7 +433,7 @@
 
 .request-card__attachment {
   padding: 0.75rem 1.25rem;
-  border-top: 1px solid #f5f5f5;
+  border-top: 1px solid var(--color-border);
 }
 
 .attachment-link {
@@ -442,3 +444,4 @@
 }
 
 .attachment-link:hover { text-decoration: underline; }
+

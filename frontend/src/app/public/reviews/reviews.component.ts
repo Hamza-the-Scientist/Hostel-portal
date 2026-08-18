@@ -142,7 +142,7 @@ import { HostelReview, HostelSummary } from '../public.model';
           <!-- Empty State -->
           <div class="empty-state" *ngIf="filteredReviews.length === 0">
             <div class="empty-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             </div>
@@ -157,16 +157,16 @@ import { HostelReview, HostelSummary } from '../public.model';
   `,
   styles: [`
     .reviews-page {
-      background: #00142A;
-      color: #FFFFFF;
+      background: var(--color-bg);
+      color: var(--color-text-main);
       min-height: 100vh;
     }
 
     /* Header Banner */
     .reviews-header {
-      background: linear-gradient(180deg, #031B33 0%, #001832 100%);
+      background: linear-gradient(135deg, #013828 0%, #015C3A 100%);
       padding: 3.5rem 1.5rem 2.5rem 1.5rem;
-      border-bottom: 1px solid #003366;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .header-container {
@@ -178,10 +178,10 @@ import { HostelReview, HostelSummary } from '../public.model';
     .sub-badge {
       display: inline-block;
       padding: 0.3rem 0.9rem;
-      background: rgba(0, 212, 178, 0.12);
-      border: 1px solid rgba(0, 212, 178, 0.3);
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 9999px;
-      color: #00D4B2;
+      color: var(--color-secondary);
       font-size: 0.8rem;
       font-weight: 800;
       letter-spacing: 0.05em;
@@ -197,7 +197,7 @@ import { HostelReview, HostelSummary } from '../public.model';
     }
 
     .page-subtitle {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 1.1rem;
       max-width: 720px;
       margin: 0 auto 2.5rem auto;
@@ -206,8 +206,8 @@ import { HostelReview, HostelSummary } from '../public.model';
 
     /* Summary Card */
     .summary-card {
-      background: #001E3C;
-      border: 1.5px solid #003366;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-border);
       border-radius: 16px;
       max-width: 750px;
       margin: 0 auto;
@@ -216,7 +216,8 @@ import { HostelReview, HostelSummary } from '../public.model';
       grid-template-columns: 1fr 1.5fr;
       gap: 2rem;
       align-items: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-sm);
+      color: var(--color-text-main);
     }
 
     .score-box {
@@ -224,14 +225,14 @@ import { HostelReview, HostelSummary } from '../public.model';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid #003366;
+      border-right: 1px solid var(--color-border);
       padding-right: 1.5rem;
     }
 
     .big-score {
       font-size: 3.5rem;
       font-weight: 900;
-      color: #FBBF24;
+      color: #F59E0B;
       line-height: 1;
       margin-bottom: 0.5rem;
     }
@@ -240,16 +241,16 @@ import { HostelReview, HostelSummary } from '../public.model';
       display: flex;
       gap: 0.3rem;
       font-size: 1.25rem;
-      color: #4B5563;
+      color: #CBD5E1;
       margin-bottom: 0.5rem;
     }
 
     .star.filled {
-      color: #FBBF24;
+      color: #F59E0B;
     }
 
     .total-count {
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.85rem;
     }
 
@@ -269,21 +270,21 @@ import { HostelReview, HostelSummary } from '../public.model';
 
     .bar-label {
       width: 55px;
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-weight: 600;
     }
 
     .bar-track {
       flex: 1;
       height: 8px;
-      background: #002B55;
+      background: #E2E8F0;
       border-radius: 9999px;
       overflow: hidden;
     }
 
     .bar-fill {
       height: 100%;
-      background: #00D4B2;
+      background: var(--color-primary);
       border-radius: 9999px;
       transition: width 400ms ease;
     }
@@ -291,7 +292,7 @@ import { HostelReview, HostelSummary } from '../public.model';
     .bar-count {
       width: 25px;
       text-align: right;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.8rem;
     }
 
@@ -312,10 +313,11 @@ import { HostelReview, HostelSummary } from '../public.model';
       align-items: center;
       margin-bottom: 2.5rem;
       flex-wrap: wrap;
-      background: #001E3C;
-      border: 1px solid #003366;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
       padding: 1.25rem;
       border-radius: 12px;
+      box-shadow: var(--shadow-sm);
     }
 
     .search-wrap {
@@ -329,24 +331,25 @@ import { HostelReview, HostelSummary } from '../public.model';
     .search-wrap svg {
       position: absolute;
       left: 1.1rem;
-      color: #00D4B2;
+      color: var(--color-primary);
     }
 
     .search-input {
       width: 100%;
       padding: 0.75rem 2.2rem 0.75rem 2.7rem;
-      background: #002244;
-      border: 1px solid #004488;
+      background: #F7F8FA;
+      border: 1px solid var(--color-border);
       border-radius: 8px;
-      color: #FFFFFF;
+      color: var(--color-text-main);
       font-size: 0.9rem;
       outline: none;
       transition: all 200ms ease;
     }
 
     .search-input:focus {
-      border-color: #00D4B2;
-      background: #002B55;
+      border-color: var(--color-primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(1, 92, 58, 0.12);
     }
 
     .clear-btn {
@@ -354,7 +357,7 @@ import { HostelReview, HostelSummary } from '../public.model';
       right: 0.9rem;
       background: none;
       border: none;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       cursor: pointer;
     }
 
@@ -363,16 +366,16 @@ import { HostelReview, HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.5rem;
       font-size: 0.85rem;
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-weight: 600;
     }
 
     .filter-select {
       padding: 0.7rem 1rem;
-      background: #002244;
-      border: 1px solid #004488;
+      background: #F7F8FA;
+      border: 1px solid var(--color-border);
       border-radius: 8px;
-      color: #FFFFFF;
+      color: var(--color-text-main);
       font-size: 0.88rem;
       outline: none;
       cursor: pointer;
@@ -383,7 +386,7 @@ import { HostelReview, HostelSummary } from '../public.model';
       background: transparent;
       border: 1px solid #EF4444;
       border-radius: 8px;
-      color: #F87171;
+      color: #DC2626;
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
@@ -401,20 +404,21 @@ import { HostelReview, HostelSummary } from '../public.model';
     }
 
     .review-card {
-      background: #001E3C;
-      border: 1px solid #003366;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+      border: 1px solid var(--color-border);
       border-radius: 12px;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 250ms ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .review-card:hover {
       transform: translateY(-4px);
-      border-color: #00D4B2;
-      box-shadow: 0 10px 25px rgba(0, 212, 178, 0.12);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
     }
 
     .card-top {
@@ -434,26 +438,26 @@ import { HostelReview, HostelSummary } from '../public.model';
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #00D4B2 0%, #006699 100%);
-      color: #00142A;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+      color: #013828;
       font-weight: 800;
       font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0, 212, 178, 0.2);
+      box-shadow: var(--shadow-sm);
     }
 
     .student-name {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--color-primary-deep);
       margin: 0 0 0.2rem 0;
     }
 
     .student-dept {
       font-size: 0.8rem;
-      color: #93B5D1;
+      color: var(--color-text-muted);
       margin: 0;
     }
 
@@ -462,10 +466,10 @@ import { HostelReview, HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.3rem;
       padding: 0.35rem 0.7rem;
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.3);
+      background: #FEF3C7;
+      border: 1px solid #FCD34D;
       border-radius: 9999px;
-      color: #FBBF24;
+      color: #F59E0B;
       font-size: 0.88rem;
       font-weight: 800;
     }
@@ -476,7 +480,7 @@ import { HostelReview, HostelSummary } from '../public.model';
       align-items: center;
       margin-bottom: 1rem;
       padding-bottom: 0.75rem;
-      border-bottom: 1px dashed #003366;
+      border-bottom: 1px dashed var(--color-border);
     }
 
     .hostel-badge-link {
@@ -484,10 +488,10 @@ import { HostelReview, HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.4rem;
       padding: 0.3rem 0.7rem;
-      background: #002B55;
-      border: 1px solid #004488;
+      background: #F4FBF7;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #00D4B2;
+      color: var(--color-primary-dark);
       font-size: 0.82rem;
       font-weight: 600;
       text-decoration: none;
@@ -495,17 +499,17 @@ import { HostelReview, HostelSummary } from '../public.model';
     }
 
     .hostel-badge-link:hover {
-      background: #00D4B2;
-      color: #00142A;
+      background: var(--color-primary);
+      color: #FFFFFF;
     }
 
     .review-date {
       font-size: 0.78rem;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
     }
 
     .comment-text {
-      color: #E2E8F0;
+      color: var(--color-text-main);
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 1.5rem;
@@ -516,7 +520,7 @@ import { HostelReview, HostelSummary } from '../public.model';
       display: flex;
       justify-content: flex-end;
       padding-top: 0.75rem;
-      border-top: 1px solid #002B55;
+      border-top: 1px solid var(--color-border);
     }
 
     .btn-helpful {
@@ -525,9 +529,9 @@ import { HostelReview, HostelSummary } from '../public.model';
       gap: 0.4rem;
       padding: 0.4rem 0.8rem;
       background: transparent;
-      border: 1px solid #004488;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
@@ -535,39 +539,39 @@ import { HostelReview, HostelSummary } from '../public.model';
     }
 
     .btn-helpful:hover, .btn-helpful.voted {
-      background: rgba(0, 212, 178, 0.15);
-      border-color: #00D4B2;
-      color: #00D4B2;
+      background: rgba(1, 92, 58, 0.1);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
     }
 
     /* Empty State */
     .empty-state {
       text-align: center;
       padding: 4rem 1.5rem;
-      background: #001E3C;
+      background: #FFFFFF;
       border-radius: 12px;
-      border: 1px solid #003366;
+      border: 1px solid var(--color-border);
       max-width: 550px;
       margin: 2rem auto;
     }
 
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .empty-state h3 { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 0.5rem; }
-    .empty-state p { color: #8CA5BD; font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .empty-state h3 { font-size: 1.4rem; color: var(--color-primary-deep); margin-bottom: 0.5rem; }
+    .empty-state p { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
 
     .btn-reset-large {
       padding: 0.75rem 1.8rem;
-      background: #00D4B2;
+      background: var(--color-primary);
       border: none;
       border-radius: 6px;
-      color: #00142A;
+      color: #FFFFFF;
       font-weight: 800;
       cursor: pointer;
     }
 
     @media (max-width: 768px) {
       .summary-card { grid-template-columns: 1fr; text-align: center; }
-      .score-box { border-right: none; border-bottom: 1px solid #003366; padding-right: 0; padding-bottom: 1.5rem; }
+      .score-box { border-right: none; border-bottom: 1px solid var(--color-border); padding-right: 0; padding-bottom: 1.5rem; }
       .filter-bar { flex-direction: column; align-items: stretch; }
       .reviews-grid { grid-template-columns: 1fr; }
     }
@@ -618,7 +622,7 @@ export class ReviewsComponent implements OnInit {
       const q = this.searchQuery.trim().toLowerCase();
       let matchesSearch = true;
       if (q) {
-        matchesSearch = 
+        matchesSearch =
           r.studentName.toLowerCase().includes(q) ||
           r.studentDept.toLowerCase().includes(q) ||
           r.hostelName.toLowerCase().includes(q) ||

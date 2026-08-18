@@ -28,16 +28,16 @@ export interface InfoSlide {
   styles: [`
     /* Hero Section */
     .hero {
-      background: #031B33;
+      background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
       color: white;
       padding: 5.5rem 1.5rem 4.5rem 1.5rem;
       text-align: center;
-      border-bottom: 1px solid #003366;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
 
-    /* Side Navigation Arrows matching the Deep Navy / Teal Theme */
+    /* Side Navigation Arrows matching the Deep Sindh Green / Warm Gold Theme */
     .hero-nav-arrow {
       position: absolute;
       top: 50%;
@@ -45,9 +45,9 @@ export interface InfoSlide {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: rgba(3, 27, 51, 0.85);
-      border: 1.5px solid #00D4B2;
-      color: #00D4B2;
+      background: rgba(1, 56, 40, 0.85);
+      border: 1.5px solid var(--color-secondary);
+      color: var(--color-secondary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -60,10 +60,10 @@ export interface InfoSlide {
     }
 
     .hero-nav-arrow:hover {
-      background: #00D4B2;
-      color: #031B33;
+      background: var(--color-secondary);
+      color: #013828;
       transform: translateY(-50%) scale(1.08);
-      box-shadow: 0 0 15px rgba(0, 212, 178, 0.5);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
 
     .hero-nav-arrow.left { left: 1.5rem; }
@@ -116,7 +116,7 @@ export interface InfoSlide {
     }
 
     .hero-subheader {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 1.2rem;
       font-weight: 400;
       line-height: 1.7;
@@ -140,7 +140,7 @@ export interface InfoSlide {
     }
 
     .dot {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       width: 8px;
       height: 6px;
       border-radius: 9999px;
@@ -151,11 +151,11 @@ export interface InfoSlide {
     }
 
     .dot:hover {
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.5);
     }
 
     .dot.active {
-      background: #00D4B2;
+      background: var(--color-secondary);
       width: 32px;
       height: 6px;
       border-radius: 9999px;
@@ -170,12 +170,12 @@ export interface InfoSlide {
     }
 
     .btn-cta-teal {
-      border: 2px solid #00D4B2;
-      color: #00D4B2;
+      border: 2px solid var(--color-secondary);
+      color: var(--color-secondary);
       background: transparent;
-      border-radius: 8px;
+      border-radius: var(--radius-btn);
       padding: 0.75rem 1.75rem;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1.05rem;
       text-decoration: none;
       display: inline-flex;
@@ -186,20 +186,20 @@ export interface InfoSlide {
     }
 
     .btn-cta-teal:hover {
-      background: rgba(0, 212, 178, 0.1);
-      color: #00D4B2;
+      background: var(--color-secondary);
+      color: #013828;
       transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 212, 178, 0.25);
+      box-shadow: var(--shadow-sm);
     }
 
     /* Announcements Ticker */
     .ticker-wrap {
       background: #FFFFFF;
-      border-bottom: 1px solid #E2E8F0;
+      border-bottom: 1px solid var(--color-border);
       padding: 0.75rem 0;
       overflow: hidden;
       white-space: nowrap;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      box-shadow: var(--shadow-sm);
     }
     .ticker {
       display: inline-block;
@@ -219,10 +219,12 @@ export interface InfoSlide {
 
     /* Info Banner Section with Right-Side Dissolving Study Hall Slider */
     .info-banner {
-      background: #031B33;
+      background-color: #014830;
       position: relative;
       overflow: hidden;
-      border-bottom: 1px solid #003366;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(194, 191, 18, 0.5);
+
       min-height: 480px;
       display: flex;
       align-items: center;
@@ -255,7 +257,7 @@ export interface InfoSlide {
     }
 
     .info-subtitle {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 1.05rem;
       line-height: 1.65;
       margin-bottom: 2rem;
@@ -275,7 +277,7 @@ export interface InfoSlide {
     }
 
     .info-bullet-icon {
-      color: #00D4B2;
+      color: var(--color-secondary);
       font-size: 1.15rem;
       font-weight: 900;
       flex-shrink: 0;
@@ -296,7 +298,7 @@ export interface InfoSlide {
     }
 
     .info-bullet-desc {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.85);
       font-size: 0.9rem;
       line-height: 1.4;
     }
@@ -336,8 +338,8 @@ export interface InfoSlide {
       width: 100%;
       height: 100%;
       background: 
-        linear-gradient(to right, #031B33 0%, #031B33 15%, rgba(3, 27, 51, 0.85) 35%, rgba(3, 27, 51, 0.4) 65%, transparent 100%),
-        linear-gradient(to bottom, #031B33 0%, transparent 15%, transparent 85%, #031B33 100%);
+        linear-gradient(to right, #014830 0%, #014830 15%, rgba(1, 56, 40, 0.85) 35%, rgba(1, 56, 40, 0.4) 65%, transparent 100%),
+        linear-gradient(to bottom, #013828 0%, transparent 15%, transparent 85%, #013828 100%);
       z-index: 2;
     }
 
@@ -359,9 +361,9 @@ export interface InfoSlide {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: rgba(3, 27, 51, 0.85);
-      border: 1.5px solid #00D4B2;
-      color: #00D4B2;
+      background: rgba(1, 56, 40, 0.85);
+      border: 1.5px solid var(--color-secondary);
+      color: var(--color-secondary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -374,10 +376,10 @@ export interface InfoSlide {
     }
 
     .info-nav-arrow:hover {
-      background: #00D4B2;
-      color: #031B33;
+      background: var(--color-secondary);
+      color: #013828;
       transform: translateY(-50%) scale(1.08);
-      box-shadow: 0 0 15px rgba(0, 212, 178, 0.5);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
 
     .info-nav-arrow.left { left: 1.5rem; }
@@ -416,7 +418,7 @@ export interface InfoSlide {
     }
 
     .info-dot.active {
-      background: #00D4B2;
+      background: var(--color-secondary);
       width: 32px;
       height: 6px;
       border-radius: 9999px;
@@ -425,20 +427,20 @@ export interface InfoSlide {
     /* Hostel Section */
     .hostels-section {
       padding: 4rem 1.5rem 5rem 1.5rem;
-      background: #00142A;
-      border-bottom: 1px solid #003366;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
       position: relative;
     }
     .hostels-section h2 { 
       text-align: center; 
       font-size: 2.3rem; 
-      color: #FFFFFF; 
+      color: var(--color-primary-deep); 
       margin-bottom: 0.5rem; 
       font-weight: 800; 
     }
     .section-subtitle {
       text-align: center;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       margin-bottom: 2rem;
       font-size: 1.05rem;
     }
@@ -452,9 +454,9 @@ export interface InfoSlide {
       flex-wrap: wrap;
     }
     .filter-btn {
-      background: rgba(0, 24, 50, 0.7);
-      color: #8CA5BD;
-      border: 1.5px solid #003366;
+      background: #FFFFFF;
+      color: var(--color-text-muted);
+      border: 1.5px solid var(--color-border);
       padding: 0.6rem 1.5rem;
       border-radius: 30px;
       font-weight: 600;
@@ -463,15 +465,15 @@ export interface InfoSlide {
       transition: all 0.25s ease;
     }
     .filter-btn:hover {
-      border-color: #00C7B6;
-      color: #00C7B6;
+      border-color: var(--color-primary);
+      color: var(--color-primary);
     }
     .filter-btn.active {
-      background: #00C7B6;
-      color: #00142A;
-      border-color: #00C7B6;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      border-color: var(--color-primary);
       font-weight: 700;
-      box-shadow: 0 4px 15px rgba(0, 199, 182, 0.35);
+      box-shadow: var(--shadow-sm);
     }
 
     /* Slider Container Wrapper */
@@ -505,9 +507,9 @@ export interface InfoSlide {
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: #001832;
-      border: 2px solid #00C7B6;
-      color: #00C7B6;
+      background: #FFFFFF;
+      border: 2px solid var(--color-primary);
+      color: var(--color-primary);
       font-size: 1.5rem;
       display: flex;
       align-items: center;
@@ -515,13 +517,13 @@ export interface InfoSlide {
       cursor: pointer;
       z-index: 20;
       transition: all 0.25s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-sm);
     }
     .slider-arrow:hover {
-      background: #00C7B6;
-      color: #00142A;
+      background: var(--color-primary);
+      color: #FFFFFF;
       transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 6px 20px rgba(0, 199, 182, 0.5);
+      box-shadow: var(--shadow-md);
     }
     .slider-arrow.left { left: -20px; }
     .slider-arrow.right { right: -20px; }
@@ -531,24 +533,23 @@ export interface InfoSlide {
       .slider-arrow.right { right: 5px; }
     }
 
-    /* Card Styling with Thin Seamless #00C7B6 Outline & Elevation */
+    /* Card Styling */
     .card {
       flex: 0 0 340px;
-      background: #FFFFFF;
-      border: 1.5px solid #00C7B6; /* Thin seamless outline in requested color code #00C7B6 */
-      border-radius: 14px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-card);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 199, 182, 0.12);
+      box-shadow: var(--shadow-sm);
       transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease, border-color 0.35s ease;
       position: relative;
       box-sizing: border-box;
     }
 
-    /* Elevate hostel card when cursor hovers over it */
     .card:hover {
-      transform: translateY(-12px) scale(1.02);
-      border-color: #00C7B6;
-      box-shadow: 0 18px 36px rgba(0, 199, 182, 0.35), 0 0 15px rgba(0, 199, 182, 0.25);
+      transform: translateY(-8px);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
       z-index: 10;
     }
 
@@ -592,7 +593,7 @@ export interface InfoSlide {
       font-weight: 700;
       letter-spacing: 0.5px;
     }
-    .badge.male { background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }
+    .badge.male { background: rgba(1, 92, 58, 0.1); color: var(--color-primary); border: 1px solid rgba(1, 92, 58, 0.25); }
     .badge.female { background: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; }
 
     .rating-badge {
@@ -611,7 +612,7 @@ export interface InfoSlide {
       font-size: 1.2rem;
       font-weight: 800;
       margin-bottom: 0.75rem;
-      color: #001832;
+      color: var(--color-primary-deep);
       line-height: 1.35;
       min-height: 3.2rem;
       display: -webkit-box;
@@ -622,7 +623,7 @@ export interface InfoSlide {
     
     .card-info {
       font-size: 0.88rem;
-      color: #475569;
+      color: var(--color-text-muted);
       margin-bottom: 1rem;
     }
     .card-info p { 
@@ -661,30 +662,30 @@ export interface InfoSlide {
       display: inline-block;
       width: 100%;
       text-align: center;
-      background: #001832;
+      background: var(--color-primary);
       color: #FFFFFF;
       font-weight: 700;
       padding: 0.8rem 1.5rem;
-      border-radius: 8px;
+      border-radius: var(--radius-btn);
       text-decoration: none;
-      border: 1.5px solid #00C7B6;
+      border: 1.5px solid var(--color-primary);
       transition: all 0.25s ease;
       box-sizing: border-box;
     }
     .btn-dark-details:hover {
-      background: #00C7B6;
-      border-color: #00C7B6;
-      color: #00142A;
+      background: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+      color: #FFFFFF;
       transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 199, 182, 0.4);
+      box-shadow: var(--shadow-sm);
     }
 
     /* What Our Residents Say Section */
     .reviews-banner-section {
-      background: linear-gradient(180deg, #00142A 0%, #031B33 100%);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
       padding: 4.5rem 1.5rem 4rem 1.5rem;
-      border-top: 1px solid #003366;
-      border-bottom: 1px solid #003366;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .section-header-wrap {
@@ -696,10 +697,10 @@ export interface InfoSlide {
     .section-badge {
       display: inline-block;
       padding: 0.35rem 0.9rem;
-      background: rgba(0, 212, 178, 0.12);
-      border: 1px solid rgba(0, 212, 178, 0.3);
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--color-secondary);
       border-radius: 9999px;
-      color: #00D4B2;
+      color: var(--color-secondary-dark);
       font-size: 0.78rem;
       font-weight: 800;
       letter-spacing: 0.05em;
@@ -709,13 +710,13 @@ export interface InfoSlide {
     .section-heading {
       font-size: 2.3rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: var(--color-primary-deep);
       margin-bottom: 0.75rem;
       letter-spacing: -0.02em;
     }
 
     .section-subheading {
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 1.05rem;
       line-height: 1.6;
     }
@@ -742,22 +743,22 @@ export interface InfoSlide {
 
     .review-slide-card {
       flex: 0 0 380px;
-      background: #001E3C;
-      border: 1.5px solid #003366;
-      border-radius: 16px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-card);
       padding: 1.75rem;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-sm);
     }
 
     .review-slide-card:hover {
       transform: translateY(-5px);
-      border-color: #00D4B2;
-      box-shadow: 0 12px 30px rgba(0, 212, 178, 0.15);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
     }
 
     .quote-mark {
@@ -765,7 +766,7 @@ export interface InfoSlide {
       top: 0.8rem;
       right: 1.5rem;
       font-size: 4rem;
-      color: rgba(0, 212, 178, 0.1);
+      color: rgba(1, 92, 58, 0.1);
       font-family: Georgia, serif;
       pointer-events: none;
       line-height: 1;
@@ -782,8 +783,8 @@ export interface InfoSlide {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #00D4B2 0%, #006699 100%);
-      color: #00142A;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+      color: #013828;
       font-weight: 800;
       font-size: 0.95rem;
       display: flex;
@@ -793,8 +794,8 @@ export interface InfoSlide {
     }
 
     .meta { flex: 1; }
-    .meta .name { font-size: 1.02rem; font-weight: 700; color: #FFFFFF; margin: 0 0 0.15rem 0; }
-    .meta .dept { font-size: 0.8rem; color: #93B5D1; margin: 0; }
+    .meta .name { font-size: 1.02rem; font-weight: 700; color: var(--color-primary-deep); margin: 0 0 0.15rem 0; }
+    .meta .dept { font-size: 0.8rem; color: var(--color-text-muted); margin: 0; }
 
     .star-rating {
       display: flex;
@@ -815,10 +816,10 @@ export interface InfoSlide {
       gap: 0.4rem;
       align-self: flex-start;
       padding: 0.28rem 0.65rem;
-      background: #002B55;
-      border: 1px solid #004488;
+      background: #F4FBF7;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #00D4B2;
+      color: var(--color-primary-dark);
       font-size: 0.78rem;
       font-weight: 600;
       text-decoration: none;
@@ -827,12 +828,12 @@ export interface InfoSlide {
     }
 
     .hostel-pill-link:hover {
-      background: #00D4B2;
-      color: #00142A;
+      background: var(--color-primary);
+      color: #FFFFFF;
     }
 
     .rev-comment {
-      color: #E2E8F0;
+      color: var(--color-text-main);
       font-size: 0.92rem;
       line-height: 1.6;
       margin-bottom: 1.25rem;
@@ -844,12 +845,12 @@ export interface InfoSlide {
       justify-content: space-between;
       align-items: center;
       padding-top: 0.85rem;
-      border-top: 1px solid #002B55;
+      border-top: 1px solid var(--color-border);
       font-size: 0.8rem;
     }
 
-    .date-badge { color: #8CA5BD; }
-    .read-all-link { color: #00D4B2; font-weight: 700; text-decoration: none; }
+    .date-badge { color: var(--color-text-muted); }
+    .read-all-link { color: var(--color-primary); font-weight: 700; text-decoration: none; }
     .read-all-link:hover { text-decoration: underline; }
 
     .rev-arrow {
@@ -859,22 +860,22 @@ export interface InfoSlide {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: #001E3C;
-      border: 1.5px solid #00D4B2;
-      color: #00D4B2;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-primary);
+      color: var(--color-primary);
       font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 10;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-sm);
       transition: all 0.25s ease;
     }
 
     .rev-arrow.left { left: -22px; }
     .rev-arrow.right { right: -22px; }
-    .rev-arrow:hover { background: #00D4B2; color: #00142A; }
+    .rev-arrow:hover { background: var(--color-primary); color: #FFFFFF; }
 
     .reviews-cta-bar {
       text-align: center;
@@ -886,19 +887,19 @@ export interface InfoSlide {
       align-items: center;
       gap: 0.6rem;
       padding: 0.85rem 2rem;
-      background: linear-gradient(135deg, #00D4B2 0%, #00A389 100%);
-      color: #00142A;
+      background: linear-gradient(135deg, #015C3A 0%, #013828 100%);
+      color: #FFFFFF;
       font-weight: 800;
       font-size: 0.95rem;
       border-radius: 9999px;
       text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0, 212, 178, 0.35);
+      box-shadow: var(--shadow-md);
       transition: all 0.3s ease;
     }
 
     .btn-all-reviews:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 212, 178, 0.5);
+      box-shadow: var(--shadow-lg);
     }
 
     @media (max-width: 768px) {

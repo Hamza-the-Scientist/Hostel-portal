@@ -42,23 +42,23 @@ import { ApplicationTimelineStep } from '../application-workflow.service';
   `,
   styles: [`
     .timeline-card {
-      background: #001C3B;
-      border-radius: 14px;
+      background: #FFFFFF;
+      border-radius: var(--radius-card);
       padding: 1.5rem;
-      border: 1px solid #002D5A;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
       margin-bottom: 1.5rem;
-      color: #FFFFFF;
+      color: var(--color-text-main);
     }
     .header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid #002D5A;
+      border-bottom: 1px solid var(--color-border);
       padding-bottom: 0.85rem;
     }
-    .header-row h3 { margin: 0; font-size: 1.15rem; color: #FFFFFF; font-weight: 700; }
+    .header-row h3 { margin: 0; font-size: 1.15rem; color: var(--color-primary-deep); font-weight: 700; }
     .status-badge {
       padding: 0.35rem 0.85rem;
       border-radius: 20px;
@@ -67,16 +67,15 @@ import { ApplicationTimelineStep } from '../application-workflow.service';
       text-transform: uppercase;
       letter-spacing: 0.4px;
     }
-    .badge-not-processed { background: #00142A; color: #CBD5E1; border: 1px solid #002D5A; }
+    .badge-not-processed { background: #F7F8FA; color: var(--color-text-muted); border: 1px solid var(--color-border); }
     .badge-in-processing { 
-      background: rgba(253, 224, 71, 0.2); 
-      color: #FEF08A; 
-      border: 1px solid #FACC15; 
-      box-shadow: 0 0 8px rgba(250, 204, 21, 0.25);
+      background: #FEF3C7; 
+      color: #B45309; 
+      border: 1px solid #FCD34D; 
     }
-    .badge-room-allocated { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
-    .badge-allocation-complete { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
-    .badge-room-not-assigned { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-room-allocated { background: #D1FAE5; color: #047857; border: 1px solid #A7F3D0; }
+    .badge-allocation-complete { background: #F3E8FF; color: #6B21A8; border: 1px solid #E9D5FF; }
+    .badge-room-not-assigned { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
 
     .timeline-container {
       display: flex;
@@ -97,40 +96,40 @@ import { ApplicationTimelineStep } from '../application-workflow.service';
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: #00142A;
-      color: #CBD5E1;
+      background: #F7F8FA;
+      color: var(--color-text-muted);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
       font-size: 0.9rem;
       z-index: 2;
-      border: 2px solid #001C3B;
-      box-shadow: 0 0 0 2px #002D5A;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 0 0 2px var(--color-border);
     }
     .timeline-step.completed .node {
-      background: #00C7B6;
-      color: #001832;
-      box-shadow: 0 0 0 2px #00C7B6;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: 0 0 0 2px var(--color-primary);
     }
     .timeline-step.current .node {
-      background: #facc15;
-      color: #001832;
-      box-shadow: 0 0 0 2px #facc15;
+      background: var(--color-secondary);
+      color: #013828;
+      box-shadow: 0 0 0 2px var(--color-secondary);
     }
     .content { text-align: center; margin-top: 0.75rem; }
-    .step-title { font-size: 0.85rem; font-weight: 600; color: #FFFFFF; margin-bottom: 0.2rem; }
-    .step-desc { font-size: 0.75rem; color: #CBD5E1; }
+    .step-title { font-size: 0.85rem; font-weight: 600; color: var(--color-primary-deep); margin-bottom: 0.2rem; }
+    .step-desc { font-size: 0.75rem; color: var(--color-text-muted); }
     .line {
       position: absolute;
       top: 16px;
       left: 50%;
       width: 100%;
       height: 3px;
-      background: #002D5A;
+      background: var(--color-border);
       z-index: 1;
     }
-    .line.filled { background: #00C7B6; }
+    .line.filled { background: var(--color-primary); }
   `]
 })
 export class StatusTimelineComponent {

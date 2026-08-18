@@ -12,15 +12,15 @@
 
 /* ── Greeting Banner ────────────────────────────────────────────────────── */
 .greeting-banner {
-  background: linear-gradient(135deg, #001020 0%, #001832 50%, #002B56 100%);
-  border-radius: 16px;
-  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.75rem 2rem;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
 }
@@ -28,25 +28,26 @@
 .greeting-banner__title {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #00C7B6;
+  color: var(--color-secondary);
   margin: 0 0 0.35rem 0;
   letter-spacing: -0.02em;
 }
 
 .greeting-banner__subtitle {
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
 }
 
 .portal-badge {
-  background: rgba(0, 199, 182, 0.15);
-  color: #00C7B6;
-  border: 1px solid rgba(0, 199, 182, 0.4);
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
+  border: none;
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
 }
 
 /* ── 4 Metric Cards Grid ────────────────────────────────────────────────── */
@@ -57,8 +58,8 @@
 }
 
 .metric-card {
-  background: var(--color-surface);
-  border-radius: 14px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+  border-radius: var(--radius-card);
   padding: 1.25rem 1.4rem;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
@@ -70,8 +71,8 @@
 
 .metric-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 199, 182, 0.15);
-  border-color: #00C7B6;
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
 }
 
 .metric-card__header {
@@ -94,9 +95,9 @@
   letter-spacing: 0.3px;
 }
 
-.badge-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-.badge-info { background: rgba(0, 199, 182, 0.2); color: #00C7B6; }
-.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.badge-success { background: rgba(1, 92, 58, 0.15); color: var(--color-primary); }
+.badge-info { background: rgba(212, 175, 55, 0.2); color: var(--color-secondary-dark); }
+.badge-warning { background: rgba(245, 158, 11, 0.15); color: #d97706; }
 
 .metric-card__label {
   font-size: 0.78rem;
@@ -111,7 +112,7 @@
 .metric-card__value {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--color-primary-deep);
   margin: 0 0 0.2rem 0;
   white-space: nowrap;
   overflow: hidden;
@@ -132,17 +133,17 @@
 }
 
 .fresh-applicant__hero {
-  background: var(--color-surface);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   padding: 2rem;
   box-shadow: var(--shadow-sm);
 }
 
 .fresh-applicant__badge {
   display: inline-block;
-  background: rgba(0, 199, 182, 0.15);
-  color: #00C7B6;
+  background: rgba(1, 92, 58, 0.1);
+  color: var(--color-primary);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.3rem 0.8rem;
@@ -155,7 +156,7 @@
 .fresh-applicant__title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--color-primary-deep);
   margin: 0 0 0.5rem 0;
 }
 
@@ -174,7 +175,7 @@
 
 .btn {
   padding: 0.7rem 1.3rem;
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
@@ -187,22 +188,23 @@
 }
 
 .btn-primary {
-  background: #00C7B6;
-  color: #001832;
+  background: var(--color-primary);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #00E5D2;
+  background: var(--color-primary-dark);
 }
 
 .btn-outline {
   background: transparent;
-  border: 1px solid #00C7B6;
-  color: #00C7B6;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
 }
 
 .btn-outline:hover {
-  background: rgba(0, 199, 182, 0.15);
+  background: var(--color-primary);
+  color: #ffffff;
 }
 
 .fresh-applicant__steps {
@@ -212,9 +214,9 @@
 }
 
 .step-card {
-  background: var(--color-surface);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   padding: 1.25rem 1rem;
   display: flex;
   flex-direction: column;
@@ -226,20 +228,20 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #00C7B6;
-  color: #001832;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 0.75rem;
 }
 
 .step-card__content h4 {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--color-primary-deep);
   margin: 0 0 0.35rem 0;
 }
 
@@ -253,10 +255,10 @@
 /* ── Skeleton Loaders ───────────────────────────────────────────────────── */
 .skeleton-card {
   height: 110px;
-  background: linear-gradient(90deg, #001F3F 25%, #002850 50%, #001F3F 75%);
+  background: linear-gradient(90deg, #E0E0E0 25%, #F0F0F0 50%, #E0E0E0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: 14px;
+  border-radius: var(--radius-card);
 }
 
 @keyframes shimmer {
@@ -268,7 +270,7 @@
   text-align: center;
   padding: 3rem;
   background: var(--color-surface);
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   border: 1px solid var(--color-border);
 }
 
@@ -304,3 +306,4 @@
     grid-template-columns: 1fr;
   }
 }
+

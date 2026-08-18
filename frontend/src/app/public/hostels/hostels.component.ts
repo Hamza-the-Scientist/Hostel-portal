@@ -194,14 +194,14 @@ import { HostelSummary } from '../public.model';
 
                 <div class="card-details">
                   <p class="detail-row">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00D4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
                     <span>{{ hostel.location || 'Main Campus, Jamshoro' }}</span>
                   </p>
                   <p class="detail-row">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00D4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M2 4v16M2 8h20M2 17h20M22 8v9"></path>
                     </svg>
                     <span>Capacity: <strong>{{ hostel.totalCapacity }}</strong> beds</span>
@@ -234,7 +234,7 @@ import { HostelSummary } from '../public.model';
           <!-- Empty State -->
           <div class="empty-state" *ngIf="filteredHostels.length === 0">
             <div class="empty-icon-wrap">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8CA5BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
                 <line x1="9" y1="6" x2="9.01" y2="6"></line>
                 <line x1="15" y1="6" x2="15.01" y2="6"></line>
@@ -255,16 +255,16 @@ import { HostelSummary } from '../public.model';
   `,
   styles: [`
     .hostels-page {
-      background: #00142A;
-      color: #FFFFFF;
+      background: var(--color-bg);
+      color: var(--color-text-main);
       min-height: 100vh;
     }
 
     /* Header Banner */
     .hostels-header {
-      background: linear-gradient(180deg, #031B33 0%, #001832 100%);
-      padding: 3rem 1.5rem 2rem 1.5rem;
-      border-bottom: 1px solid #003366;
+      background: linear-gradient(135deg, #013828 0%, #015C3A 100%);
+      padding: 3.5rem 1.5rem 2.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .header-container {
@@ -282,7 +282,7 @@ import { HostelSummary } from '../public.model';
     }
 
     .page-subtitle {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 1rem;
       max-width: 700px;
       margin: 0 auto 2rem auto;
@@ -315,7 +315,7 @@ import { HostelSummary } from '../public.model';
       left: 1.1rem;
       top: 50%;
       transform: translateY(-50%);
-      color: #00D4B2;
+      color: var(--color-secondary);
       display: flex;
       align-items: center;
     }
@@ -323,10 +323,10 @@ import { HostelSummary } from '../public.model';
     .search-input {
       width: 100%;
       padding: 0.8rem 2.5rem 0.8rem 2.8rem;
-      background: #002244;
-      border: 1.5px solid #004488;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-border);
       border-radius: 9999px;
-      color: #FFFFFF;
+      color: var(--color-text-main);
       font-size: 0.9rem;
       outline: none;
       transition: all 250ms ease;
@@ -334,9 +334,8 @@ import { HostelSummary } from '../public.model';
     }
 
     .search-input:focus {
-      border-color: #00D4B2;
-      background: #002B55;
-      box-shadow: 0 0 15px rgba(0, 212, 178, 0.25);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 15px rgba(1, 92, 58, 0.2);
     }
 
     .clear-input-btn {
@@ -346,22 +345,22 @@ import { HostelSummary } from '../public.model';
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.9rem;
       cursor: pointer;
     }
 
-    .clear-input-btn:hover { color: #FFFFFF; }
+    .clear-input-btn:hover { color: var(--color-text-main); }
 
     .btn-toggle-filter {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.8rem 1.3rem;
-      background: #002244;
-      border: 1.5px solid #004488;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-border);
       border-radius: 9999px;
-      color: #00D4B2;
+      color: var(--color-primary);
       font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
@@ -370,14 +369,15 @@ import { HostelSummary } from '../public.model';
     }
 
     .btn-toggle-filter:hover, .btn-toggle-filter.active {
-      background: #003366;
-      border-color: #00D4B2;
-      box-shadow: 0 0 15px rgba(0, 212, 178, 0.25);
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
     }
 
     .filter-badge {
-      background: #00D4B2;
-      color: #00142A;
+      background: var(--color-secondary);
+      color: #013828;
       border-radius: 50%;
       width: 20px;
       height: 20px;
@@ -390,15 +390,15 @@ import { HostelSummary } from '../public.model';
 
     /* Minimal Filter Panel */
     .filter-panel {
-      background: #001E3C;
-      border: 1px solid #003366;
-      border-radius: 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
       text-align: left;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      box-shadow: var(--shadow-md);
       animation: slideDown 250ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -416,7 +416,7 @@ import { HostelSummary } from '../public.model';
     .filter-label {
       font-size: 0.88rem;
       font-weight: 700;
-      color: #93B5D1;
+      color: var(--color-primary-deep);
       display: flex;
       align-items: center;
       gap: 0.4rem;
@@ -432,10 +432,10 @@ import { HostelSummary } from '../public.model';
 
     .gender-chip {
       padding: 0.5rem 1.1rem;
-      background: rgba(0, 34, 68, 0.6);
-      border: 1px solid #003366;
+      background: #F7F8FA;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
@@ -443,26 +443,26 @@ import { HostelSummary } from '../public.model';
     }
 
     .gender-chip:hover {
-      background: #003366;
-      color: #FFFFFF;
+      background: #E2E8F0;
+      color: var(--color-text-main);
     }
 
     .gender-chip.active {
-      background: #00D4B2;
-      border-color: #00D4B2;
-      color: #00142A;
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
       font-weight: 700;
     }
 
     .gender-chip.male.active {
-      background: #3B82F6;
-      border-color: #3B82F6;
+      background: var(--color-primary);
+      border-color: var(--color-primary);
       color: #FFFFFF;
     }
 
     .gender-chip.female.active {
-      background: #EC4899;
-      border-color: #EC4899;
+      background: #C2185B;
+      border-color: #C2185B;
       color: #FFFFFF;
     }
 
@@ -478,10 +478,10 @@ import { HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.4rem;
       padding: 0.45rem 0.8rem;
-      background: rgba(0, 34, 68, 0.4);
-      border: 1px solid #003366;
+      background: #F7F8FA;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
@@ -490,22 +490,21 @@ import { HostelSummary } from '../public.model';
     }
 
     .amenity-chip:hover {
-      background: #002B55;
-      color: #FFFFFF;
-      border-color: #004488;
+      background: #E2E8F0;
+      color: var(--color-text-main);
     }
 
     .amenity-chip.selected {
-      background: rgba(0, 212, 178, 0.1);
-      border-color: #00D4B2;
-      color: #00D4B2;
+      background: rgba(1, 92, 58, 0.1);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
       font-weight: 700;
     }
 
     .chip-check {
       display: flex;
       align-items: center;
-      color: #00D4B2;
+      color: var(--color-primary);
     }
 
     /* Action Buttons Row */
@@ -514,7 +513,7 @@ import { HostelSummary } from '../public.model';
       justify-content: space-between;
       align-items: center;
       padding-top: 0.85rem;
-      border-top: 1px solid #003366;
+      border-top: 1px solid var(--color-border);
       gap: 1rem;
     }
 
@@ -524,9 +523,9 @@ import { HostelSummary } from '../public.model';
       gap: 0.4rem;
       padding: 0.55rem 1rem;
       background: transparent;
-      border: 1px solid #004488;
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
@@ -536,7 +535,7 @@ import { HostelSummary } from '../public.model';
     .btn-clear-all:hover {
       background: rgba(239, 68, 68, 0.15);
       border-color: #EF4444;
-      color: #F87171;
+      color: #DC2626;
     }
 
     .btn-apply-filters {
@@ -544,20 +543,20 @@ import { HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.4rem;
       padding: 0.65rem 1.5rem;
-      background: #00D4B2;
+      background: var(--color-primary);
       border: none;
       border-radius: 6px;
-      color: #00142A;
+      color: #FFFFFF;
       font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 200ms ease;
-      box-shadow: 0 4px 12px rgba(0, 212, 178, 0.3);
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-apply-filters:hover {
-      background: #00E6C3;
-      box-shadow: 0 6px 16px rgba(0, 212, 178, 0.45);
+      background: var(--color-primary-dark);
+      box-shadow: var(--shadow-md);
     }
 
     /* List Section */
@@ -578,7 +577,7 @@ import { HostelSummary } from '../public.model';
     }
 
     .results-meta {
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.9rem;
     }
 
@@ -594,10 +593,10 @@ import { HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.35rem;
       padding: 0.25rem 0.65rem;
-      background: #002B55;
-      border: 1px solid #004488;
+      background: #F4FBF7;
+      border: 1px solid var(--color-border);
       border-radius: 9999px;
-      color: #00D4B2;
+      color: var(--color-primary-dark);
       font-size: 0.8rem;
       font-weight: 600;
     }
@@ -605,7 +604,7 @@ import { HostelSummary } from '../public.model';
     .tag-remove {
       background: none;
       border: none;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       cursor: pointer;
       font-size: 0.8rem;
       padding: 0;
@@ -613,19 +612,19 @@ import { HostelSummary } from '../public.model';
       align-items: center;
     }
 
-    .tag-remove:hover { color: #FFFFFF; }
+    .tag-remove:hover { color: var(--color-text-main); }
 
     .clear-tags-btn {
       background: none;
       border: none;
-      color: #8CA5BD;
+      color: var(--color-text-muted);
       font-size: 0.8rem;
       text-decoration: underline;
       cursor: pointer;
       padding: 0 0.4rem;
     }
 
-    .clear-tags-btn:hover { color: #F87171; }
+    .clear-tags-btn:hover { color: #DC2626; }
 
     /* Cards Grid */
     .hostels-grid {
@@ -635,20 +634,20 @@ import { HostelSummary } from '../public.model';
     }
 
     .hostel-card {
-      background: #001E3C;
-      border-radius: 12px;
-      border: 1px solid #003366;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+      border-radius: var(--radius-card);
+      border: 1.5px solid var(--color-border);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: all 250ms ease;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-sm);
     }
 
     .hostel-card:hover {
       transform: translateY(-4px);
-      border-color: #00D4B2;
-      box-shadow: 0 12px 30px rgba(0, 212, 178, 0.15);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
     }
 
     .card-image {
@@ -678,26 +677,25 @@ import { HostelSummary } from '../public.model';
     }
 
     .gender-badge.male {
-      background: #003366;
-      color: #60A5FA;
-      border: 1px solid #1E40AF;
+      background: rgba(1, 92, 58, 0.1);
+      color: var(--color-primary);
+      border: 1px solid rgba(1, 92, 58, 0.25);
     }
 
     .gender-badge.female {
-      background: #4C0519;
-      color: #F472B6;
-      border: 1px solid #9F1239;
+      background: #FCE4EC;
+      color: #C2185B;
+      border: 1px solid #F48FB1;
     }
 
     .rating-badge {
-      background: rgba(3, 27, 51, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
+      background: #FEF3C7;
+      border: 1px solid #FCD34D;
       padding: 0.25rem 0.6rem;
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 700;
-      color: #FBBF24;
+      color: #B45309;
     }
 
     .card-content {
@@ -710,7 +708,7 @@ import { HostelSummary } from '../public.model';
     .hostel-name {
       font-size: 1.2rem;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--color-primary-deep);
       margin-bottom: 0.85rem;
       line-height: 1.35;
       min-height: 2.6rem;
@@ -726,7 +724,7 @@ import { HostelSummary } from '../public.model';
       gap: 0.45rem;
       margin-bottom: 1.15rem;
       font-size: 0.88rem;
-      color: #93B5D1;
+      color: var(--color-text-muted);
     }
 
     .detail-row {
@@ -749,7 +747,7 @@ import { HostelSummary } from '../public.model';
     }
 
     .vacancy.low-beds {
-      color: #F87171;
+      color: #DC2626;
     }
 
     .amenities-container {
@@ -765,9 +763,9 @@ import { HostelSummary } from '../public.model';
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      background: rgba(0, 212, 178, 0.08);
-      border: 1px solid rgba(0, 212, 178, 0.25);
-      color: #00D4B2;
+      background: #F0FDFA;
+      border: 1px solid #99F6E4;
+      color: #0F766E;
       padding: 0.2rem 0.55rem;
       border-radius: 4px;
       font-size: 0.76rem;
@@ -775,20 +773,20 @@ import { HostelSummary } from '../public.model';
     }
 
     .amenity-pill.extra {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #8CA5BD;
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      color: var(--color-text-muted);
     }
 
     .btn-view-details {
       display: block;
       width: 100%;
       text-align: center;
-      background: #001832;
-      color: #00D4B2;
-      border: 1.5px solid #00D4B2;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      border: 1.5px solid var(--color-primary);
       padding: 0.75rem 1rem;
-      border-radius: 6px;
+      border-radius: var(--radius-btn);
       font-weight: 700;
       font-size: 0.9rem;
       text-decoration: none;
@@ -797,35 +795,18 @@ import { HostelSummary } from '../public.model';
     }
 
     .btn-view-details:hover {
-      background: #00D4B2;
-      color: #00142A;
-      box-shadow: 0 4px 12px rgba(0, 212, 178, 0.4);
+      background: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+      color: #FFFFFF;
     }
 
-    /* Empty State */
     .empty-state {
       text-align: center;
-      padding: 3.5rem 1.5rem;
-      background: #001E3C;
-      border-radius: 12px;
-      border: 1px solid #003366;
-      max-width: 550px;
-      margin: 2rem auto;
+      padding: 4rem 1.5rem;
     }
-
-    .empty-icon-wrap { margin-bottom: 0.85rem; }
-    .empty-state h3 { font-size: 1.35rem; color: #FFFFFF; margin-bottom: 0.4rem; }
-    .empty-state p { color: #8CA5BD; font-size: 0.9rem; margin-bottom: 1.25rem; }
-
-    .reset-search-btn {
-      padding: 0.65rem 1.5rem;
-      background: #00D4B2;
-      border: none;
-      border-radius: 6px;
-      color: #00142A;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    .empty-state h3 { color: var(--color-primary-deep); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .empty-state p { color: var(--color-text-muted); margin-bottom: 1.5rem; }
+    .reset-search-btn { background: var(--color-primary); color: #FFFFFF; border: none; padding: 0.6rem 1.25rem; border-radius: var(--radius-btn); font-weight: 700; cursor: pointer; }
 
     @media (max-width: 768px) {
       .hostels-grid { grid-template-columns: 1fr; }

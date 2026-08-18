@@ -33,7 +33,7 @@ import { RouterModule } from '@angular/router';
       max-height: 100vh;
       overflow: hidden;
       position: relative;
-      background-color: #001832;
+      background-color: var(--color-bg);
       display: flex;
       flex-direction: column;
     }
@@ -47,13 +47,14 @@ import { RouterModule } from '@angular/router';
       filter: blur(10px);
       transform: scale(1.05);
       z-index: 1;
+      opacity: 0.15;
     }
     .auth-header {
-      background: rgba(0, 24, 50, 0.85);
+      background: linear-gradient(135deg, #013828 0%, #015C3A 100%);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0, 199, 182, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 0.85rem 2rem;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-md);
       position: relative;
       z-index: 10;
       flex-shrink: 0;
@@ -79,20 +80,20 @@ import { RouterModule } from '@angular/router';
     .logo-circle {
       width: 42px;
       height: 42px;
-      background: #00C7B6;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
       border-radius: 50%;
-      color: #001832;
+      color: #013828;
       font-weight: 800;
       font-size: 0.9rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 14px rgba(0, 199, 182, 0.4);
+      box-shadow: var(--shadow-sm);
     }
     .brand-title {
       font-size: 1.5rem;
       font-weight: 800;
-      color: #00C7B6;
+      color: var(--color-secondary);
       letter-spacing: 0.02em;
     }
     .auth-main-content {

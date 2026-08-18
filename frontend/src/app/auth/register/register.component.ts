@@ -14,65 +14,67 @@ import { AuthService } from '../../core/auth.service';
       max-width: 620px;
       margin: 0.5rem auto 0;
       padding: 1.75rem 2rem;
-      border-radius: 14px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg);
       background: white;
-      border: 1px solid rgba(255,255,255,0.8);
+      border: 1px solid var(--color-border);
     }
     .header-box { text-align: center; margin-bottom: 2rem; }
     .verify-badge {
       display: inline-block;
-      background: #e8f5e9;
-      color: #015C3A;
+      background: #F4FBF7;
+      color: var(--color-primary);
+      border: 1px solid rgba(1, 92, 58, 0.2);
       padding: 0.35rem 0.9rem;
       border-radius: 20px;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 0.75rem;
     }
-    .subtitle { color: #666; font-size: 0.92rem; margin-top: 0.5rem; }
+    .subtitle { color: var(--color-text-muted); font-size: 0.92rem; margin-top: 0.5rem; }
     .form-row { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
     .form-group { flex: 1; }
     .form-group.full { margin-bottom: 1.25rem; }
-    label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.88rem; color: #1E293B; }
+    label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.88rem; color: var(--color-text-main); }
     input, select {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-btn);
       box-sizing: border-box;
       font-size: 0.95rem;
-      color: #0F172A;
+      color: var(--color-text-main);
       transition: border-color 0.2s;
     }
-    input:focus { outline: none; border-color: #00897B; }
+    input:focus, select:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(1, 92, 58, 0.15); }
     .password-input-wrapper { position: relative; display: flex; align-items: center; }
     .password-input-wrapper input { padding-right: 3rem; }
     .toggle-password-btn { position: absolute; right: 0.75rem; background: transparent !important; border: none !important; padding: 0.25rem !important; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: none !important; width: auto !important; height: auto !important; min-height: 0 !important; }
-    .toggle-password-btn:hover svg { stroke: #00C7B6; }
+    .toggle-password-btn:hover svg { stroke: var(--color-primary); }
     .error { color: #d32f2f; font-size: 0.82rem; margin-top: 0.3rem; }
     .info-note {
-      background: #f5f5f5;
+      background: #F4FBF7;
       padding: 0.85rem;
       border-radius: 6px;
       font-size: 0.86rem;
-      color: #475569;
-      border-left: 4px solid #00897B;
+      color: var(--color-text-muted);
+      border-left: 4px solid var(--color-primary);
       margin-bottom: 1.5rem;
     }
     .btn-submit {
       width: 100%;
       padding: 0.85rem;
-      background: #00897B;
+      background: var(--color-primary);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: var(--radius-btn);
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: background 0.2s;
+      box-shadow: var(--shadow-sm);
     }
-    .btn-submit:hover:not(:disabled) { background: #00796B; }
+    .btn-submit:hover:not(:disabled) { background: var(--color-primary-dark); }
     .btn-submit:disabled { background: #9e9e9e; cursor: not-allowed; }
     .server-error {
       background: #ffebee;
@@ -85,9 +87,9 @@ import { AuthService } from '../../core/auth.service';
       font-size: 0.9rem;
       border: 1px solid #ffcdd2;
     }
-    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.95rem; color: #475569; font-weight: 500; }
-    .login-link a { color: #00897B; font-weight: 700; text-decoration: underline; }
-    .login-link a:hover { color: #004D40; }
+    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.95rem; color: var(--color-text-muted); font-weight: 500; }
+    .login-link a { color: var(--color-primary); font-weight: 700; text-decoration: underline; }
+    .login-link a:hover { color: var(--color-primary-dark); }
   `]
 })
 export class RegisterComponent {

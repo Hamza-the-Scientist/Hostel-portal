@@ -21,7 +21,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
         <div class="hostel-card">
           <div class="hostel-hero">
             <span class="hero-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
                 <line x1="12" y1="18" x2="12" y2="22"></line>
               </svg>
@@ -36,7 +36,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
           <div class="details-grid">
             <div class="detail-box">
               <span class="box-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 2l-2 2m-1.5 1.5L4 19l-2 3 3-2 13.5-13.5z"></path>
                 </svg>
               </span>
@@ -47,7 +47,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
             </div>
             <div class="detail-box">
               <span class="box-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
                 </svg>
               </span>
@@ -58,7 +58,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
             </div>
             <div class="detail-box">
               <span class="box-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                   <line x1="16" y1="2" x2="16" y2="6"></line>
                   <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -72,7 +72,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
             </div>
             <div class="detail-box">
               <span class="box-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                   <line x1="1" y1="10" x2="23" y2="10"></line>
                 </svg>
@@ -105,7 +105,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
       } @else {
         <div class="empty-state">
           <span class="empty-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00C7B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
               <line x1="12" y1="18" x2="12" y2="22"></line>
             </svg>
@@ -119,29 +119,29 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
   `,
   styles: [`
     .view-container { max-width: 900px; margin: 0 auto; }
-    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.25rem; }
-    .subtitle { color: #CBD5E1; font-size: 0.9rem; margin-bottom: 1.5rem; }
-    .hostel-card { background: #001C3B; border: 1px solid #002D5A; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
-    .hostel-hero { display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #002D5A; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+    .view-header h2 { font-size: 1.5rem; font-weight: 800; color: var(--color-primary-deep); margin-bottom: 0.25rem; }
+    .subtitle { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .hostel-card { background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 2rem; box-shadow: var(--shadow-sm); }
+    .hostel-hero { display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
     .hero-icon { display: flex; align-items: center; justify-content: center; }
-    .hostel-hero h3 { font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin: 0; }
-    .hostel-hero p { color: #CBD5E1; margin: 0.2rem 0 0 0; }
+    .hostel-hero h3 { font-size: 1.3rem; font-weight: 800; color: var(--color-primary-deep); margin: 0; }
+    .hostel-hero p { color: var(--color-text-muted); margin: 0.2rem 0 0 0; }
     .status-badge { margin-left: auto; padding: 0.35rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
-    .status-badge.active { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.5); }
+    .status-badge.active { background: #D1FAE5; color: #047857; border: 1px solid #A7F3D0; }
     .details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .detail-box { display: flex; align-items: center; gap: 0.85rem; background: #00142A; padding: 1rem; border-radius: 12px; border: 1px solid #002D5A; }
+    .detail-box { display: flex; align-items: center; gap: 0.85rem; background: #F4FBF7; padding: 1rem; border-radius: 12px; border: 1px solid var(--color-border); }
     .box-icon { display: flex; align-items: center; justify-content: center; }
-    .detail-box strong { font-size: 0.8rem; color: #94A3B8; text-transform: uppercase; }
-    .detail-box p { font-size: 1rem; font-weight: 700; color: #FFFFFF; margin: 0.1rem 0 0 0; }
+    .detail-box strong { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; }
+    .detail-box p { font-size: 1rem; font-weight: 700; color: var(--color-primary-deep); margin: 0.1rem 0 0 0; }
     .actions-row { display: flex; gap: 1rem; }
-    .btn { padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s ease; cursor: pointer; }
-    .btn-primary { background: transparent; border: 2px solid #00C7B6; color: #00C7B6; }
-    .btn-primary:hover { background: #00C7B6; color: #001832; box-shadow: 0 4px 12px rgba(0, 199, 182, 0.35); }
-    .btn-outline { background: transparent; border: 1px solid #00C7B6; color: #00C7B6; }
-    .btn-outline:hover { background: #00C7B6; color: #001832; box-shadow: 0 4px 14px rgba(0, 199, 182, 0.4); }
-    .empty-state { text-align: center; padding: 3rem; background: #001C3B; border-radius: 16px; border: 1px solid #002D5A; color: #FFFFFF; }
+    .btn { padding: 0.65rem 1.25rem; border-radius: var(--radius-btn); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s ease; cursor: pointer; }
+    .btn-primary { background: var(--color-primary); color: #FFFFFF; border: none; }
+    .btn-primary:hover { background: var(--color-primary-dark); box-shadow: var(--shadow-sm); }
+    .btn-outline { background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); }
+    .btn-outline:hover { background: var(--color-primary); color: #FFFFFF; }
+    .empty-state { text-align: center; padding: 3rem; background: #FFFFFF; border-radius: var(--radius-card); border: 1px solid var(--color-border); color: var(--color-text-main); }
     .empty-icon { display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-    .loading-state { text-align: center; padding: 3rem; color: #CBD5E1; }
+    .loading-state { text-align: center; padding: 3rem; color: var(--color-text-muted); }
   `]
 })
 export class HostelViewComponent implements OnInit {

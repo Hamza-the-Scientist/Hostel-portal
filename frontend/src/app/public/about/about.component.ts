@@ -24,7 +24,7 @@ import { RouterModule } from '@angular/router';
         <div class="pillars-container">
           <div class="pillar-card">
             <div class="icon-wrap">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00D4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="3" x2="12" y2="21"></line>
                 <line x1="4" y1="7" x2="20" y2="7"></line>
                 <path d="M4 7l4 7a3 3 0 0 0 6 0"></path>
@@ -36,7 +36,7 @@ import { RouterModule } from '@angular/router';
           </div>
           <div class="pillar-card">
             <div class="icon-wrap">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00D4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
@@ -45,7 +45,7 @@ import { RouterModule } from '@angular/router';
           </div>
           <div class="pillar-card">
             <div class="icon-wrap">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00D4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
             </div>
@@ -82,14 +82,14 @@ import { RouterModule } from '@angular/router';
   `,
   styles: [`
     .about-page {
-      background: #00142A;
-      color: #FFFFFF;
+      background: var(--color-bg);
+      color: var(--color-text-main);
       min-height: 100vh;
     }
     .about-hero {
-      background: linear-gradient(180deg, #031B33 0%, #001832 100%);
+      background: linear-gradient(135deg, #013828 0%, #015C3A 100%);
       padding: 4rem 1.5rem 3rem 1.5rem;
-      border-bottom: 1px solid #003366;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
     }
     .hero-container {
@@ -99,10 +99,10 @@ import { RouterModule } from '@angular/router';
     .sub-badge {
       display: inline-block;
       padding: 0.35rem 1rem;
-      background: rgba(0, 212, 178, 0.12);
-      border: 1px solid rgba(0, 212, 178, 0.3);
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 9999px;
-      color: #00D4B2;
+      color: var(--color-secondary);
       font-size: 0.8rem;
       font-weight: 800;
       letter-spacing: 0.05em;
@@ -115,7 +115,7 @@ import { RouterModule } from '@angular/router';
       margin-bottom: 1rem;
     }
     .page-subtitle {
-      color: #93B5D1;
+      color: rgba(255, 255, 255, 0.9);
       font-size: 1.15rem;
       line-height: 1.6;
     }
@@ -130,16 +130,17 @@ import { RouterModule } from '@angular/router';
       gap: 2rem;
     }
     .pillar-card {
-      background: #001E3C;
-      border: 1px solid #003366;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+      border: 1.5px solid var(--color-border);
       border-radius: 14px;
       padding: 2rem;
       transition: all 300ms ease;
+      box-shadow: var(--shadow-sm);
     }
     .pillar-card:hover {
       transform: translateY(-4px);
-      border-color: #00D4B2;
-      box-shadow: 0 10px 25px rgba(0, 212, 178, 0.12);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
     }
     .icon-wrap {
       font-size: 2.5rem;
@@ -147,18 +148,19 @@ import { RouterModule } from '@angular/router';
     }
     .pillar-card h3 {
       font-size: 1.25rem;
-      color: #FFFFFF;
+      color: var(--color-primary-deep);
       margin-bottom: 0.75rem;
+      font-weight: 700;
     }
     .pillar-card p {
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
     }
     .mission-section {
-      background: #001A35;
+      background: #FFFFFF;
       padding: 4rem 1.5rem;
-      border-top: 1px solid #003366;
+      border-top: 1px solid var(--color-border);
       text-align: center;
     }
     .mission-container {
@@ -167,11 +169,12 @@ import { RouterModule } from '@angular/router';
     }
     .mission-container h2 {
       font-size: 2rem;
-      color: #00D4B2;
+      color: var(--color-primary-deep);
       margin-bottom: 1rem;
+      font-weight: 800;
     }
     .mission-container p {
-      color: #CBD5E1;
+      color: var(--color-text-main);
       font-size: 1.1rem;
       line-height: 1.7;
       margin-bottom: 3rem;
@@ -190,10 +193,10 @@ import { RouterModule } from '@angular/router';
     .stat-num {
       font-size: 3rem;
       font-weight: 900;
-      color: #00D4B2;
+      color: var(--color-primary);
     }
     .stat-lbl {
-      color: #93B5D1;
+      color: var(--color-text-muted);
       font-weight: 600;
       font-size: 0.9rem;
     }

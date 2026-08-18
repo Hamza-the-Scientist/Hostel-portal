@@ -3,42 +3,68 @@
    ========================================================================== */
 
 :root {
-  /* Brand Colors from User Request */
-  --color-primary: #00C7B6; /* Vibrant Teal Accent */
-  --color-primary-dark: #001832; /* Deep Dark Navy Text Color */
-  --color-secondary: #00E5D2; /* Light Cyan Accent */
-  
-  /* Deep Dark Theme Colors */
-  --color-bg: #001832; /* Deep Dark Navy Page Background */
-  --color-surface: #001C3B; /* Deep Dark Navy Card Surface */
-  --color-surface-hover: #00254D;
-  --color-text-main: #FFFFFF; /* Main White Text */
-  --color-text-muted: #94A3B8; /* Muted Slate Text */
-  --color-border: #002D5A; /* Border Token */
+  /* Brand Primary Colors (Deep Sindh Green Theme) */
+  --color-primary: #015C3A;
+  /* Primary Sindh Green */
+  --color-primary-dark: #01432A;
+  /* Dark Sindh Green */
+  --color-primary-deep: #013828;
+  /* Deep Hero / Sidebar Base Green */
+  --color-primary-light: #017A4A;
+  /* Light Gradient Green */
 
-  /* UI Tokens */
-  --color-accent: #00C7B6;
-  --color-on-primary: #FFFFFF;
+  /* Brand Accent Colors (Warm Gold) */
+  --color-secondary: #D4AF37;
+  /* Warm Gold Accent */
+  --color-secondary-dark: #B8962A;
+  /* Dark Gold / Hover State */
+
+  /* Neutral Backgrounds & Surfaces */
+  --color-bg: #F7F8FA;
+  /* Main App Background */
+  --color-surface: #FFFFFF;
+  /* Card & Container Surface */
+  --color-border: #E0E0E0;
+  /* Light Border Color */
+
+  /* Neutral Typography Colors */
+  --color-text-main: #333333;
+  /* Main Body Text */
+  --color-text-muted: #666666;
+  /* Secondary / Subtitle Text */
+
+  /* UI System Tokens */
   --radius-card: 12px;
   --radius-btn: 6px;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
-  --font-family: 'Inter', sans-serif;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Brand Gradients */
+  --grad-hero: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
+  --grad-gold: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  --grad-card: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
-  background-color: #001832;
+  background-color: var(--color-bg);
   color: var(--color-text-main);
   line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0 0 1rem 0;
   font-weight: 700;
-  color: #001832; /* Deep Dark Navy for All Headings */
+  color: var(--color-primary-deep);
 }
 
 a {
@@ -46,8 +72,9 @@ a {
   color: var(--color-primary);
   transition: color 0.2s;
 }
+
 a:hover {
-  color: var(--color-secondary);
+  color: var(--color-primary-dark);
 }
 
 /* Global Container */
@@ -57,57 +84,80 @@ a:hover {
   padding: 0 1.5rem;
 }
 
+/* Helper Gradient Classes */
+.bg-grad-hero {
+  background: var(--grad-hero);
+}
+
+.bg-grad-gold {
+  background: var(--grad-gold);
+}
+
+.bg-grad-card {
+  background: var(--grad-card);
+}
+
 /* Button Component */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-btn);
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: var(--font-family);
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   border: none;
 }
 
 .btn-primary {
-  background-color: transparent;
-  border: 2px solid #00C7B6;
-  color: #00C7B6;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-sm);
 }
+
 .btn-primary:hover {
-  background-color: #00C7B6;
-  color: #001832;
-  box-shadow: 0 4px 12px rgba(0, 199, 182, 0.35);
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: var(--color-surface);
-  color: var(--color-primary);
-  border: 1px solid var(--color-border);
+  background: var(--grad-gold);
+  color: #013828;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
 }
+
 .btn-secondary:hover {
-  background-color: var(--color-surface-hover);
+  background: linear-gradient(135deg, #B8962A 0%, #A38222 100%);
+  color: #013828;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background-color: transparent;
-  border: 2px solid #00C7B6;
-  color: #00C7B6;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
   font-weight: 600;
   transition: all 0.2s ease;
 }
+
 .btn-outline:hover {
-  background-color: #00C7B6;
-  color: #001832;
-  box-shadow: 0 4px 12px rgba(0, 199, 182, 0.35);
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }
 
 /* Form Styles Override */
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: var(--font-family);
 }
