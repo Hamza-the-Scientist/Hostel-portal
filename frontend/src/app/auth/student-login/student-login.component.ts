@@ -10,7 +10,7 @@ import { AuthService } from '../../core/auth.service';
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './student-login.component.html',
   styles: [`
-    .login-container { max-width: 420px; width: 100%; margin: 0.5rem auto 0; padding: 1.75rem 2rem; border-radius: var(--radius-card); box-shadow: var(--shadow-lg); background: white; color: var(--color-text-main); border: 1px solid var(--color-border); }
+    .login-container { max-width: 420px; width: 100%; margin: 0.5rem auto 0; padding: 1.75rem 2rem; border-radius: var(--radius-card); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); color: var(--color-text-main); border: 1px solid rgba(255, 255, 255, 0.8); }
     .form-group { margin-bottom: 1rem; }
     label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--color-text-main); }
     input { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--color-border); border-radius: var(--radius-btn); box-sizing: border-box; font-size: 0.95rem; color: var(--color-text-main); }

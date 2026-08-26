@@ -15,9 +15,10 @@ import { AuthService } from '../../core/auth.service';
       margin: 0.5rem auto 0;
       padding: 1.75rem 2rem;
       border-radius: var(--radius-card);
-      box-shadow: var(--shadow-lg);
-      background: white;
-      border: 1px solid var(--color-border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
     }
     .header-box { text-align: center; margin-bottom: 2rem; }
     .verify-badge {

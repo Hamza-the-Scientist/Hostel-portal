@@ -1,6 +1,4 @@
-// ============================================================
-// models/hostel.model.ts — Hostel & Room TypeScript interfaces
-// ============================================================
+// Hostel & Room interfaces
 
 export interface Hostel {
   hostelId: number;

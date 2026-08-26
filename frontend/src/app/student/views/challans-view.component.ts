@@ -2,6 +2,8 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { MeritService, ChallanListDto } from '../merit-result/merit.service';
+import { HttpClient } from '@angular/common/http';
+import { windowWhen } from 'rxjs';
 
 @Component({
   selector: 'app-challans-view',
@@ -23,7 +25,7 @@ import { MeritService, ChallanListDto } from '../merit-result/merit.service';
           <div class="challan-card">
             <div class="card-badge info">Processing Fee</div>
             <h3>Application Processing Fee</h3>
-            <div class="amount">PKR 1,500</div>
+            <div class="amount">PKR 100</div>
             <div class="info-row"><span>Status:</span> <strong>{{ c.processingFeeChallan?.status || 'Paid' }}</strong></div>
             <div class="info-row"><span>Challan #:</span> <code>{{ c.processingFeeChallan?.challanNumber || 'PF-2026-8841' }}</code></div>
             <button class="btn btn-outline" (click)="downloadReceipt('Processing Fee')">⬇ Download Receipt</button>
@@ -33,7 +35,7 @@ import { MeritService, ChallanListDto } from '../merit-result/merit.service';
           <div class="challan-card highlight">
             <div class="card-badge primary">Hostel Fee</div>
             <h3>Final Accommodation Challan</h3>
-            <div class="amount">PKR {{ c.finalHostelChallan?.amount || 15000 | number }}</div>
+            <div class="amount">PKR {{ c.finalHostelChallan?.amount || 12000 | number }}</div>
             <div class="info-row"><span>Status:</span> <strong>{{ c.finalHostelChallan?.status || 'Pending Payment' }}</strong></div>
             <div class="info-row"><span>Challan #:</span> <code>{{ c.finalHostelChallan?.challanNumber || 'HC-2026-9012' }}</code></div>
             <button class="btn btn-primary" (click)="downloadReceipt('Hostel Fee')">⬇ Download Final Challan</button>
@@ -85,7 +87,11 @@ export class ChallansViewComponent implements OnInit {
     });
   }
 
+  
+
   downloadReceipt(type: string) {
+    
     alert(`Downloading official Sindh University ${type} Challan PDF...`);
+    
   }
 }

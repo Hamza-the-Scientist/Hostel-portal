@@ -180,7 +180,7 @@ import { HostelSummary } from '../public.model';
               <!-- Image Banner -->
               <div 
                 class="card-image" 
-                [style.background-image]="'url(' + (hostel.mainImageUrl || 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=80') + ')'"
+                [style.background-image]="'url(&quot;' + (hostel.mainImageUrl || 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=80') + '&quot;)'"
               >
                 <div class="badge-overlay">
                   <span class="gender-badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }}</span>
@@ -455,8 +455,8 @@ import { HostelSummary } from '../public.model';
     }
 
     .gender-chip.male.active {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
+      background: #0284C7;
+      border-color: #0284C7;
       color: #FFFFFF;
     }
 
@@ -653,7 +653,7 @@ import { HostelSummary } from '../public.model';
     .card-image {
       height: 190px;
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       position: relative;
     }
 
@@ -677,9 +677,9 @@ import { HostelSummary } from '../public.model';
     }
 
     .gender-badge.male {
-      background: rgba(1, 92, 58, 0.1);
-      color: var(--color-primary);
-      border: 1px solid rgba(1, 92, 58, 0.25);
+      background: #E0F2FE;
+      color: #0369A1;
+      border: 1px solid #7DD3FC;
     }
 
     .gender-badge.female {

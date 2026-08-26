@@ -23,9 +23,10 @@ import { HostelDetail, HostelReview } from '../public.model';
     }
     .banner {
       width: 100%;
-      height: 400px;
+      height: 480px;
       background-size: cover;
-      background-position: center;
+      background-position: center top !important;
+      background-repeat: no-repeat;
       background-color: #eee;
     }
     .content {
@@ -51,7 +52,7 @@ import { HostelDetail, HostelReview } from '../public.model';
       font-size: 0.8rem;
       font-weight: 600;
     }
-    .badge.male { background: rgba(1, 92, 58, 0.1); color: var(--color-primary); border: 1px solid rgba(1, 92, 58, 0.25); }
+    .badge.male { background: #E0F2FE; color: #0369A1; border: 1px solid #7DD3FC; }
     .badge.female { background: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; }
 
     .rating-reviews-link {

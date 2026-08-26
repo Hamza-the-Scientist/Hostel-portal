@@ -1,6 +1,3 @@
-/* ==========================================================================
-   student/layout/layout.component.css
-   ========================================================================== */
 
 .student-portal {
   display: flex;
@@ -9,7 +6,7 @@
   position: relative;
 }
 
-/* ── Mobile Backdrop Overlay ────────────────────────────────────────────── */
+/* Mobile Backdrop Overlay  */
 .mobile-backdrop {
   position: fixed;
   inset: 0;
@@ -24,7 +21,7 @@
   to { opacity: 1; }
 }
 
-/* ── Sidebar ────────────────────────────────────────────────────────────── */
+/* Sidebar  */
 .sidebar {
   width: 72px;
   min-height: 100vh;
@@ -65,7 +62,7 @@
   font-size: 0.9rem;
 }
 
-/* ── Nav Links ──────────────────────────────────────────────────────────── */
+/* Nav Links  */
 .sidebar__nav {
   flex: 1;
   padding: 1rem 0.5rem;
@@ -126,7 +123,7 @@
   opacity: 1;
 }
 
-/* ── Footer ─────────────────────────────────────────────────────────────── */
+/*  Footer  */
 .sidebar__footer {
   padding: 1rem 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -207,7 +204,7 @@
   color: #ffffff;
 }
 
-/* ── Main Content ───────────────────────────────────────────────────────── */
+/* Main Content */
 .portal-main {
   flex: 1;
   display: flex;
@@ -379,7 +376,7 @@
   background: var(--color-bg);
 }
 
-/* ── Mobile Bottom Navigation Bar ────────────────────────────────────────── */
+/* Mobile Navigation Bar */
 .mobile-bottom-nav {
   display: none;
   position: fixed;
@@ -418,7 +415,6 @@
   font-weight: 700;
 }
 
-/* ── Responsive Queries ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hamburger-btn {
     display: flex;

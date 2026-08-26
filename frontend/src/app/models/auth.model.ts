@@ -21,7 +21,7 @@ export interface RegisterStudentRequest {
   registrationNumber: string;
   cnic: string;
   gender: number; // Enum: 0=Male, 1=Female, etc.
-  dateOfBirth: string; // YYYY-MM-DD
+  dateOfBirth: string; 
 }
 
 export interface AuthResponse {

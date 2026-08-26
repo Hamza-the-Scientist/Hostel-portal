@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
     <div class="view-container">
       <div class="view-header">
         <h2>Feedback & Suggestions</h2>
-        <p class="subtitle">Share your feedback to help us improve hostel facilities and portal features.</p>
+        <p class="subtitle">Help us improve hostel facilities and portal features.</p>
       </div>
 
       <div class="card">

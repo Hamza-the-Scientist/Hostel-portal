@@ -63,34 +63,34 @@ const MOCK_RESIDENCY: StudentResidencyDto = {
   roomNumber: '204',
   bedLabel: 'Bed-2',
   checkInDate: '2024-09-01',
-  annualFeeStatus: 'Unpaid',
+  annualFeeStatus: 'paid',
   annualChallan: undefined,
   canRequestRoomChange: true,
   allowFreshApplication: false,
 };
 
 const MOCK_ROOM_CHANGE_REQUESTS: RoomChangeRequestDto[] = [
-  {
-    requestId: 1,
-    residentId: 1,
-    currentHostelRoom: 'Allama Iqbal Hostel — Block A, Room 204',
-    preferredBlock: 'Block B',
-    reason: 'Room is too far from the study hall. I need a quieter environment closer to the library.',
-    additionalDetails: 'Any room on the 1st floor of Block B would be preferred.',
-    status: 'Under Review',
-    adminRemarks: undefined,
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    requestId: 2,
-    residentId: 1,
-    currentHostelRoom: 'Allama Iqbal Hostel — Block A, Room 204',
-    preferredBlock: 'Block C',
-    reason: 'Noise issue — the room adjacent to the common room is too loud at night.',
-    status: 'Rejected',
-    adminRemarks: 'No vacancies currently available in Block C. Please try again next semester.',
-    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-  },
+  // {
+  //   requestId: 1,
+  //   residentId: 1,
+  //   currentHostelRoom: 'Allama Iqbal Hostel — Block A, Room 204',
+  //   preferredBlock: 'Block B',
+  //   reason: 'Room is too far from the study hall. I need a quieter environment closer to the library.',
+  //   additionalDetails: 'Any room on the 1st floor of Block B would be preferred.',
+  //   status: 'Under Review',
+  //   adminRemarks: undefined,
+  //   createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  // },
+  // {
+  //   requestId: 2,
+  //   residentId: 1,
+  //   currentHostelRoom: 'Allama Iqbal Hostel — Block A, Room 204',
+  //   preferredBlock: 'Block C',
+  //   reason: 'Noise issue — the room adjacent to the common room is too loud at night.',
+  //   status: 'Rejected',
+  //   adminRemarks: 'No vacancies currently available in Block C. Please try again next semester.',
+  //   createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+  // },
 ];
 
 // ── Service ───────────────────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ export class ResidencyService {
         annualChallan: {
           feeId: request.feeId,
           challanNumber: 'ANN-2026-0001',
-          amount: 15000,
+          amount: 12000,
           status: 'Paid',
           createdAt: new Date().toISOString(),
           dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),

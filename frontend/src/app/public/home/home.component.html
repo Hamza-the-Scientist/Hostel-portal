@@ -40,7 +40,7 @@
     </svg>
   </button>
 
-  <!-- Slide Indicators / Dots -->
+  <!-- Slide Indicators -->
   <div class="dots-container" role="tablist" aria-label="Hero text slides">
     <button *ngFor="let slide of heroSlides; let i = index" class="dot" [class.active]="i === currentSlideIndex"
       (click)="goToSlide(i)" [attr.aria-label]="'Go to slide ' + (i + 1)" [attr.aria-selected]="i === currentSlideIndex"
@@ -69,7 +69,7 @@
     <div class="info-banner-left">
       <div *ngFor="let slide of infoBannerSlides; let i = index"
         [style.display]="i === currentInfoSlideIndex ? 'block' : 'none'">
-        <h2 class="info-title">{{ slide.title }}</h2>
+        <h2 class="info-title">{{ slide.title }}</h2>info-nav-arrow right
         <p class="info-subtitle">{{ slide.subtitle }}</p>
 
         <div class="info-bullets">
@@ -148,7 +148,7 @@
       <div class="card" *ngFor="let hostel of filteredHostels">
         <!-- Fallback image logic via style -->
         <div class="card-img"
-          [style.background-image]="hostel.mainImageUrl ? 'url(' + hostel.mainImageUrl + ')' : 'url(assets/placeholder-hostel.jpg)'">
+          [style.background-image]="hostel.mainImageUrl ? 'url(&quot;' + hostel.mainImageUrl + '&quot;)' : 'url(assets/placeholder-hostel.jpg)'">
         </div>
 
         <div class="card-body">

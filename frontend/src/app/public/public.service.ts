@@ -9,6 +9,62 @@ export class PublicService {
     // MALE HOSTELS
     {
       hostelId: 1,
+      name: 'Marvi Girls Hostel',
+      gender: 'Female',
+      location: 'Girls Hostel Complex, Main Campus',
+      mainImageUrl: '/images/marvi-hostel.jpeg',
+      totalCapacity: 683,
+      availableBeds: 25,
+      rating: 4.6,
+      keyAmenities: ['High-Speed WiFi', '24/7 Female Security', 'In-House Mess', 'Lush Green Lawn', 'Reading Room'],
+      warden: 'Prof. Dr. Shaheen Shah',
+      wardenPhone: '+92 300 9876543',
+      description: 'The premier girls hostel offering top-notch security, beautiful central garden, and nutritious hygienic food options.'
+    },
+    {
+      hostelId: 2,
+      name: 'Lal Shahbaz Hostel',
+      gender: 'Male',
+      location: 'Main Campus, Jamshoro',
+      mainImageUrl: '/images/lal-shahbaz-hostel.jpeg',
+      totalCapacity: 412,
+      availableBeds: 19,
+      rating: 4.4,
+      keyAmenities: ['High-Speed WiFi', 'Reading Hall', 'Cafeteria', 'Sports Ground', 'Guarded Gate'],
+      warden: 'Engr. Mansoor Ali Soomro',
+      wardenPhone: '+92 312 4567890',
+      description: 'Named after the revered Sufi saint, this hostel combines traditional architecture with active student sports culture and spacious rooms.'
+    },
+    {
+      hostelId: 3,
+      name: 'P.G Girl Hostel',
+      gender: 'Female',
+      location: 'Main Campus, Jamshoro',
+      mainImageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80',
+      totalCapacity: 204,
+      availableBeds: 48,
+      rating: 4.0,
+      keyAmenities: ['24/7 Security & CCTV', 'Subsidized Mess', 'Laundry Area', 'Indoor Games', 'Generator'],
+      warden: 'Prof. Fiza ',
+      wardenPhone: '+92 333 9876542',
+      description: 'The largest capacity hostel on campus, known for its bustling student community, budget-friendly mess facility, and open courtyard.'
+    },
+    {
+      hostelId: 4,
+      name: 'Under Graduate Girls Hostel',
+      gender: 'Female',
+      location: 'Main Campus, Jamshoro',
+      mainImageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      totalCapacity: 451,
+      availableBeds: 8,
+      rating: 4.1,
+      keyAmenities: ['WiFi', 'Quiet Study Area', 'Filtered Water', 'Security Guard', 'Common Room'],
+      warden: 'Dr. Ghulam Mustafa Shah',
+      wardenPhone: '+92 300 1122334',
+      description: 'A cozy, lower-density residential block providing a quiet and focused environment ideal for Under Graduate'
+    },
+    {
+      hostelId: 5,
       name: 'Allama Iqbal Hostel',
       gender: 'Male',
       location: 'Main Campus, Jamshoro',
@@ -22,49 +78,21 @@ export class PublicService {
       description: "A vibrant boys' hostel offering a balanced academic atmosphere, large common areas, and quick access to central campus departments."
     },
     {
-      hostelId: 2,
-      name: 'Government Federal Hostel',
+      hostelId: 6,
+      name: 'Sindh University Teachers Hostel',
       gender: 'Male',
       location: 'Main Campus, Jamshoro',
-      mainImageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 570,
-      availableBeds: 48,
-      rating: 4.0,
-      keyAmenities: ['24/7 Security & CCTV', 'Subsidized Mess', 'Laundry Area', 'Indoor Games', 'Generator'],
-      warden: 'Prof. Tariq Hussain Chandio',
-      wardenPhone: '+92 333 9876542',
-      description: 'The largest capacity hostel on campus, known for its bustling student community, budget-friendly mess facility, and open courtyard.'
-    },
+      mainImageUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80',
+      totalCapacity: 75,
+      availableBeds: 5,
+      rating: 4.2,
+      keyAmenities: ['WiFi', 'Dedicated Dining Hall', '24/7 Power Backup', 'Parking Space', 'Gardens'],
+      warden: 'Mr. Abdul Rasheed Kalhoro',
+      wardenPhone: '+92 305 6677889',
+      description: 'Reserved for eligible university teachers and research fellows, offering well-maintained gardens and peace of mind.'
+    }, 
     {
-      hostelId: 3,
-      name: 'Lal Shahbaz Hostel',
-      gender: 'Male',
-      location: 'Main Campus, Jamshoro',
-      mainImageUrl: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 412,
-      availableBeds: 19,
-      rating: 4.4,
-      keyAmenities: ['High-Speed WiFi', 'Reading Hall', 'Cafeteria', 'Sports Ground', 'Guarded Gate'],
-      warden: 'Engr. Mansoor Ali Soomro',
-      wardenPhone: '+92 312 4567890',
-      description: 'Named after the revered Sufi saint, this hostel combines traditional architecture with active student sports culture and spacious rooms.'
-    },
-    {
-      hostelId: 4,
-      name: 'Allama Dr. Daudpota Block Hostel "C"',
-      gender: 'Male',
-      location: 'Main Campus, Jamshoro',
-      mainImageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 90,
-      availableBeds: 8,
-      rating: 4.1,
-      keyAmenities: ['WiFi', 'Quiet Study Area', 'Filtered Water', 'Security Guard', 'Common Room'],
-      warden: 'Dr. Ghulam Mustafa Shah',
-      wardenPhone: '+92 300 1122334',
-      description: 'A cozy, lower-density residential block providing a quiet and focused environment ideal for postgraduate and final-year students.'
-    },
-    {
-      hostelId: 5,
+      hostelId: 7,
       name: 'Sindh University Employees Hostel',
       gender: 'Male',
       location: 'Main Campus, Jamshoro',
@@ -78,12 +106,12 @@ export class PublicService {
       description: 'Reserved for eligible university staff sons and research fellows, offering well-maintained gardens and peace of mind.'
     },
     {
-      hostelId: 6,
-      name: 'Hasrat Mohani Block Hostel "D"',
+      hostelId: 8,
+      name: 'Blocks Hostel',
       gender: 'Male',
       location: 'Main Campus, Jamshoro',
       mainImageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 110,
+      totalCapacity: 180,
       availableBeds: 12,
       rating: 3.9,
       keyAmenities: ['Mess Facility', 'RO Water Plant', 'Study Room', 'Night Security', 'Badminton Court'],
@@ -92,26 +120,12 @@ export class PublicService {
       description: 'Compact residential block featuring an active badminton court and easy access to the central university library.'
     },
     {
-      hostelId: 7,
-      name: 'Shah Abdul Latif Bhittai Hostel',
-      gender: 'Male',
-      location: 'Main Campus, Jamshoro',
-      mainImageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 450,
-      availableBeds: 28,
-      rating: 4.5,
-      keyAmenities: ['High-Speed Fiber WiFi', 'Modern Gymnasium', 'Central Mess', 'CCTV System', 'Study Lounge'],
-      warden: 'Dr. Sarfaraz Ali Bhutto',
-      wardenPhone: '+92 302 9988776',
-      description: 'One of the most modern boys hostels with updated infrastructure, high-speed fiber internet, and a dedicated student gym.'
-    },
-    {
-      hostelId: 8,
-      name: 'International Boys Hostel',
+      hostelId: 9,
+      name: 'Shaheed Benazir Bhutto International Hostel',
       gender: 'Male',
       location: 'Main Campus, Jamshoro',
       mainImageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 120,
+      totalCapacity: 338,
       availableBeds: 14,
       rating: 4.6,
       keyAmenities: ['Air Conditioned Rooms', 'International Mess', '24/7 Security & Access Control', 'High-Speed WiFi', 'Laundry Service'],
@@ -119,131 +133,59 @@ export class PublicService {
       wardenPhone: '+92 313 7766554',
       description: 'Specially designed to accommodate international exchange students and scholars with premium amenities and climate control.'
     },
-
-    // FEMALE HOSTELS
-    {
-      hostelId: 9,
-      name: 'Marvi Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
-      mainImageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 480,
-      availableBeds: 25,
-      rating: 4.6,
-      keyAmenities: ['High-Speed WiFi', '24/7 Female Security', 'In-House Mess', 'Lush Green Lawn', 'Reading Room'],
-      warden: 'Prof. Dr. Shaheen Shah',
-      wardenPhone: '+92 300 9876543',
-      description: 'The premier girls hostel offering top-notch security, beautiful central garden, and nutritious hygienic food options.'
-    },
     {
       hostelId: 10,
-      name: 'Elsa Kazi Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
-      mainImageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 350,
-      availableBeds: 18,
-      rating: 4.3,
-      keyAmenities: ['WiFi Zone', 'Hygienic Dining Hall', 'Study Library', 'Biometric Security', 'Doctor on Call'],
-      warden: 'Dr. Naheed Abrar',
-      wardenPhone: '+92 331 1234567',
-      description: 'Named after the legendary German-Sindhi artist Elsa Kazi, providing a quiet, safe, and academically enriching atmosphere.'
-    },
-    {
-      hostelId: 11,
-      name: 'Fatima Jinnah Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
-      mainImageUrl: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 400,
-      availableBeds: 30,
-      rating: 4.4,
-      keyAmenities: ['24/7 Power Backup', 'Mess & Canteen', 'High Security Boundary', 'Computer Lab', 'Activity Area'],
-      warden: 'Mrs. Parveen Akhtar Jatoi',
-      wardenPhone: '+92 306 4455667',
-      description: 'Equipped with computer lab access, solar backup, and comprehensive security protocols for peace of mind.'
-    },
-    {
-      hostelId: 12,
-      name: 'Benazir Bhutto International Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
-      mainImageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 300,
-      availableBeds: 15,
-      rating: 4.7,
-      keyAmenities: ['Air Conditioned Rooms', 'High-Speed Fiber WiFi', 'Modern Kitchen', '24/7 CCTV & Guards', 'Gym & Fitness Room'],
-      warden: 'Dr. Bushra Fatima Syed',
-      wardenPhone: '+92 314 3322110',
-      description: 'State-of-the-art residential facility built to international standards with gym, AC rooms, and high-speed connectivity.'
-    },
-    {
-      hostelId: 13,
-      name: 'Bakhtawar Bhutto Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
-      mainImageUrl: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 380,
-      availableBeds: 22,
-      rating: 4.2,
-      keyAmenities: ['WiFi', 'Fresh Mess Food', 'Filtered Drinking Water', 'Indoor Table Tennis', '24/7 Matron'],
-      warden: 'Ms. Rubina Kausar Solangi',
-      wardenPhone: '+92 332 7788990',
-      description: 'Newly renovated building featuring bright rooms, indoor recreation options, and strict safety guidelines.'
-    },
-    {
-      hostelId: 14,
-      name: 'Hyder Bux Jatoi Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
+      name: 'Government Federal Hostel',
+      gender: 'Male',
+      location: 'Main Campus',
       mainImageUrl: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 290,
+      totalCapacity: 570,
       availableBeds: 16,
       rating: 4.1,
       keyAmenities: ['WiFi', 'Study Lounge', 'Clean Dining', '24/7 Security Gate', 'Medical First Aid'],
-      warden: 'Dr. Kishwar Sultana',
+      warden: 'Dr. Sultan',
       wardenPhone: '+92 303 5566778',
       description: 'Focuses on creating a disciplined yet supportive home-like environment for undergraduate female scholars.'
     },
     {
-      hostelId: 15,
-      name: "Ra'ana Liaquat Ali Khan Girls Hostel",
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
+      hostelId: 11,
+      name: "Shaheed Zulfiqar Ali Bhutto Hostel",
+      gender: 'Male',
+      location: ' Main Campus',
       mainImageUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 320,
+      totalCapacity: 200,
       availableBeds: 19,
       rating: 4.3,
       keyAmenities: ['High-Speed WiFi', 'Nutritious Mess Menu', 'Computer Room', 'Courtyard Garden', '24/7 Guarded Gate'],
-      warden: 'Mrs. Shazia Memon',
+      warden: 'Mrs. farz Memon',
       wardenPhone: '+92 315 8899001',
       description: 'Known for its friendly courtyard gathering space, delicious weekend mess menus, and quiet study quarters.'
     },
     {
-      hostelId: 16,
-      name: 'Syeda Zainab Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
+      hostelId: 12,
+      name: 'Khan Bahadur Syed Allahando Shah Hostel ',
+      gender: 'Male',
+      location: 'Main Campus',
       mainImageUrl: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 310,
+      totalCapacity: 320,
       availableBeds: 21,
       rating: 4.5,
       keyAmenities: ['WiFi', 'Silent Study Library', 'Solar Power Generator', 'Purified Water Plant', 'Female Guarding Staff'],
-      warden: 'Dr. Yasmin Bano Unar',
+      warden: 'Dr. Awais Unar',
       wardenPhone: '+92 307 1122445',
       description: 'Features a dedicated quiet study library open 24 hours during exam seasons and reliable solar power backup.'
     },
     {
-      hostelId: 17,
-      name: 'Bibi Ayesha Girls Hostel',
-      gender: 'Female',
-      location: 'Girls Hostel Complex, Main Campus',
+      hostelId: 13,
+      name: 'Makhdoom Ameen Fahmeen Hostel',
+      gender: 'Male',
+      location: 'Main Campus',
       mainImageUrl: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
-      totalCapacity: 360,
+      totalCapacity: 184,
       availableBeds: 27,
       rating: 4.4,
       keyAmenities: ['WiFi', 'Central Mess', 'Tuck Shop', 'Medical Room', '24/7 Security Gate'],
-      warden: 'Prof. Dr. Farzana Baloch',
+      warden: 'Prof. Dr. Farz Baloch',
       wardenPhone: '+92 336 9900112',
       description: 'Conveniently located near the central departmental block with an in-house tuck shop and comprehensive healthcare support.'
     }
@@ -869,7 +811,7 @@ export class PublicService {
     { id: 1706, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Hira Abro', studentDept: 'Zoology 2nd Year', rating: 4.3, date: 'Aug 2025', comment: 'Clean common room with TV and seating.', helpfulCount: 8 }
   ];
 
-  // Announcements Data
+  // Announcements 
   private announcementsList: Announcement[] = [
     {
       announcementId: 1,
@@ -885,7 +827,6 @@ export class PublicService {
     }
   ];
 
-  // --- API METHODS ---
 
   getHostels(): Observable<HostelSummary[]> {
     return of(this.hostelsList);
@@ -929,7 +870,7 @@ export class PublicService {
   }
 
   /**
-   * Get all reviews or reviews filtered by hostelId
+   *  reviews filtered by hostelId
    */
   getReviews(hostelId?: number): Observable<HostelReview[]> {
     if (hostelId && hostelId > 0) {
@@ -939,7 +880,7 @@ export class PublicService {
   }
 
   /**
-   * Get 10 random reviews for the landing page banner on every page refresh
+   * Rom reviews for the landing page banner on every page refresh
    */
   getRandomReviews(count: number = 10): Observable<HostelReview[]> {
     // Fisher-Yates Shuffle copy of reviewsList

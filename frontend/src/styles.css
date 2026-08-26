@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Brand Primary Colors (Deep Sindh Green Theme) */
+  /*  Primary Colors (Deep Sindh Green Theme) */
   --color-primary: #015C3A;
   /* Primary Sindh Green */
   --color-primary-dark: #01432A;
@@ -181,9 +181,7 @@ textarea {
   font-family: var(--font-family);
 }
 
-/* ==========================================================================
-   Global Smooth Route Page Transitions
-   ========================================================================== */
+/*Smooth Route Page Transitions */
 @keyframes pageSmoothFadeIn {
   0% {
     opacity: 0;

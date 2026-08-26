@@ -6,7 +6,7 @@
   display: block;
 }
 
-/* ── Page layout ─────────────────────────────────────────────── */
+/* Page layout*/
 .merit-page {
   padding: 28px 32px;
   max-width: 1100px;
@@ -31,7 +31,7 @@
   margin: 0;
 }
 
-/* ── Status badges ───────────────────────────────────────────── */
+/*Status badges */
 .badge {
   display: inline-block;
   padding: 5px 14px;
@@ -48,7 +48,7 @@
 .badge-wait      { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
 .badge-rejected  { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
 
-/* ── Hero card ───────────────────────────────────────────────── */
+/* Hero card */
 .hero-card {
   display: flex;
   align-items: center;
@@ -92,7 +92,7 @@
   margin: 0;
 }
 
-/* ── Rank box ────────────────────────────────────────────────── */
+/*  Rank box*/
 .rank-box {
   text-align: center;
   min-width: 180px;

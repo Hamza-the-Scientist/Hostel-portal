@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
     <div class="view-container">
       <div class="view-header">
         <h2>Notifications & Alerts</h2>
-        <p class="subtitle">Stay updated with official hostel announcements, merit list releases, and maintenance schedules.</p>
+        <p class="subtitle">Stay updated with official announcements.</p>
       </div>
 
       <div class="notifications-list">

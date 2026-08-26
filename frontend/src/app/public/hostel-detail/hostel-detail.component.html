@@ -9,7 +9,7 @@
 
 <div class="detail-container" *ngIf="!isLoading && hostel">
   
-  <div class="banner" [style.background-image]="hostel.images.length > 0 ? 'url(' + hostel.images[0] + ')' : 'url(assets/placeholder-hostel.jpg)'"></div>
+  <div class="banner" [style.background-image]="hostel.images.length > 0 ? 'url(&quot;' + hostel.images[0] + '&quot;)' : 'url(assets/placeholder-hostel.jpg)'"></div>
   
   <div class="content">
     

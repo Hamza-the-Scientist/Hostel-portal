@@ -44,7 +44,9 @@
         <div class="hero-text">
           <span class="badge" [class]="statusConfig.cls">{{ statusConfig.label }}</span>
           <h2>{{ r.studentName }}</h2>
-          <p class="roll">{{ r.rollNumber }}</p>
+          <!-- <p class="roll">{{ r.rollNumber }}</p> -->
+          <p class="roll">2K26/SE/202</p>
+
         </div>
       </div>
       <div class="hero-right">
@@ -115,20 +117,20 @@
           <div class="score-tile">
             <span class="score-label">CPN / Entry Test</span>
             <span class="score-val">{{ r.cpn | number:'1.1-1' }}</span>
-            <span class="score-sub">/ 200</span>
+            <span class="score-sub">/ 100</span>
           </div>
-          @if (r.cgpa) {
+          <!-- @if (r.cgpa) {
             <div class="score-tile">
               <span class="score-label">CGPA</span>
               <span class="score-val">{{ r.cgpa | number:'1.2-2' }}</span>
               <span class="score-sub">/ 4.00</span>
             </div>
-          }
-          <div class="score-tile highlight">
+          } -->
+          <!-- <div class="score-tile highlight">
             <span class="score-label">Merit Score</span>
             <span class="score-val">{{ r.meritScore | number:'1.2-2' }}</span>
             <span class="score-sub">/ 100</span>
-          </div>
+          </div> -->
         </div>
       </div>
 

@@ -1,4 +1,3 @@
-// src/app/admin/applications/admin-application-view.component.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
@@ -43,6 +42,7 @@ export class AdminApplicationViewComponent implements OnInit {
   displayed = ['studentId', 'hostelId', 'preferenceOrder', 'status'];
 
   ngOnInit() { this.load(); }
+  
 
   load() {
     const params = this.filterForm.value;

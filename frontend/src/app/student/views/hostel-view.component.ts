@@ -12,7 +12,7 @@ import { ResidencyService, StudentResidencyDto } from '../residency.service';
     <div class="view-container">
       <div class="view-header">
         <h2>My Hostel & Facilities</h2>
-        <p class="subtitle">Overview of your assigned hostel room, block rules, and campus amenities.</p>
+        <p class="subtitle">Overview of your alloted hostel room.</p>
       </div>
 
       @if (loading()) {

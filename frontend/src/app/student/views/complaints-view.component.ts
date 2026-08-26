@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
     <div class="view-container">
       <div class="view-header">
         <h2>Complaints & Maintenance Support</h2>
-        <p class="subtitle">Log room maintenance issues, electrical, plumbing or warden support requests.</p>
+        <p class="subtitle">Report issues and get prompt support.</p>
       </div>
 
       <div class="complaint-form-card">

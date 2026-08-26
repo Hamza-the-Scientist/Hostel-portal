@@ -1,6 +1,4 @@
-// =============================================================
-// student/merit-result/merit-result.component.ts
-// =============================================================
+
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MeritService, MeritResultDto, ChallanListDto } from './merit.service';
@@ -73,7 +71,6 @@ export class MeritResultComponent implements OnInit {
     const challan = this.finalChallan;
     if (!challan) return;
 
-    // Generate a simple printable challan page
     const content = `
       <!DOCTYPE html>
       <html>
