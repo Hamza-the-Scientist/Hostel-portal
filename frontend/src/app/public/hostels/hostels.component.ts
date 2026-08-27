@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -820,6 +820,7 @@ import { HostelSummary } from '../public.model';
 export class HostelsComponent implements OnInit {
   private publicService = inject(PublicService);
   private sanitizer = inject(DomSanitizer);
+  private cdr = inject(ChangeDetectorRef);
 
   hostels: HostelSummary[] = [];
   
@@ -852,7 +853,10 @@ export class HostelsComponent implements OnInit {
   ngOnInit() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     this.publicService.getHostels().subscribe({
-      next: (data) => this.hostels = data,
+      next: (data) => {
+        this.hostels = data || [];
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Failed to fetch hostels', err)
     });
   }

@@ -1,7 +1,277 @@
-.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); min-height: 200px; }
-.card { text-align: center; }
-.primary { background: var(--color-primary); color: var(--color-on-primary); }
-.secondary { background: var(--color-surface); color: var(--color-on-surface); }
-.allocation-switch { margin-top: 2rem; text-align: center; }
-.open { color: green; font-weight: 600; }
-.closed { color: red; font-weight: 600; }
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Greeting Banner ── */
+.greeting-banner {
+  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%);
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.75rem 2rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.greeting-banner__title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.greeting-banner__subtitle {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.portal-badge {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
+  color: #013828;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Metric Cards ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.metric-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+  border-radius: var(--radius-card);
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+.metric-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.metric-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(1, 92, 58, 0.08);
+}
+
+.metric-card__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-success { background: rgba(1, 92, 58, 0.15); color: var(--color-primary); }
+.badge-info { background: rgba(212, 175, 55, 0.2); color: var(--color-secondary-dark); }
+.badge-warning { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+.badge-danger { background: rgba(220, 38, 38, 0.15); color: #dc2626; }
+
+.metric-card__label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.metric-card__value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary-deep);
+  margin: 0 0 0.2rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metric-card__sub {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Allocation Status Card ── */
+.allocation-section {
+  margin-top: 0.5rem;
+}
+
+.allocation-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
+  border-radius: var(--radius-card);
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.allocation-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.allocation-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(1, 92, 58, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.allocation-card__title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary-deep);
+  margin: 0 0 0.25rem 0;
+}
+
+.allocation-card__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.allocation-card__status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.status-pill {
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.4rem 1.25rem;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.status-pill.open {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pill.closed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.allocation-deadline {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.allocation-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-btn);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .allocation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .greeting-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

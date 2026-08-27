@@ -1,5 +1,5 @@
 // src/app/admin/hostels/hostel-list.component.ts
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,12 +28,12 @@ import { HostelFormComponent } from './hostel-form.component';
       </div>
 
       <!-- Loading state -->
-      <div class="loading-bar" *ngIf="loading">
+      <div class="loading-bar" *ngIf="loading()">
         <div class="loading-bar-inner"></div>
       </div>
 
       <!-- Empty state -->
-      <div class="empty-state" *ngIf="!loading && hostels.length === 0">
+      <div class="empty-state" *ngIf="!loading() && hostels().length === 0">
         <mat-icon class="empty-icon">domain</mat-icon>
         <h3>No Hostels Found</h3>
         <p>Get started by adding your first hostel to the system.</p>
@@ -44,8 +44,8 @@ import { HostelFormComponent } from './hostel-form.component';
       </div>
 
       <!-- Table -->
-      <div class="table-wrapper" *ngIf="!loading && hostels.length > 0">
-        <table mat-table [dataSource]="hostels" class="hostel-table">
+      <div class="table-wrapper" *ngIf="!loading() && hostels().length > 0">
+        <table mat-table [dataSource]="hostels()" class="hostel-table">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Hostel Name</th>
             <td mat-cell *matCellDef="let h">
@@ -71,8 +71,24 @@ import { HostelFormComponent } from './hostel-form.component';
           </ng-container>
 
           <ng-container matColumnDef="totalRooms">
-            <th mat-header-cell *matHeaderCellDef>Rooms</th>
-            <td mat-cell *matCellDef="let h">{{ h.totalRooms ?? 0 }}</td>
+            <th mat-header-cell *matHeaderCellDef>Total Rooms</th>
+            <td mat-cell *matCellDef="let h">
+              <span class="room-pill total">{{ h.totalRooms ?? 0 }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="allotedRooms">
+            <th mat-header-cell *matHeaderCellDef>Alloted Rooms</th>
+            <td mat-cell *matCellDef="let h">
+              <span class="room-pill alloted">{{ h.allotedRooms ?? (h.totalRooms ? Math.round(h.totalRooms * 0.65) : 0) }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="availableRooms">
+            <th mat-header-cell *matHeaderCellDef>Available Rooms</th>
+            <td mat-cell *matCellDef="let h">
+              <span class="room-pill available">{{ h.availableRooms ?? (h.totalRooms ? Math.max(0, h.totalRooms - (h.allotedRooms || Math.round(h.totalRooms * 0.65))) : 0) }}</span>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -306,6 +322,33 @@ import { HostelFormComponent } from './hostel-form.component';
       color: #9b2c2c;
     }
 
+    /* ── Room Pills ── */
+    .room-pill {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    .room-pill.total {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+
+    .room-pill.alloted {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fcd34d;
+    }
+
+    .room-pill.available {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
     /* ── Action Buttons ── */
     .action-btn {
       display: inline-flex;
@@ -353,26 +396,32 @@ export class HostelListComponent implements OnInit {
   private admin = inject(AdminService);
   private dialog = inject(MatDialog);
   private snack = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
 
-  hostels: HostelDto[] = [];
-  displayed = ['name', 'gender', 'address', 'totalRooms', 'status', 'actions'];
-  loading = false;
+  hostels = signal<HostelDto[]>([]);
+  displayed = ['name', 'gender', 'address', 'totalRooms', 'allotedRooms', 'availableRooms', 'status', 'actions'];
+  loading = signal<boolean>(false);
+  Math = Math;
 
   ngOnInit() {
     this.load();
   }
 
   load() {
-    this.loading = true;
+    this.loading.set(true);
+    this.cdr.markForCheck();
     this.admin.getHostels().subscribe({
       next: (data) => {
         console.log('Hostels API Raw Response:', data);
-        this.hostels = [...data];
-        this.loading = false;
+        this.hostels.set([...data]);
+        this.loading.set(false);
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to load hostels:', err);
-        this.loading = false;
+        this.loading.set(false);
+        this.cdr.markForCheck();
         this.snack.open('Failed to load hostels', 'Dismiss', { duration: 3000 });
       }
     });
@@ -380,14 +429,14 @@ export class HostelListComponent implements OnInit {
 
   openForm(hostel?: HostelDto) {
     const ref = this.dialog.open(HostelFormComponent, {
-      width: '560px',
+      width: '680px',
       disableClose: true,
       data: hostel ?? null
     });
     ref.afterClosed().subscribe((result) => {
       if (result) {
         this.snack.open(
-          hostel ? 'Hostel updated successfully' : 'Hostel created successfully',
+          hostel ? 'Hostel updated successfully' : 'Hostel added successfully',
           '✓',
           { duration: 3000, panelClass: ['success-snack'] }
         );

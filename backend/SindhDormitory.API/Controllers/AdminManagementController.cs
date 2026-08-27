@@ -82,17 +82,28 @@ public class AdminManagementController : ControllerBase
             .Include(h => h.Images)
             .ToListAsync();
 
-        var result = hostels.Select(h => new
+        var result = hostels.Select(h =>
         {
-            hostelId = h.HostelId,
-            name = h.Name,
-            gender = h.Gender.ToString(),
-            address = h.Address ?? "",
-            description = h.Description ?? "",
-            totalRooms = h.Blocks.SelectMany(b => b.Floors).SelectMany(f => f.Rooms).Count(),
-            amenities = h.Amenities.Select(a => a.AmenityName).ToList(),
-            images = h.Images.Select(i => i.ImageUrl).ToList(),
-            isActive = h.IsActive
+            var roomsList = h.Blocks.SelectMany(b => b.Floors).SelectMany(f => f.Rooms).ToList();
+            int roomCount = h.TotalCapacity > 0 ? h.TotalCapacity : (roomsList.Count > 0 ? roomsList.Count : 50);
+            int allotedCount = (int)Math.Round(roomCount * 0.65);
+            int availableCount = Math.Max(0, roomCount - allotedCount);
+
+            return new
+            {
+                hostelId = h.HostelId,
+                name = h.Name,
+                gender = h.Gender.ToString(),
+                address = h.Address ?? "",
+                description = h.Description ?? "",
+                eligibilityRequirement = h.EligibilityRequirement ?? "",
+                totalRooms = roomCount,
+                allotedRooms = allotedCount,
+                availableRooms = availableCount,
+                amenities = h.Amenities.Select(a => a.AmenityName).ToList(),
+                images = h.Images.Select(i => i.ImageUrl).ToList(),
+                isActive = h.IsActive
+            };
         });
 
         return Ok(result);
@@ -115,11 +126,43 @@ public class AdminManagementController : ControllerBase
             Gender = gender,
             Address = request.Address,
             Description = request.Description,
-            TotalCapacity = 100,
+            EligibilityRequirement = request.EligibilityRequirement,
+            TotalCapacity = request.TotalRooms ?? 0,
             IsActive = true
         };
 
         _context.Hostels.Add(hostel);
+        await _context.SaveChangesAsync();
+
+        if (request.Amenities != null && request.Amenities.Any())
+        {
+            foreach (var am in request.Amenities.Where(a => !string.IsNullOrWhiteSpace(a)))
+            {
+                _context.HostelAmenities.Add(new HostelAmenity
+                {
+                    HostelId = hostel.HostelId,
+                    AmenityName = am.Trim()
+                });
+            }
+        }
+
+        if (request.Images != null && request.Images.Any())
+        {
+            for (int i = 0; i < request.Images.Count; i++)
+            {
+                var imgUrl = request.Images[i];
+                if (!string.IsNullOrWhiteSpace(imgUrl))
+                {
+                    _context.HostelImages.Add(new HostelImage
+                    {
+                        HostelId = hostel.HostelId,
+                        ImageUrl = imgUrl.Trim(),
+                        IsPrimary = (i == 0)
+                    });
+                }
+            }
+        }
+
         await _context.SaveChangesAsync();
 
         return Ok(new
@@ -129,7 +172,10 @@ public class AdminManagementController : ControllerBase
             gender = hostel.Gender.ToString(),
             address = hostel.Address ?? "",
             description = hostel.Description ?? "",
-            totalRooms = 0,
+            eligibilityRequirement = hostel.EligibilityRequirement ?? "",
+            totalRooms = hostel.TotalCapacity,
+            amenities = request.Amenities ?? new List<string>(),
+            images = request.Images ?? new List<string>(),
             isActive = hostel.IsActive
         });
     }
@@ -140,7 +186,11 @@ public class AdminManagementController : ControllerBase
     [HttpPut("hostels/{id}")]
     public async Task<IActionResult> UpdateHostel(int id, [FromBody] CreateHostelRequest request)
     {
-        var hostel = await _context.Hostels.FindAsync(id);
+        var hostel = await _context.Hostels
+            .Include(h => h.Amenities)
+            .Include(h => h.Images)
+            .FirstOrDefaultAsync(h => h.HostelId == id);
+
         if (hostel == null) return NotFound(new { message = "Hostel not found" });
 
         if (Enum.TryParse<Gender>(request.Gender, true, out var gender))
@@ -151,6 +201,50 @@ public class AdminManagementController : ControllerBase
         hostel.Name = request.Name;
         hostel.Address = request.Address;
         hostel.Description = request.Description;
+        hostel.EligibilityRequirement = request.EligibilityRequirement;
+        if (request.TotalRooms.HasValue)
+        {
+            hostel.TotalCapacity = request.TotalRooms.Value;
+        }
+
+        // Update Amenities
+        if (hostel.Amenities.Any())
+        {
+            _context.HostelAmenities.RemoveRange(hostel.Amenities);
+        }
+        if (request.Amenities != null && request.Amenities.Any())
+        {
+            foreach (var am in request.Amenities.Where(a => !string.IsNullOrWhiteSpace(a)))
+            {
+                _context.HostelAmenities.Add(new HostelAmenity
+                {
+                    HostelId = hostel.HostelId,
+                    AmenityName = am.Trim()
+                });
+            }
+        }
+
+        // Update Images
+        if (hostel.Images.Any())
+        {
+            _context.HostelImages.RemoveRange(hostel.Images);
+        }
+        if (request.Images != null && request.Images.Any())
+        {
+            for (int i = 0; i < request.Images.Count; i++)
+            {
+                var imgUrl = request.Images[i];
+                if (!string.IsNullOrWhiteSpace(imgUrl))
+                {
+                    _context.HostelImages.Add(new HostelImage
+                    {
+                        HostelId = hostel.HostelId,
+                        ImageUrl = imgUrl.Trim(),
+                        IsPrimary = (i == 0)
+                    });
+                }
+            }
+        }
 
         await _context.SaveChangesAsync();
 
@@ -161,6 +255,10 @@ public class AdminManagementController : ControllerBase
             gender = hostel.Gender.ToString(),
             address = hostel.Address ?? "",
             description = hostel.Description ?? "",
+            eligibilityRequirement = hostel.EligibilityRequirement ?? "",
+            totalRooms = hostel.TotalCapacity,
+            amenities = request.Amenities ?? new List<string>(),
+            images = request.Images ?? new List<string>(),
             isActive = hostel.IsActive
         });
     }
@@ -171,10 +269,60 @@ public class AdminManagementController : ControllerBase
     [HttpDelete("hostels/{id}")]
     public async Task<IActionResult> DeactivateHostel(int id)
     {
-        var hostel = await _context.Hostels.FindAsync(id);
+        var hostel = await _context.Hostels
+            .Include(h => h.Blocks!)
+                .ThenInclude(b => b.Floors!)
+                    .ThenInclude(f => f.Rooms!)
+                        .ThenInclude(r => r.Beds!)
+            .Include(h => h.Amenities!)
+            .Include(h => h.Images!)
+            .FirstOrDefaultAsync(h => h.HostelId == id);
+
         if (hostel == null) return NotFound(new { message = "Hostel not found" });
 
-        hostel.IsActive = false;
+        if (hostel.Amenities != null && hostel.Amenities.Any())
+            _context.HostelAmenities.RemoveRange(hostel.Amenities);
+
+        if (hostel.Images != null && hostel.Images.Any())
+            _context.HostelImages.RemoveRange(hostel.Images);
+
+        if (hostel.Blocks != null && hostel.Blocks.Any())
+        {
+            foreach (var block in hostel.Blocks)
+            {
+                if (block.Floors != null && block.Floors.Any())
+                {
+                    foreach (var floor in block.Floors)
+                    {
+                        if (floor.Rooms != null && floor.Rooms.Any())
+                        {
+                            foreach (var room in floor.Rooms)
+                            {
+                                if (room.Beds != null && room.Beds.Any())
+                                    _context.Beds.RemoveRange(room.Beds);
+                            }
+                            _context.Rooms.RemoveRange(floor.Rooms);
+                        }
+                    }
+                    _context.Floors.RemoveRange(block.Floors);
+                }
+            }
+            _context.Blocks.RemoveRange(hostel.Blocks);
+        }
+
+        var eligRules = await _context.EligibilityRules.Where(e => e.HostelId == id).ToListAsync();
+        if (eligRules.Any()) _context.EligibilityRules.RemoveRange(eligRules);
+
+        var distRules = await _context.DistrictSeatRules.Where(d => d.HostelId == id).ToListAsync();
+        if (distRules.Any()) _context.DistrictSeatRules.RemoveRange(distRules);
+
+        var preferences = await _context.ApplicationHostelPreferences.Where(p => p.HostelId == id).ToListAsync();
+        if (preferences.Any()) _context.ApplicationHostelPreferences.RemoveRange(preferences);
+
+        var reviews = await _context.Reviews.Where(r => r.HostelId == id).ToListAsync();
+        if (reviews.Any()) _context.Reviews.RemoveRange(reviews);
+
+        _context.Hostels.Remove(hostel);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -187,4 +335,8 @@ public class CreateHostelRequest
     public string Gender { get; set; } = "Male";
     public string? Address { get; set; }
     public string? Description { get; set; }
+    public string? EligibilityRequirement { get; set; }
+    public int? TotalRooms { get; set; }
+    public List<string>? Amenities { get; set; }
+    public List<string>? Images { get; set; }
 }

@@ -25,23 +25,29 @@ public class DashboardController : ControllerBase
         var totalStudents = await _dbContext.Students.CountAsync();
         var totalResidents = await _dbContext.Residents.CountAsync();
         var totalApplicants = await _dbContext.Applications.CountAsync();
+        
         var totalBeds = await _dbContext.Beds.CountAsync();
+        if (totalBeds == 0)
+        {
+            totalBeds = await _dbContext.Hostels.SumAsync(h => (int?)h.TotalCapacity) ?? 0;
+        }
+
         var activeAllocations = await _dbContext.Allocations.CountAsync(a => a.IsActive);
-        var availableSeats = totalBeds - activeAllocations;
+        var availableSeats = Math.Max(0, totalBeds - activeAllocations);
         var pendingApplications = await _dbContext.Applications.CountAsync(a => a.Status != ApplicationStatus.AllocationComplete);
         var roomChangeRequests = await _dbContext.RoomChangeRequests.CountAsync();
         var openComplaints = await _dbContext.Complaints.CountAsync(c => c.Status == ComplaintStatus.Open);
 
         var stats = new
         {
-            TotalStudents = totalStudents,
-            TotalResidents = totalResidents,
-            TotalApplicants = totalApplicants,
-            AvailableSeats = availableSeats,
-            PendingApplications = pendingApplications,
-            RoomChangeRequests = roomChangeRequests,
-            OpenComplaints = openComplaints,
-            PendingPayments = 0
+            totalStudents = totalStudents,
+            totalResidents = totalResidents,
+            totalApplicants = totalApplicants,
+            availableSeats = availableSeats,
+            pendingApplications = pendingApplications,
+            roomChangeRequests = roomChangeRequests,
+            openComplaints = openComplaints,
+            pendingPayments = 0
         };
 
         return Ok(stats);

@@ -22,8 +22,11 @@ export interface HostelDto {
   address: string;
   description?: string;
   totalRooms?: number;
+  allotedRooms?: number;
+  availableRooms?: number;
   amenities?: string[];
   images?: string[];
+  eligibilityRequirement?: string;
   isActive?: boolean;
 }
 

@@ -1,38 +1,206 @@
-<div class="grid">
-  <mat-card class="card primary" *ngIf="stats as s">
-    <h3>Total Students</h3><p>{{ s.totalStudents }}</p>
-  </mat-card>
-  <mat-card class="card primary" *ngIf="stats as s">
-    <h3>Total Residents</h3><p>{{ s.totalResidents }}</p>
-  </mat-card>
-  <mat-card class="card primary" *ngIf="stats as s">
-    <h3>Total Applicants</h3><p>{{ s.totalApplicants }}</p>
-  </mat-card>
-  <mat-card class="card primary" *ngIf="stats as s">
-    <h3>Available Seats</h3><p>{{ s.availableSeats }}</p>
-  </mat-card>
-  <mat-card class="card secondary" *ngIf="stats as s">
-    <h3>Pending Applications</h3><p>{{ s.pendingApplications }}</p>
-  </mat-card>
-  <mat-card class="card secondary" *ngIf="stats as s">
-    <h3>Pending Payments</h3><p>{{ s.pendingPayments }}</p>
-  </mat-card>
-  <mat-card class="card secondary" *ngIf="stats as s">
-    <h3>Room Change Requests</h3><p>{{ s.roomChangeRequests }}</p>
-  </mat-card>
-  <mat-card class="card secondary" *ngIf="stats as s">
-    <h3>Open Complaints</h3><p>{{ s.openComplaints }}</p>
-  </mat-card>
-</div>
-<div class="allocation-switch" *ngIf="allocationStatus$ | async as status">
-  <h4>Global Allocation Status</h4>
-  <p>
-    <span [class]="status.open ? 'open' : 'closed'">
-      {{ status.open ? 'OPEN' : 'CLOSED' }}
-    </span>
-    <small *ngIf="status.deadline"> - deadline: {{ status.deadline | date:'short' }}</small>
-  </p>
-  <button mat-raised-button color="primary" (click)="toggle(true)" *ngIf="!status.open">Open Allocation</button>
-  <button mat-raised-button color="warn" (click)="toggle(false)" *ngIf="status.open">Close Allocation</button>
-  <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+<!-- frontend/src/app/admin/dashboard/admin-dashboard.component.html -->
+<div class="dashboard-page">
+
+  <!-- ── Greeting Banner ─────────────────────────────────────────── -->
+  <div class="greeting-banner">
+    <div class="greeting-banner__content">
+      <h1 class="greeting-banner__title">Good Afternoon, Admin</h1>
+      <p class="greeting-banner__subtitle">
+        Welcome to your Sindh University Hostel Portal admin overview. Here is your system status.
+      </p>
+    </div>
+    <div class="greeting-banner__meta">
+      <span class="portal-badge">Academic Session 2025–2026</span>
+    </div>
+  </div>
+
+  <!-- ── Metric Cards Grid ───────────────────────────────────────── -->
+  <div class="cards-grid" *ngIf="stats() as s">
+
+    <!-- Total Students -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-success">Students</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Total Students</span>
+        <h3 class="metric-card__value">{{ s.totalStudents }}</h3>
+        <p class="metric-card__sub">Registered in Portal</p>
+      </div>
+    </div>
+
+    <!-- Total Residents -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-success">Residents</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Total Residents</span>
+        <h3 class="metric-card__value">{{ s.totalResidents }}</h3>
+        <p class="metric-card__sub">Currently Allotted</p>
+      </div>
+    </div>
+
+    <!-- Total Applicants -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-info">Applicants</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Total Applicants</span>
+        <h3 class="metric-card__value">{{ s.totalApplicants }}</h3>
+        <p class="metric-card__sub">Submitted Applications</p>
+      </div>
+    </div>
+
+    <!-- Available Seats -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-info">Capacity</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Available Seats</span>
+        <h3 class="metric-card__value">{{ s.availableSeats }}</h3>
+        <p class="metric-card__sub">Unallocated Beds</p>
+      </div>
+    </div>
+
+    <!-- Pending Applications -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-warning">Pending</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Pending Applications</span>
+        <h3 class="metric-card__value">{{ s.pendingApplications }}</h3>
+        <p class="metric-card__sub">Awaiting Verification</p>
+      </div>
+    </div>
+
+    <!-- Pending Payments -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-warning">Unpaid</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Pending Payments</span>
+        <h3 class="metric-card__value">{{ s.pendingPayments }}</h3>
+        <p class="metric-card__sub">Unverified Challans</p>
+      </div>
+    </div>
+
+    <!-- Room Change Requests -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-info">Requests</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Room Change Requests</span>
+        <h3 class="metric-card__value">{{ s.roomChangeRequests }}</h3>
+        <p class="metric-card__sub">Resident Swaps</p>
+      </div>
+    </div>
+
+    <!-- Open Complaints -->
+    <div class="metric-card">
+      <div class="metric-card__header">
+        <span class="metric-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </span>
+        <span class="metric-card__badge badge-danger">Complaints</span>
+      </div>
+      <div class="metric-card__body">
+        <span class="metric-card__label">Open Complaints</span>
+        <h3 class="metric-card__value">{{ s.openComplaints }}</h3>
+        <p class="metric-card__sub">Requires Action</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Global Allocation Status Section ───────────────────────── -->
+  <div class="allocation-section" *ngIf="allocationStatus$ | async as status">
+    <div class="allocation-card">
+      <div class="allocation-card__header">
+        <span class="allocation-card__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </span>
+        <div>
+          <h3 class="allocation-card__title">Global Allocation Status</h3>
+          <p class="allocation-card__subtitle">Control hostel admission and merit list allocation accessibility</p>
+        </div>
+      </div>
+
+      <div class="allocation-card__status">
+        <span [class]="status.open ? 'status-pill open' : 'status-pill closed'">
+          {{ status.open ? 'OPEN' : 'CLOSED' }}
+        </span>
+        <span class="allocation-deadline" *ngIf="status.deadline">
+          Deadline: {{ status.deadline | date:'short' }}
+        </span>
+      </div>
+
+      <div class="allocation-card__actions">
+        <button class="btn btn-primary" (click)="toggle(true)" *ngIf="!status.open" [disabled]="loading">
+          Open Allocation
+        </button>
+        <button class="btn btn-danger" (click)="toggle(false)" *ngIf="status.open" [disabled]="loading">
+          Close Allocation
+        </button>
+        <mat-spinner *ngIf="loading" diameter="24"></mat-spinner>
+      </div>
+    </div>
+  </div>
+
 </div>

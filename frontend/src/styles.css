@@ -199,3 +199,25 @@ textarea {
   animation: pageSmoothFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: opacity, transform;
 }
+
+/* Angular Material Dialog Overrides */
+.mat-mdc-dialog-container,
+.mat-mdc-dialog-surface,
+.mdc-dialog__container,
+.mdc-dialog__surface {
+  overflow: hidden !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+
+.custom-dialog-container .mat-mdc-dialog-surface {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+.mat-mdc-dialog-content {
+  overflow-x: hidden !important;
+  max-height: none !important;
+  padding: 0 !important;
+}

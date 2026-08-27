@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -233,6 +233,7 @@ export class HostelDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private publicService = inject(PublicService);
   private sanitizer = inject(DomSanitizer);
+  private cdr = inject(ChangeDetectorRef);
 
   hostel: HostelDetail | null = null;
   hostelReviews: HostelReview[] = [];
@@ -246,15 +247,23 @@ export class HostelDetailComponent implements OnInit {
         next: (data) => {
           this.hostel = data;
           this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: () => {
           this.isLoading = false;
+          this.cdr.detectChanges();
         }
       });
 
       this.publicService.getReviews(+id).subscribe({
-        next: (reviews) => this.hostelReviews = reviews
+        next: (reviews) => {
+          this.hostelReviews = reviews;
+          this.cdr.detectChanges();
+        }
       });
+    } else {
+      this.isLoading = false;
+      this.cdr.detectChanges();
     }
   }
 

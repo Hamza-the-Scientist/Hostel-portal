@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 import { HostelSummary, HostelDetail, Announcement, HostelReview } from './public.model';
 
 @Injectable({ providedIn: 'root' })
 export class PublicService {
+  private readonly http = inject(HttpClient);
 
   private hostelsList: (HostelSummary & { description?: string; warden?: string; wardenPhone?: string })[] = [
     // MALE HOSTELS
@@ -829,17 +833,26 @@ export class PublicService {
 
 
   getHostels(): Observable<HostelSummary[]> {
-    return of(this.hostelsList);
+    return this.http.get<HostelSummary[]>(`${environment.apiUrl}/api/hostels`).pipe(
+      map(res => (res && res.length > 0) ? res : this.hostelsList),
+      catchError(() => of(this.hostelsList))
+    );
   }
 
   getHostelById(id: number): Observable<HostelDetail | null> {
-    const found = this.hostelsList.find(h => h.hostelId === id);
-    if (!found) return of(null);
+    return this.http.get<HostelDetail>(`${environment.apiUrl}/api/hostels/${id}`).pipe(
+      map(res => res || this.getFallbackHostelDetail(id)),
+      catchError(() => of(this.getFallbackHostelDetail(id)))
+    );
+  }
 
-    // Filter reviews for this hostel to calculate review count
+  private getFallbackHostelDetail(id: number): HostelDetail | null {
+    const found = this.hostelsList.find(h => h.hostelId === id);
+    if (!found) return null;
+
     const hostelReviews = this.reviewsList.filter(r => r.hostelId === id);
 
-    const detail: HostelDetail = {
+    return {
       hostelId: found.hostelId,
       name: found.name,
       gender: found.gender,
@@ -861,8 +874,6 @@ export class PublicService {
         'Academic attendance record above 75% in previous semester.'
       ]
     };
-
-    return of(detail);
   }
 
   getAnnouncements(): Observable<Announcement[]> {

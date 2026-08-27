@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -915,6 +915,7 @@ export interface InfoSlide {
 export class HomeComponent implements OnInit, OnDestroy {
   private publicService = inject(PublicService);
   private sanitizer = inject(DomSanitizer);
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('sliderContainer') sliderContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('reviewsSliderContainer') reviewsSliderContainer!: ElementRef<HTMLDivElement>;
@@ -1029,7 +1030,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.startInfoBannerTimer();
 
     this.publicService.getHostels().subscribe({
-      next: (data) => this.hostels = data,
+      next: (data) => {
+        this.hostels = data || [];
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Failed to load hostels', err)
     });
 

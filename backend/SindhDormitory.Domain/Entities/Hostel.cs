@@ -13,6 +13,7 @@ public class Hostel : SoftDeletableEntity
     public int     TotalCapacity { get; set; }
     public string? Address       { get; set; }
     public string? Description   { get; set; }
+    public string? EligibilityRequirement { get; set; }
     public string? Warden        { get; set; }
     public string? WardenPhone   { get; set; }
     public bool    IsActive      { get; set; } = true;

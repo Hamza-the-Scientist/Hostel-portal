@@ -57,71 +57,252 @@ public static class DbInitializer
         var hydDistrict = await context.Districts.FirstAsync(d => d.Name == "Hyderabad");
         var jamDistrict = await context.Districts.FirstAsync(d => d.Name == "Jamshoro");
 
-        // 4. Seed Hostels, Blocks, Rooms & Beds if missing
-        if (!await context.Hostels.AnyAsync())
+        // 4. Seed Hostels, Blocks, Rooms & Beds if missing or incomplete
+        if (await context.Hostels.CountAsync() < 13)
         {
-            var maleHostel = new Hostel
+            var existingNames = await context.Hostels.Select(h => h.Name.ToLower()).ToListAsync();
+
+            var seedHostels = new List<(Hostel hostel, string[] amenities, string[] images)>
             {
-                Name = "Allama Iqbal Hostel",
-                Gender = Gender.Male,
-                TotalCapacity = 100,
-                Address = "University of Sindh, Jamshoro",
-                Description = "Main Boys Hostel with study hall and Wi-Fi facilities.",
-                Warden = "Prof. Dr. Ghulam Murtaza",
-                WardenPhone = "+92-300-1234567",
-                IsActive = true
+                (
+                    new Hostel
+                    {
+                        Name = "Marvi Girls Hostel",
+                        Gender = Gender.Female,
+                        Address = "Girls Hostel Complex, Main Campus",
+                        TotalCapacity = 683,
+                        Description = "The premier girls hostel offering top-notch security, beautiful central garden, and nutritious hygienic food options.",
+                        EligibilityRequirement = "Must be a full-time enrolled student domiciled in designated Sindh quota districts outside Jamshoro.",
+                        Warden = "Prof. Dr. Shaheen Shah",
+                        WardenPhone = "+92 300 9876543",
+                        IsActive = true
+                    },
+                    new[] { "High-Speed WiFi", "24/7 Female Security", "In-House Mess", "Lush Green Lawn", "Reading Room", "Attached Bathroom" },
+                    new[] { "/images/marvi-hostel.jpeg" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Lal Shahbaz Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 412,
+                        Description = "Named after the revered Sufi saint, this hostel combines traditional architecture with active student sports culture and spacious rooms.",
+                        EligibilityRequirement = "Regular enrolled male student of University of Sindh.",
+                        Warden = "Engr. Mansoor Ali Soomro",
+                        WardenPhone = "+92 312 4567890",
+                        IsActive = true
+                    },
+                    new[] { "High-Speed WiFi", "Reading Hall", "Cafeteria", "Sports Ground", "Guarded Gate", "Common Bathroom" },
+                    new[] { "/images/lal-shahbaz-hostel.jpeg" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "P.G Girl Hostel",
+                        Gender = Gender.Female,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 204,
+                        Description = "The largest capacity hostel on campus, known for its bustling student community, budget-friendly mess facility, and open courtyard.",
+                        EligibilityRequirement = "Postgraduate & Master female scholars of University of Sindh.",
+                        Warden = "Prof. Fiza",
+                        WardenPhone = "+92 333 9876542",
+                        IsActive = true
+                    },
+                    new[] { "24/7 Security & CCTV", "Subsidized Mess", "Laundry Area", "Indoor Games", "Generator", "Attached Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Under Graduate Girls Hostel",
+                        Gender = Gender.Female,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 451,
+                        Description = "A cozy, lower-density residential block providing a quiet and focused environment ideal for Under Graduate female students.",
+                        EligibilityRequirement = "Enrolled undergraduate female student.",
+                        Warden = "Dr. Ghulam Mustafa Shah",
+                        WardenPhone = "+92 300 1122334",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Quiet Study Area", "Filtered Water", "Security Guard", "Common Room", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Allama Iqbal Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 420,
+                        Description = "A vibrant boys' hostel offering a balanced academic atmosphere, large common areas, and quick access to central campus departments.",
+                        EligibilityRequirement = "Enrolled male student with minimum 2.5 CGPA.",
+                        Warden = "Dr. Farooq Ahmed Memon",
+                        WardenPhone = "+92 301 2345671",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Mess & Dining", "24/7 Security", "Study Room", "Water Plant", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Sindh University Teachers Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 75,
+                        Description = "Reserved for eligible university teachers and research fellows, offering well-maintained gardens and peace of mind.",
+                        EligibilityRequirement = "Faculty members and research scholars.",
+                        Warden = "Mr. Abdul Rasheed Kalhoro",
+                        WardenPhone = "+92 305 6677889",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Dedicated Dining Hall", "24/7 Power Backup", "Parking Space", "Gardens", "Attached Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Sindh University Employees Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 75,
+                        Description = "Reserved for eligible university staff sons and research fellows, offering well-maintained gardens and peace of mind.",
+                        EligibilityRequirement = "University staff dependants and scholars.",
+                        Warden = "Mr. Abdul Rasheed Kalhoro",
+                        WardenPhone = "+92 305 6677889",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Dedicated Dining Hall", "24/7 Power Backup", "Parking Space", "Gardens", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Blocks Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 180,
+                        Description = "Compact residential block featuring an active badminton court and easy access to the central university library.",
+                        EligibilityRequirement = "Undergraduate male students.",
+                        Warden = "Mr. Imtiaz Ahmed Khoso",
+                        WardenPhone = "+92 334 5544332",
+                        IsActive = true
+                    },
+                    new[] { "Mess Facility", "RO Water Plant", "Study Room", "Night Security", "Badminton Court", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Shaheed Benazir Bhutto International Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus, Jamshoro",
+                        TotalCapacity = 338,
+                        Description = "Specially designed to accommodate international exchange students and scholars with premium amenities and climate control.",
+                        EligibilityRequirement = "International exchange students and postgraduate research fellows.",
+                        Warden = "Prof. Dr. Zahid Hussain Nizamani",
+                        WardenPhone = "+92 313 7766554",
+                        IsActive = true
+                    },
+                    new[] { "Air Conditioned Rooms", "International Mess", "24/7 Security & Access Control", "High-Speed WiFi", "Laundry Service", "Attached Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Government Federal Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus",
+                        TotalCapacity = 570,
+                        Description = "Focuses on creating a disciplined yet supportive home-like environment for undergraduate scholars.",
+                        EligibilityRequirement = "Federal & provincial quota scholars.",
+                        Warden = "Dr. Sultan",
+                        WardenPhone = "+92 303 5566778",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Study Lounge", "Clean Dining", "24/7 Security Gate", "Medical First Aid", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Shaheed Zulfiqar Ali Bhutto Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus",
+                        TotalCapacity = 200,
+                        Description = "Known for its friendly courtyard gathering space, delicious weekend mess menus, and quiet study quarters.",
+                        EligibilityRequirement = "Enrolled male scholars.",
+                        Warden = "Mrs. Farz Memon",
+                        WardenPhone = "+92 315 8899001",
+                        IsActive = true
+                    },
+                    new[] { "High-Speed WiFi", "Nutritious Mess Menu", "Computer Room", "Courtyard Garden", "24/7 Guarded Gate", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Khan Bahadur Syed Allahando Shah Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus",
+                        TotalCapacity = 320,
+                        Description = "Features a dedicated quiet study library open 24 hours during exam seasons and reliable solar power backup.",
+                        EligibilityRequirement = "Enrolled male students.",
+                        Warden = "Dr. Awais Unar",
+                        WardenPhone = "+92 307 1122445",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Silent Study Library", "Solar Power Generator", "Purified Water Plant", "Security Staff", "Attached Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80" }
+                ),
+                (
+                    new Hostel
+                    {
+                        Name = "Makhdoom Ameen Fahmeen Hostel",
+                        Gender = Gender.Male,
+                        Address = "Main Campus",
+                        TotalCapacity = 184,
+                        Description = "Conveniently located near the central departmental block with an in-house tuck shop and comprehensive healthcare support.",
+                        EligibilityRequirement = "Enrolled male students.",
+                        Warden = "Prof. Dr. Farz Baloch",
+                        WardenPhone = "+92 336 9900112",
+                        IsActive = true
+                    },
+                    new[] { "WiFi", "Central Mess", "Tuck Shop", "Medical Room", "24/7 Security Gate", "Common Bathroom" },
+                    new[] { "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" }
+                )
             };
 
-            var femaleHostel = new Hostel
+            foreach (var item in seedHostels)
             {
-                Name = "Fatima Jinnah Girls Hostel",
-                Gender = Gender.Female,
-                TotalCapacity = 80,
-                Address = "University of Sindh, Jamshoro",
-                Description = "Girls Hostel with 24/7 security and mess hall.",
-                Warden = "Dr. Shahnaz Memon",
-                WardenPhone = "+92-300-7654321",
-                IsActive = true
-            };
+                if (!existingNames.Contains(item.hostel.Name.ToLower()))
+                {
+                    context.Hostels.Add(item.hostel);
+                    await context.SaveChangesAsync();
 
-            context.Hostels.AddRange(maleHostel, femaleHostel);
-            await context.SaveChangesAsync();
+                    foreach (var am in item.amenities)
+                    {
+                        context.HostelAmenities.Add(new HostelAmenity
+                        {
+                            HostelId = item.hostel.HostelId,
+                            AmenityName = am
+                        });
+                    }
 
-            // Create Blocks & Rooms for Male Hostel
-            var blockA = new Block { HostelId = maleHostel.HostelId, BlockName = "Block A" };
-            context.Blocks.Add(blockA);
-            await context.SaveChangesAsync();
+                    for (int i = 0; i < item.images.Length; i++)
+                    {
+                        context.HostelImages.Add(new HostelImage
+                        {
+                            HostelId = item.hostel.HostelId,
+                            ImageUrl = item.images[i],
+                            IsPrimary = (i == 0)
+                        });
+                    }
 
-            var floor1 = new Floor { BlockId = blockA.BlockId, FloorNumber = 1 };
-            context.Floors.Add(floor1);
-            await context.SaveChangesAsync();
-
-            var room204 = new Room { FloorId = floor1.FloorId, RoomNumber = "204" };
-            context.Rooms.Add(room204);
-            await context.SaveChangesAsync();
-
-            var bed1 = new Bed { RoomId = room204.RoomId, BedLabel = "Bed-1", IsAvailable = false };
-            var bed2 = new Bed { RoomId = room204.RoomId, BedLabel = "Bed-2", IsAvailable = true };
-            context.Beds.AddRange(bed1, bed2);
-            await context.SaveChangesAsync();
-
-            // Create Blocks & Rooms for Female Hostel
-            var femaleBlockA = new Block { HostelId = femaleHostel.HostelId, BlockName = "Block A" };
-            context.Blocks.Add(femaleBlockA);
-            await context.SaveChangesAsync();
-
-            var fFloor1 = new Floor { BlockId = femaleBlockA.BlockId, FloorNumber = 1 };
-            context.Floors.Add(fFloor1);
-            await context.SaveChangesAsync();
-
-            var room101 = new Room { FloorId = fFloor1.FloorId, RoomNumber = "101" };
-            context.Rooms.Add(room101);
-            await context.SaveChangesAsync();
-
-            var fBed1 = new Bed { RoomId = room101.RoomId, BedLabel = "Bed-1", IsAvailable = true };
-            var fBed2 = new Bed { RoomId = room101.RoomId, BedLabel = "Bed-2", IsAvailable = true };
-            context.Beds.AddRange(fBed1, fBed2);
-            await context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
+                }
+            }
         }
 
         // 5. Seed Simulated University Records for Verification
