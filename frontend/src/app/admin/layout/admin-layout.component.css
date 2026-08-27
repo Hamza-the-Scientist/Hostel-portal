@@ -1,13 +1,13 @@
 /* Admin layout – Sindh Green & Gold theme */
-.admin-shell { 
-  height: 100vh; 
-  background: var(--color-bg); 
+.admin-shell {
+  height: 100vh;
+  background: var(--color-bg);
 }
 
-.admin-sidebar { 
-  width: 250px; 
-  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%) !important; 
-  border-right: 1px solid rgba(255, 255, 255, 0.1); 
+.admin-sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: var(--shadow-md);
 }
 
@@ -30,15 +30,16 @@
 .admin-sidebar ::ng-deep .mat-mdc-list-item .mat-mdc-list-item-title,
 .admin-sidebar ::ng-deep a.mat-mdc-list-item,
 .admin-sidebar ::ng-deep a span,
-.admin-sidebar ::ng-deep .mat-mdc-list-item-unscoped-content { 
-  color: #FFFFFF !important; 
+.admin-sidebar ::ng-deep .mat-mdc-list-item-unscoped-content {
+  color: #FFFFFF !important;
   font-weight: 600 !important;
   font-size: 0.95rem !important;
   opacity: 1 !important;
 }
 
-.admin-sidebar ::ng-deep .mat-icon { 
-  color: var(--color-secondary) !important; 
+.admin-sidebar ::ng-deep .mat-icon {
+  color: var(--color-secondary) !important;
+  margin-bottom: -7px;
   margin-right: 0.75rem !important;
   opacity: 1 !important;
 }
@@ -69,25 +70,33 @@
   background: linear-gradient(135deg, #013828 0%, #015C3A 60%, #017A4A 100%) !important;
   color: var(--color-text-main) !important;
   border-bottom: 1px solid var(--color-border);
-  position: sticky; top: 0; z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   box-shadow: var(--shadow-sm);
 }
 
-.breadcrumb { 
-  font-weight: 700; 
+.breadcrumb {
+  font-weight: 700;
   color: var(--color-secondary);
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
 }
 
-.spacer { flex: 1; }
-
-.admin-content { 
-  padding: 1.5rem; 
-  background: var(--color-bg); 
-  min-height: calc(100vh - 64px); 
-  color: var(--color-text-main); 
+.spacer {
+  flex: 1;
 }
 
-.logout ::ng-deep .mat-icon { color: #DC2626 !important; }
-.logout ::ng-deep span { color: #DC2626 !important; }
+.admin-content {
+  padding: 1.5rem;
+  background: var(--color-bg);
+  min-height: calc(100vh - 64px);
+  color: var(--color-text-main);
+}
 
+.logout ::ng-deep .mat-icon {
+  color: #DC2626 !important;
+}
+
+.logout ::ng-deep span {
+  color: #DC2626 !important;
+}
