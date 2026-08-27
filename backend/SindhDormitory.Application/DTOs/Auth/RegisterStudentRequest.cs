@@ -23,11 +23,9 @@ public class RegisterStudentRequest
     [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters long.")]
     public string Password { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "First Name is required.")]
     [StringLength(100)]
     public string FirstName { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Last Name is required.")]
     [StringLength(100)]
     public string LastName { get; set; } = string.Empty;
 

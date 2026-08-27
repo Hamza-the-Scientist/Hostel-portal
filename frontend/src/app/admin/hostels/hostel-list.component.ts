@@ -46,7 +46,10 @@ export class HostelListComponent implements OnInit {
   ngOnInit() { this.load(); }
 
   load() {
-    this.admin.getHostels().subscribe(data => this.hostels = data);
+    this.admin.getHostels().subscribe(data => {
+      console.log('Hostels API Raw Response:', data);
+      this.hostels = [...data];
+    });
   }
 
   openForm(hostel?: HostelDto) {

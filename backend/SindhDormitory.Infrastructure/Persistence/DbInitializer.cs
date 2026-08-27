@@ -169,7 +169,49 @@ public static class DbInitializer
                 IsActive = true
             };
 
-            context.SimulatedUniversityRecords.AddRange(simRecord1, simRecord2);
+            var simRecord3 = new SimulatedUniversityRecord
+            {
+                RollNumber = "2K24/CS/303",
+                Cnic = "4130499887766",
+                FullName = "Tariq Mahmood",
+                FatherName = "Mahmood Ahmed",
+                Address = "Station Road, Dadu",
+                DistrictName = "Dadu",
+                Province = "Sindh",
+                DepartmentName = "Computer Science",
+                ProgramName = "BS Computer Science",
+                DegreeType = DegreeType.BS,
+                Semester = 1,
+                Cgpa = 3.60m,
+                Cpn = 79.20m,
+                AcademicYear = "2025–2026",
+                Gender = Gender.Male,
+                DateOfBirth = new DateOnly(2004, 3, 15),
+                IsActive = true
+            };
+
+            var simRecord4 = new SimulatedUniversityRecord
+            {
+                RollNumber = "2K24/CS/404",
+                Cnic = "4130455443322",
+                FullName = "Zainab Fatima",
+                FatherName = "Fatima Gul",
+                Address = "Civil Lines, Sukkur",
+                DistrictName = "Sukkur",
+                Province = "Sindh",
+                DepartmentName = "Information Technology",
+                ProgramName = "BS Information Technology",
+                DegreeType = DegreeType.BS,
+                Semester = 1,
+                Cgpa = 3.90m,
+                Cpn = 84.10m,
+                AcademicYear = "2025–2026",
+                Gender = Gender.Female,
+                DateOfBirth = new DateOnly(2005, 11, 10),
+                IsActive = true
+            };
+
+            context.SimulatedUniversityRecords.AddRange(simRecord1, simRecord2, simRecord3, simRecord4);
             await context.SaveChangesAsync();
         }
 

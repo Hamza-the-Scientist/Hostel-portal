@@ -58,13 +58,14 @@ const DEFAULT_PROFILE: StudentProfileDto = {
     label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.88rem; color: var(--color-text-main); }
     input, select, textarea { width: 100%; padding: 0.7rem; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-btn); box-sizing: border-box; font-size: 0.95rem; font-family: inherit; color: var(--color-text-main); }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(1, 92, 58, 0.12); }
-    .form-actions { margin-top: 1.5rem; text-align: right; }
-    .btn { padding: 0.7rem 1.4rem; border-radius: var(--radius-btn); font-weight: 700; cursor: pointer; border: none; }
+    .btn { padding: 0.7rem 1.4rem; border-radius: var(--radius-btn); font-weight: 700; cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
     .btn-primary { background: var(--color-primary); color: #FFFFFF; box-shadow: var(--shadow-sm); }
     .btn-primary:hover:not(:disabled) { background: var(--color-primary-dark); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-    .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; }
-    .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+    .spinner { border: 2px solid rgba(255, 255, 255, 0.3); border-top: 2px solid #FFFFFF; border-radius: 50%; width: 14px; height: 14px; animation: spin 0.8s linear infinite; display: inline-block; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+    .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.1); }
     .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
     .font-bold { font-weight: 700; color: var(--color-primary); }
   `]
@@ -148,13 +149,30 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.updateProfile(this.profileForm.value as any).subscribe({
       next: (updated) => {
-        if (updated) this.profile = updated;
-        this.message = 'Profile updated successfully!';
         this.isSaving = false;
+        if (updated) {
+          this.profile = updated;
+          if (updated.personalInfo) {
+            this.profileForm.patchValue({
+              phoneNumber: updated.personalInfo.phoneNumber,
+              emergencyContact: updated.personalInfo.emergencyContact,
+              guardianName: updated.personalInfo.guardianName,
+              guardianPhone: updated.personalInfo.guardianPhone,
+              guardianRelation: updated.personalInfo.guardianRelation,
+              bloodGroup: updated.personalInfo.bloodGroup,
+              homeAddress: updated.personalInfo.homeAddress,
+              city: updated.personalInfo.city,
+              disabilities: updated.personalInfo.disabilities
+            });
+          }
+        }
+        this.message = 'Profile updated successfully!';
+        setTimeout(() => { this.message = ''; }, 4000);
       },
-      error: () => {
-        this.message = 'Profile updated successfully!';
+      error: (err) => {
         this.isSaving = false;
+        this.errorMessage = err.error?.message || 'Failed to update profile. Please try again.';
+        setTimeout(() => { this.errorMessage = ''; }, 4000);
       }
     });
   }

@@ -134,8 +134,16 @@ export class RegisterComponent {
         this.router.navigate(['/student/profile']);
       },
       error: (err) => {
-        this.serverError = err.error?.message || 'Verification or registration failed. Please check your CNIC and Roll Number.';
         this.isLoading = false;
+        if (err.error?.errors) {
+          const messages: string[] = [];
+          for (const key of Object.keys(err.error.errors)) {
+            messages.push(...err.error.errors[key]);
+          }
+          this.serverError = messages.join(' ');
+        } else {
+          this.serverError = err.error?.message || 'Verification or registration failed. Please check your CNIC and Roll Number.';
+        }
       }
     });
   }
