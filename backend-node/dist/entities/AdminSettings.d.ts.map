@@ -1,0 +1,1 @@
+{"version":3,"file":"AdminSettings.d.ts","sourceRoot":"","sources":["../../src/entities/AdminSettings.ts"],"names":[],"mappings":"AAEA,qBACa,aAAa;IAExB,UAAU,EAAG,MAAM,CAAC;IAGpB,cAAc,EAAG,OAAO,CAAC;IAGzB,kBAAkB,EAAG,IAAI,GAAG,IAAI,CAAC;IAGjC,qBAAqB,EAAG,MAAM,CAAC;IAG/B,iBAAiB,EAAG,OAAO,CAAC;IAG5B,aAAa,EAAG,IAAI,CAAC;IAGrB,SAAS,EAAG,IAAI,CAAC;IAGjB,SAAS,EAAG,IAAI,CAAC;CAClB"}

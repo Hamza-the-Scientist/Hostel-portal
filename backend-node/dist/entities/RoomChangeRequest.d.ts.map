@@ -1,0 +1,1 @@
+{"version":3,"file":"RoomChangeRequest.d.ts","sourceRoot":"","sources":["../../src/entities/RoomChangeRequest.ts"],"names":[],"mappings":"AAEA,qBACa,iBAAiB;IAE5B,SAAS,EAAG,MAAM,CAAC;IAGnB,UAAU,EAAG,MAAM,CAAC;IAGpB,eAAe,EAAG,MAAM,GAAG,IAAI,CAAC;IAGhC,MAAM,EAAG,MAAM,GAAG,IAAI,CAAC;IAGvB,MAAM,EAAG,MAAM,CAAC;IAGhB,SAAS,EAAG,IAAI,CAAC;IAGjB,SAAS,EAAG,IAAI,CAAC;CAClB"}

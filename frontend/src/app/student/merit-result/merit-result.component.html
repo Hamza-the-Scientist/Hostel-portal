@@ -3,261 +3,270 @@
 
   <!-- ── Loading skeleton ────────────────────────────────────────── -->
   @if (loading()) {
-    <div class="skeleton-wrap">
-      <div class="skeleton-hero"></div>
-      <div class="skeleton-grid">
-        <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6]"></div>
-      </div>
+  <div class="skeleton-wrap">
+    <div class="skeleton-hero"></div>
+    <div class="skeleton-grid">
+      <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6]"></div>
     </div>
+  </div>
   }
 
   <!-- ── Error state ─────────────────────────────────────────────── -->
   @else if (error()) {
-    <div class="error-state">
-      <div class="error-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-      </div>
-      <h2>Unable to Load Merit Result</h2>
-      <p>{{ error() }}</p>
+  <div class="error-state">
+    <div class="error-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
     </div>
+    <h2>Unable to Load Merit Result</h2>
+    <p>{{ error() }}</p>
+  </div>
   }
 
   <!-- ── Main content ────────────────────────────────────────────── -->
   @else if (result(); as r) {
-    <div class="page-header">
-      <h1>Merit Result</h1>
-      <p class="subtitle">Academic Year {{ r.academicYear || '2025-2026' }}</p>
-    </div>
+  <div class="page-header">
+    <h1>Merit Result</h1>
+    <p class="subtitle">Academic Year {{ r.academicYear || '2025-2026' }}</p>
+  </div>
 
-    <!-- ── Status hero card ─────────────────────────────────────── -->
-    <div class="hero-card" [class]="statusConfig.cls + '-card'">
-      <div class="hero-left">
-        <div class="status-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
-        </div>
-        <div class="hero-text">
-          <span class="badge" [class]="statusConfig.cls">{{ statusConfig.label }}</span>
-          <h2>{{ r.studentName }}</h2>
-          <!-- <p class="roll">{{ r.rollNumber }}</p> -->
-          <p class="roll">2K26/SE/202</p>
-
-        </div>
+  <!-- ── Status hero card ─────────────────────────────────────── -->
+  <div class="hero-card" [class]="statusConfig.cls + '-card'">
+    <div class="hero-left">
+      <div class="status-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+          </polygon>
+        </svg>
       </div>
-      <div class="hero-right">
-        @if (r.meritRank && r.meritRank < 9000) {
-          <div class="rank-box">
-            <span class="rank-num">#{{ r.meritRank }}</span>
-            <span class="rank-label">Merit Rank</span>
-            <div class="rank-bar-wrap">
-              <div class="rank-bar" [style.width.%]="rankPercentile"></div>
-            </div>
-            <span class="rank-pct">Top {{ 100 - rankPercentile + 1 }}% of {{ r.totalApplicants }} applicants</span>
-          </div>
-        }
+      <div class="hero-text">
+        <span class="badge" [class]="statusConfig.cls">{{ statusConfig.label }}</span>
+        <h2>{{ r.studentName }}</h2>
+        <!-- <p class="roll">{{ r.rollNumber }}</p> -->
+        <p class="roll">{{ r.rollNumber }}</p>
+
       </div>
     </div>
-
-    <!-- ── Main grid ────────────────────────────────────────────── -->
-    <div class="content-grid">
-
-      <!-- ── Academic Info ──────────────────────────────────────── -->
-      <div class="info-card">
-        <div class="card-header">
-          <span class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-            </svg>
-          </span>
-          <h3>Academic Information</h3>
+    <div class="hero-right">
+      @if (r.meritRank && r.meritRank < 9000) { <div class="rank-box">
+        <span class="rank-num">#{{ r.meritRank }}</span>
+        <span class="rank-label">Merit Rank</span>
+        <div class="rank-bar-wrap">
+          <div class="rank-bar" [style.width.%]="rankPercentile"></div>
         </div>
-        <div class="info-rows">
-          <div class="info-row">
-            <span class="label">Department</span>
-            <span class="value">{{ r.department || '—' }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Program</span>
-            <span class="value">{{ r.program || '—' }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Academic Year</span>
-            <span class="value">{{ r.academicYear || '—' }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">District</span>
-            <span class="value">{{ r.district || '—' }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Gender</span>
-            <span class="value">{{ r.gender || '—' }}</span>
-          </div>
-        </div>
+        <span class="rank-pct">Top {{ 100 - rankPercentile + 1 }}% of {{ r.totalApplicants }} applicants</span>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- ── Main grid ────────────────────────────────────────────── -->
+<div class="content-grid">
+
+  <!-- ── Academic Info ──────────────────────────────────────── -->
+  <div class="info-card">
+    <div class="card-header">
+      <span class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+        </svg>
+      </span>
+      <h3>Academic Information</h3>
+    </div>
+    <div class="info-rows">
+      <div class="info-row">
+        <span class="label">Department</span>
+        <span class="value">{{ r.department || '—' }}</span>
       </div>
+      <div class="info-row">
+        <span class="label">Program</span>
+        <span class="value">{{ r.program || '—' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Academic Year</span>
+        <span class="value">{{ r.academicYear || '—' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">District</span>
+        <span class="value">{{ r.district || '—' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Gender</span>
+        <span class="value">{{ r.gender || '—' }}</span>
+      </div>
+    </div>
+  </div>
 
-      <!-- ── Merit Scores ───────────────────────────────────────── -->
-      <div class="info-card">
-        <div class="card-header">
-          <span class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-          </span>
-          <h3>Merit Scores</h3>
-        </div>
-        <div class="score-grid">
-          <div class="score-tile">
-            <span class="score-label">CPN / Entry Test</span>
-            <span class="score-val">{{ r.cpn | number:'1.1-1' }}</span>
-            <span class="score-sub">/ 100</span>
-          </div>
-          <!-- @if (r.cgpa) {
+  <!-- ── Merit Scores ───────────────────────────────────────── -->
+  <div class="info-card">
+    <div class="card-header">
+      <span class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      </span>
+      <h3>Merit Scores</h3>
+    </div>
+    <div class="score-grid">
+      <div class="score-tile">
+        <span class="score-label">CPN / Entry Test</span>
+        <span class="score-val">{{ r.cpn | number:'1.1-1' }}</span>
+        <span class="score-sub">/ 100</span>
+      </div>
+      <!-- @if (r.cgpa) {
             <div class="score-tile">
               <span class="score-label">CGPA</span>
               <span class="score-val">{{ r.cgpa | number:'1.2-2' }}</span>
               <span class="score-sub">/ 4.00</span>
             </div>
           } -->
-          <!-- <div class="score-tile highlight">
+      <!-- <div class="score-tile highlight">
             <span class="score-label">Merit Score</span>
             <span class="score-val">{{ r.meritScore | number:'1.2-2' }}</span>
             <span class="score-sub">/ 100</span>
           </div> -->
-        </div>
-      </div>
-
-      <!-- ── Hostel Allocation ──────────────────────────────────── -->
-      <div class="info-card">
-        <div class="card-header">
-          <span class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"></path>
-            </svg>
-          </span>
-          <h3>Hostel Allocation</h3>
-        </div>
-
-        @if (r.allocationStatus === 'Allocated') {
-          <div class="allocation-result">
-            <div class="alloc-item">
-              <span class="alloc-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                  <line x1="12" y1="18" x2="12" y2="22"></line>
-                </svg>
-              </span>
-              <div>
-                <span class="alloc-label">Allocated Hostel</span>
-                <span class="alloc-value">{{ r.allocatedHostel }}</span>
-              </div>
-            </div>
-            <div class="alloc-item">
-              <span class="alloc-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                </svg>
-              </span>
-              <div>
-                <span class="alloc-label">Room Number</span>
-                <span class="alloc-value">{{ r.allocatedRoom }}</span>
-              </div>
-            </div>
-            <div class="alloc-item">
-              <span class="alloc-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
-                </svg>
-              </span>
-              <div>
-                <span class="alloc-label">Bed</span>
-                <span class="alloc-value">{{ r.allocatedBed }}</span>
-              </div>
-            </div>
-          </div>
-        }
-
-        @else if (r.allocationStatus === 'Waitlisted') {
-          <div class="alloc-pending waitlisted">
-            <p>You are on the <strong>waitlist</strong>.</p>
-            <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
-            <p class="hint">A second-round allocation will be conducted after the payment deadline.</p>
-          </div>
-        }
-
-        @else {
-          <div class="alloc-pending">
-            <p>Allocation is currently being processed.</p>
-            <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
-          </div>
-        }
-      </div>
-
-      <!-- ── Final Challan ─────────────────────────────────────── -->
-      <div class="info-card challan-card">
-        <div class="card-header">
-          <span class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-            </svg>
-          </span>
-          <h3>Final Hostel Challan</h3>
-        </div>
-
-        @if (hasFinalChallan && finalChallan; as c) {
-          <div class="challan-detail">
-            <div class="challan-amount">PKR {{ c.amount | number }}</div>
-            <div class="challan-row">
-              <span>Challan #</span>
-              <strong>{{ c.challanNumber }}</strong>
-            </div>
-            <div class="challan-row">
-              <span>Status</span>
-              <span class="challan-status" [class.paid]="c.status === 'Paid'">{{ c.status }}</span>
-            </div>
-            <div class="challan-row">
-              <span>Due Date</span>
-              <strong [class.overdue]="c.isExpired">{{ c.expiresAt | date:'dd MMM yyyy' }}</strong>
-            </div>
-            <button
-              class="download-btn"
-              (click)="downloadChallan()"
-              [disabled]="c.status === 'Paid'">
-              @if (c.status === 'Paid') {
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Challan Paid
-              } @else {
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Download Final Challan
-              }
-            </button>
-          </div>
-        }
-
-        @else {
-          <div class="challan-pending">
-            <p>Your final hostel challan will appear here once a room has been allocated.</p>
-          </div>
-        }
-      </div>
-
     </div>
-  }
+  </div>
+
+  <!-- ── Hostel Allocation ──────────────────────────────────── -->
+  <div class="info-card">
+    <div class="card-header">
+      <span class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"></path>
+        </svg>
+      </span>
+      <h3>Hostel Allocation</h3>
+    </div>
+
+    @if (r.allocationStatus === 'Allocated') {
+    <div class="allocation-result">
+      <div class="alloc-item">
+        <span class="alloc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+          </svg>
+        </span>
+        <div>
+          <span class="alloc-label">Allocated Hostel</span>
+          <span class="alloc-value">{{ r.allocatedHostel }}</span>
+        </div>
+      </div>
+      <div class="alloc-item">
+        <span class="alloc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          </svg>
+        </span>
+        <div>
+          <span class="alloc-label">Room Number</span>
+          <span class="alloc-value">{{ r.allocatedRoom }}</span>
+        </div>
+      </div>
+      <div class="alloc-item">
+        <span class="alloc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"></path>
+          </svg>
+        </span>
+        <div>
+          <span class="alloc-label">Bed</span>
+          <span class="alloc-value">{{ r.allocatedBed }}</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    @else if (r.allocationStatus === 'Waitlisted') {
+    <div class="alloc-pending waitlisted">
+      <p>You are on the <strong>waitlist</strong>.</p>
+      <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
+      <p class="hint">A second-round allocation will be conducted after the payment deadline.</p>
+    </div>
+    }
+
+    @else {
+    <div class="alloc-pending">
+      <p>Allocation is currently being processed.</p>
+      <p>Your preferred hostel: <strong>{{ r.preferredHostel || 'N/A' }}</strong></p>
+    </div>
+    }
+  </div>
+
+  <!-- ── Final Challan ─────────────────────────────────────── -->
+  <div class="info-card challan-card">
+    <div class="card-header">
+      <span class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+      </span>
+      <h3>Final Hostel Challan</h3>
+    </div>
+
+    @if (hasFinalChallan && finalChallan; as c) {
+    <div class="challan-detail">
+      <div class="challan-amount">PKR {{ c.amount | number }}</div>
+      <div class="challan-row">
+        <span>Challan #</span>
+        <strong>{{ c.challanNumber }}</strong>
+      </div>
+      <div class="challan-row">
+        <span>Status</span>
+        <span class="challan-status" [class.paid]="c.status === 'Paid'">{{ c.status }}</span>
+      </div>
+      <div class="challan-row">
+        <span>Due Date</span>
+        <strong [class.overdue]="c.isExpired">{{ c.expiresAt | date:'dd MMM yyyy' }}</strong>
+      </div>
+      <button class="download-btn" (click)="downloadChallan()" [disabled]="c.status === 'Paid'">
+        @if (c.status === 'Paid') {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Challan Paid
+        } @else {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download Final Challan
+        }
+      </button>
+    </div>
+    }
+
+    @else {
+    <div class="challan-pending">
+      <p>Your final hostel challan will appear here once a room has been allocated.</p>
+    </div>
+    }
+  </div>
+
+</div>
+}
 
 </div>

@@ -1,0 +1,1 @@
+{"version":3,"file":"HostelAmenity.d.ts","sourceRoot":"","sources":["../../src/entities/HostelAmenity.ts"],"names":[],"mappings":"AAIA,OAAO,EAAE,MAAM,EAAE,MAAM,UAAU,CAAC;AAElC,qBACa,aAAa;IAExB,SAAS,EAAG,MAAM,CAAC;IAGnB,QAAQ,EAAG,MAAM,CAAC;IAGlB,WAAW,EAAG,MAAM,CAAC;IAGrB,SAAS,EAAG,IAAI,CAAC;IAGjB,SAAS,EAAG,IAAI,CAAC;IAIjB,MAAM,EAAG,MAAM,CAAC;CACjB"}

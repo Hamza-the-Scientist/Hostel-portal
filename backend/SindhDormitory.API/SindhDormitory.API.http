@@ -1,6 +1,0 @@
-@SindhDormitory.API_HostAddress = http://localhost:5225
-
-GET {{SindhDormitory.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

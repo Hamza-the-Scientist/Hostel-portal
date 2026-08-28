@@ -25,12 +25,15 @@ export interface RegisterStudentRequest {
 }
 
 export interface AuthResponse {
-  token: string;
-  userId: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: number;
+  token?: string;
+  accessToken?: string;
+  userId?: number;
+  id?: number;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string | number;
+  data?: any;
 }
 
 export type UserRole = 'Student' | 'Admin' | 'SuperAdmin';

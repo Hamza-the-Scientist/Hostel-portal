@@ -13,9 +13,15 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       switch (error.status) {
         case 401:
-          // Unauthorized — clear token and redirect to login
+          // Unauthorized — clear storage and redirect to appropriate login route
           localStorage.removeItem('access_token');
-          router.navigate(['/auth/student-login']);
+          localStorage.removeItem('current_user');
+          localStorage.removeItem('user_role');
+          if (router.url.includes('/admin')) {
+            router.navigate(['/auth/admin-login']);
+          } else {
+            router.navigate(['/auth/student-login']);
+          }
           break;
         case 403:
           // Forbidden — redirect to appropriate area

@@ -56,6 +56,7 @@ export class AdminLoginComponent {
       password: this.loginForm.value.password!
     }).subscribe({
       next: () => {
+        this.isLoading = false;
         this.router.navigate(['/admin']);
       },
       error: (err) => {

@@ -15,7 +15,7 @@ const DEFAULT_APPLICATION: ApplicationDto = {
     feeId: 501,
     challanNumber: 'CH-2026-0091',
     amount: 100,
-    status: 'Unpaid',
+    status: 'Paid',
     createdAt: new Date().toISOString(),
     dueDate: new Date(Date.now() + 7 * 86400000).toISOString()
   },
