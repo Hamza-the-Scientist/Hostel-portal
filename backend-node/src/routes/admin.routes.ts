@@ -20,4 +20,12 @@ router.post('/hostels', AdminController.createHostel);
 router.put('/hostels/:id', AdminController.updateHostel);
 router.delete('/hostels/:id', AdminController.deleteHostel);
 
+// Residents
+router.get('/residents', AdminController.getResidents);
+router.post('/residents/:id/challan', AdminController.assignChallan);
+router.get('/residents/:id/room-history', AdminController.getRoomHistory);
+router.get('/residents/:id/room-change', AdminController.getRoomChangeRequest);
+router.post('/residents/:id/room-change/:requestId/approve', AdminController.approveRoomChange);
+router.post('/residents/:id/room-change/:requestId/reject', AdminController.rejectRoomChange);
+
 export default router;

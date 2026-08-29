@@ -82,6 +82,18 @@ export class AdminService {
   assignChallan(residentId: number, amount: number): Observable<void> {
     return this.http.post<void>(`${this.base}/residents/${residentId}/challan`, { amount });
   }
+  getRoomHistory(studentId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/residents/${studentId}/room-history`);
+  }
+  getRoomChangeRequest(studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/residents/${studentId}/room-change`);
+  }
+  approveRoomChange(studentId: number, requestId: number): Observable<void> {
+    return this.http.post<void>(`${this.base}/residents/${studentId}/room-change/${requestId}/approve`, {});
+  }
+  rejectRoomChange(studentId: number, requestId: number, reason: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/residents/${studentId}/room-change/${requestId}/reject`, { reason });
+  }
 
   // Applications
   getApplications(filter: any = {}): Observable<ApplicationDto[]> {

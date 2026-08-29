@@ -60,10 +60,31 @@ export interface StudentDto {
 export interface ResidentDto {
   residentId?: number;
   studentId: number;
+  studentName?: string;
+  cnic?: string;
+  rollNumber?: string;
+  department?: string;
+  district?: string;
+  gender?: string;
   hostelId: number;
+  hostelName?: string;
   block: string;
   room: string;
-  bed: number;
+  bed: string;
+  academicYear?: string;
+  annualFeeStatus?: 'Paid' | 'Pending' | 'Unpaid';
+  annualFeeAmount?: number;
+  status: string;
+}
+
+export interface RoomHistoryDto {
+  historyId?: number;
+  date: string;
+  hostel: string;
+  block: string;
+  room: string;
+  bed: string;
+  action: string;
   status: string;
 }
 

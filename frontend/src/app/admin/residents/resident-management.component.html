@@ -1,0 +1,379 @@
+<div class="res-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Current Residents</h2>
+      <p class="page-subtitle">Manage students currently residing in university hostels.</p>
+    </div>
+    <div class="header-stat">
+      <span class="stat-num">{{ filtered.length }}</span>
+      <span class="stat-label">Active Residents</span>
+    </div>
+  </div>
+
+  <!-- Search + Filters -->
+  <div class="filter-card">
+    <div class="filter-row">
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="res-search" type="text" class="search-input" placeholder="Search by name, ID, roll number, hostel, room..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+      </div>
+      <select id="res-filter-hostel" class="filter-select" [(ngModel)]="filterHostel" (change)="onFilterChange()">
+        <option value="all">All Hostels</option>
+        <option *ngFor="let h of hostels" [value]="h.hostelId">{{ h.name }}</option>
+      </select>
+      <select id="res-filter-fee" class="filter-select" [(ngModel)]="filterFeeStatus" (change)="onFilterChange()">
+        <option value="all">All Fee Statuses</option>
+        <option value="Paid">Paid</option>
+        <option value="Pending">Pending</option>
+        <option value="Unpaid">Unpaid</option>
+      </select>
+      <button class="btn-refresh" (click)="load()" title="Refresh">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-bar" *ngIf="loading">
+    <div class="loading-bar-inner"></div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filtered.length === 0">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <h3>No current residents found.</h3>
+    <p *ngIf="searchTerm || filterHostel !== 'all' || filterFeeStatus !== 'all'">No residents match the selected filters.</p>
+    <p *ngIf="!searchTerm && filterHostel === 'all' && filterFeeStatus === 'all'">No students are currently residing in any hostel.</p>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card" *ngIf="!loading && filtered.length > 0">
+    <div class="table-header-bar">
+      <span class="table-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#015C3A" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Current Residents
+      </span>
+      <span class="record-count">{{ filtered.length }} record{{ filtered.length === 1 ? '' : 's' }}</span>
+    </div>
+    <div class="table-scroll">
+      <table class="res-table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Hostel</th>
+            <th>Block</th>
+            <th>Room</th>
+            <th>Bed</th>
+            <th>Academic Year</th>
+            <th>Annual Fee Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of filtered" class="data-row">
+            <td>
+              <div class="student-id-cell">
+                <div class="avatar">{{ (r.studentName || 'S').charAt(0).toUpperCase() }}</div>
+                <div>
+                  <div class="roll-num">{{ r.rollNumber || 'SU-' + r.studentId }}</div>
+                  <div class="sid">ID: {{ r.studentId }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="name-cell">{{ r.studentName || '—' }}</td>
+            <td>
+              <span class="hostel-badge">{{ r.hostelName || '—' }}</span>
+            </td>
+            <td>{{ r.block || '—' }}</td>
+            <td><span class="room-chip">{{ r.room || '—' }}</span></td>
+            <td><span class="bed-chip">Bed {{ r.bed || '—' }}</span></td>
+            <td>{{ r.academicYear || '—' }}</td>
+            <td>
+              <span class="fee-badge" [class.fee-paid]="r.annualFeeStatus === 'Paid'" [class.fee-pending]="r.annualFeeStatus === 'Pending'" [class.fee-unpaid]="r.annualFeeStatus === 'Unpaid'">
+                {{ r.annualFeeStatus || 'Pending' }}
+              </span>
+            </td>
+            <td>
+              <div class="action-btns">
+                <button class="act-btn view-btn" title="View Profile" (click)="viewProfile(r)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="act-btn challan-btn" title="Generate Challan" (click)="openChallanModal(r)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                </button>
+                <button class="act-btn history-btn" title="Room History" (click)="viewRoomHistory(r)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </button>
+                <button class="act-btn approve-btn" title="Approve Room Change" (click)="openRoomChange(r)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PROFILE MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showProfileModal" (click)="showProfileModal=false">
+  <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Resident Profile</h3>
+        <p class="modal-sub">Complete residency information</p>
+      </div>
+      <button class="modal-close" (click)="showProfileModal=false">✕</button>
+    </div>
+    <div class="modal-body" *ngIf="selectedResident">
+      <div class="profile-grid">
+        <div class="profile-avatar-col">
+          <div class="profile-avatar-lg">{{ (selectedResident.studentName || 'S').charAt(0).toUpperCase() }}</div>
+          <div class="profile-name">{{ selectedResident.studentName }}</div>
+          <div class="profile-roll">{{ selectedResident.rollNumber }}</div>
+          <span class="fee-badge" [class.fee-paid]="selectedResident.annualFeeStatus==='Paid'" [class.fee-pending]="selectedResident.annualFeeStatus==='Pending'" [class.fee-unpaid]="selectedResident.annualFeeStatus==='Unpaid'">
+            {{ selectedResident.annualFeeStatus || 'Pending' }}
+          </span>
+        </div>
+        <div class="profile-details-col">
+          <div class="section-label">Student Information</div>
+          <div class="detail-grid">
+            <div class="detail-item"><span class="dl">Student ID</span><span class="dv">{{ selectedResident.studentId }}</span></div>
+            <div class="detail-item"><span class="dl">CNIC</span><span class="dv mono">{{ selectedResident.cnic || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Roll Number</span><span class="dv">{{ selectedResident.rollNumber || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Department</span><span class="dv">{{ selectedResident.department || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Gender</span><span class="dv">{{ selectedResident.gender || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">District</span><span class="dv">{{ selectedResident.district || '—' }}</span></div>
+          </div>
+          <div class="section-label" style="margin-top:1rem">Residency Information</div>
+          <div class="detail-grid">
+            <div class="detail-item"><span class="dl">Hostel</span><span class="dv">{{ selectedResident.hostelName || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Block</span><span class="dv">{{ selectedResident.block || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Room</span><span class="dv">{{ selectedResident.room || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Bed</span><span class="dv">{{ selectedResident.bed || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Academic Year</span><span class="dv">{{ selectedResident.academicYear || '—' }}</span></div>
+            <div class="detail-item"><span class="dl">Status</span><span class="dv"><span class="badge-active">Active</span></span></div>
+          </div>
+          <div class="section-label" style="margin-top:1rem">Fee Information</div>
+          <div class="detail-grid">
+            <div class="detail-item"><span class="dl">Annual Fee</span><span class="dv">Rs. {{ (selectedResident.annualFeeAmount || 25000) | number }}</span></div>
+            <div class="detail-item"><span class="dl">Fee Status</span><span class="dv">
+              <span class="fee-badge" [class.fee-paid]="selectedResident.annualFeeStatus==='Paid'" [class.fee-pending]="selectedResident.annualFeeStatus==='Pending'" [class.fee-unpaid]="selectedResident.annualFeeStatus==='Unpaid'">
+                {{ selectedResident.annualFeeStatus || 'Pending' }}
+              </span>
+            </span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showProfileModal=false">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CHALLAN MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showChallanModal" (click)="showChallanModal=false">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon gold-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Generate Annual Challan</h3>
+        <p class="modal-sub">Confirm challan generation for this resident</p>
+      </div>
+      <button class="modal-close" (click)="showChallanModal=false">✕</button>
+    </div>
+    <div class="modal-body" *ngIf="selectedResident">
+      <div class="info-list">
+        <div class="info-row"><span class="il">Student Name</span><span class="iv">{{ selectedResident.studentName }}</span></div>
+        <div class="info-row"><span class="il">Student ID</span><span class="iv">{{ selectedResident.studentId }}</span></div>
+        <div class="info-row"><span class="il">Roll Number</span><span class="iv">{{ selectedResident.rollNumber }}</span></div>
+        <div class="info-row"><span class="il">Hostel</span><span class="iv">{{ selectedResident.hostelName }}</span></div>
+        <div class="info-row"><span class="il">Room</span><span class="iv">{{ selectedResident.room }}</span></div>
+        <div class="info-row"><span class="il">Academic Year</span><span class="iv">{{ selectedResident.academicYear }}</span></div>
+        <div class="info-row"><span class="il">Annual Fee Amount</span><span class="iv fee-amount">Rs. {{ (selectedResident.annualFeeAmount || 25000) | number }}</span></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showChallanModal=false" [disabled]="challanLoading">Cancel</button>
+      <button class="btn-primary" (click)="generateChallan()" [disabled]="challanLoading">
+        {{ challanLoading ? 'Generating...' : 'Generate Challan' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ROOM HISTORY MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showHistoryModal" (click)="showHistoryModal=false">
+  <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon blue-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Room History</h3>
+        <p class="modal-sub">{{ selectedResident?.studentName }} — All room allocations</p>
+      </div>
+      <button class="modal-close" (click)="showHistoryModal=false">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="loading-bar" *ngIf="historyLoading"><div class="loading-bar-inner"></div></div>
+      <div class="empty-state" *ngIf="!historyLoading && roomHistory.length === 0">
+        <p>No room history found for this student.</p>
+      </div>
+      <div class="table-scroll" *ngIf="!historyLoading && roomHistory.length > 0">
+        <table class="res-table">
+          <thead>
+            <tr>
+              <th>Date</th><th>Hostel</th><th>Block</th><th>Room</th><th>Bed</th><th>Action</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let h of roomHistory" class="data-row">
+              <td>{{ h.date }}</td>
+              <td>{{ h.hostel }}</td>
+              <td>{{ h.block }}</td>
+              <td><span class="room-chip">{{ h.room }}</span></td>
+              <td><span class="bed-chip">{{ h.bed }}</span></td>
+              <td>{{ h.action }}</td>
+              <td><span class="badge-active" *ngIf="h.status==='Current'">Current</span><span class="badge-prev" *ngIf="h.status!=='Current'">Previous</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showHistoryModal=false">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ROOM CHANGE MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showRoomChangeModal" (click)="showRoomChangeModal=false">
+  <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon green-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Approve Room Change</h3>
+        <p class="modal-sub">Review pending room change request</p>
+      </div>
+      <button class="modal-close" (click)="showRoomChangeModal=false">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="loading-bar" *ngIf="roomChangeLoading"><div class="loading-bar-inner"></div></div>
+      <div class="no-request-msg" *ngIf="!roomChangeLoading && !pendingRequest">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>No pending room change request found for this resident.</p>
+      </div>
+      <div *ngIf="!roomChangeLoading && pendingRequest">
+        <div class="room-compare">
+          <div class="room-panel">
+            <div class="room-panel-label current-label">Current Room</div>
+            <div class="info-list">
+              <div class="info-row"><span class="il">Hostel</span><span class="iv">{{ pendingRequest.currentRoom?.hostel || '—' }}</span></div>
+              <div class="info-row"><span class="il">Block</span><span class="iv">{{ pendingRequest.currentRoom?.block || '—' }}</span></div>
+              <div class="info-row"><span class="il">Room</span><span class="iv">{{ pendingRequest.currentRoom?.room || '—' }}</span></div>
+              <div class="info-row"><span class="il">Bed</span><span class="iv">{{ pendingRequest.currentRoom?.bed || '—' }}</span></div>
+            </div>
+          </div>
+          <div class="room-arrow">→</div>
+          <div class="room-panel">
+            <div class="room-panel-label requested-label">Requested Room</div>
+            <div class="info-list" *ngIf="pendingRequest.requestedRoom">
+              <div class="info-row"><span class="il">Hostel</span><span class="iv">{{ pendingRequest.requestedRoom?.hostel || '—' }}</span></div>
+              <div class="info-row"><span class="il">Block</span><span class="iv">{{ pendingRequest.requestedRoom?.block || '—' }}</span></div>
+              <div class="info-row"><span class="il">Room</span><span class="iv">{{ pendingRequest.requestedRoom?.room || '—' }}</span></div>
+              <div class="info-row"><span class="il">Bed</span><span class="iv">{{ pendingRequest.requestedRoom?.bed || 'Any Available' }}</span></div>
+            </div>
+            <div *ngIf="!pendingRequest.requestedRoom" class="no-request-msg"><p>No specific room requested.</p></div>
+          </div>
+        </div>
+        <div class="request-info">
+          <div class="info-row"><span class="il">Request Date</span><span class="iv">{{ pendingRequest.requestDate | date:'mediumDate' }}</span></div>
+          <div class="info-row"><span class="il">Reason</span><span class="iv">{{ pendingRequest.reason || 'No reason provided' }}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" *ngIf="!roomChangeLoading && pendingRequest">
+      <button class="btn-danger" (click)="openRejectModal()">Reject</button>
+      <button class="btn-secondary" (click)="showRoomChangeModal=false">Cancel</button>
+      <button class="btn-primary" (click)="confirmApprove()">Approve</button>
+    </div>
+    <div class="modal-footer" *ngIf="!roomChangeLoading && !pendingRequest">
+      <button class="btn-secondary" (click)="showRoomChangeModal=false">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONFIRM APPROVE MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showConfirmApproveModal" (click)="showConfirmApproveModal=false">
+  <div class="modal-box modal-sm" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon green-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Approve Room Change?</h3>
+      </div>
+      <button class="modal-close" (click)="showConfirmApproveModal=false">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="confirm-msg">This will move the student to the requested room and update their current residency. This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showConfirmApproveModal=false" [disabled]="actionLoading">Cancel</button>
+      <button class="btn-primary" (click)="doApprove()" [disabled]="actionLoading">
+        {{ actionLoading ? 'Processing...' : 'Confirm Approve' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- REJECT MODAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" *ngIf="showRejectModal" (click)="showRejectModal=false">
+  <div class="modal-box modal-sm" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-header-icon red-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      </div>
+      <div>
+        <h3 class="modal-title">Reject Room Change</h3>
+      </div>
+      <button class="modal-close" (click)="showRejectModal=false">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Reason for rejection (optional)</label>
+      <textarea class="reason-input" [(ngModel)]="rejectReason" placeholder="Enter reason..." rows="3"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showRejectModal=false" [disabled]="actionLoading">Cancel</button>
+      <button class="btn-danger" (click)="doReject()" [disabled]="actionLoading">
+        {{ actionLoading ? 'Processing...' : 'Reject Request' }}
+      </button>
+    </div>
+  </div>
+</div>
