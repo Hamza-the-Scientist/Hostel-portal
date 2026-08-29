@@ -23,15 +23,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Allocation.prototype, "allocationId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ApplicationId' }),
+    (0, typeorm_1.Column)({ name: 'ApplicationId', type: 'int' }),
     __metadata("design:type", Number)
 ], Allocation.prototype, "applicationId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'StudentId' }),
+    (0, typeorm_1.Column)({ name: 'StudentId', type: 'int' }),
     __metadata("design:type", Number)
 ], Allocation.prototype, "studentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'BedId' }),
+    (0, typeorm_1.Column)({ name: 'BedId', type: 'int' }),
     __metadata("design:type", Number)
 ], Allocation.prototype, "bedId", void 0);
 __decorate([
@@ -39,11 +39,11 @@ __decorate([
     __metadata("design:type", Date)
 ], Allocation.prototype, "allocatedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], Allocation.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Allocation.prototype, "isDeleted", void 0);
 __decorate([

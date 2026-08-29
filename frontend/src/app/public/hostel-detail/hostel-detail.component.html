@@ -25,15 +25,6 @@
           {{ hostel.location || 'University of Sindh, Jamshoro' }}
         </p>
       </div>
-      <a [routerLink]="['/reviews']" [queryParams]="{ hostelId: hostel.hostelId }" class="rating-reviews-link" title="Click to view all student reviews for this hostel">
-        <div class="rating-star">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
-          {{ hostel.rating | number:'1.1-1' }}
-        </div>
-        <div class="reviews-count-text">{{ hostel.reviewCount }} Reviews &rarr;</div>
-      </a>
     </div>
 
     <div class="stats">
@@ -46,8 +37,8 @@
         <span class="stat-value" style="color: #28a745;">{{ hostel.availableBeds }} Beds</span>
       </div>
       <div class="stat-item">
-        <span class="stat-label">Warden</span>
-        <span class="stat-value">{{ hostel.warden || 'N/A' }}</span>
+        <span class="stat-label">Provost</span>
+        <span class="stat-value">{{ hostel.provost || hostel.warden || 'N/A' }}</span>
       </div>
     </div>
 
@@ -68,35 +59,7 @@
       <li *ngFor="let req of hostel.eligibilitySummary">{{ req }}</li>
     </ul>
 
-    <!-- Student Reviews for this Hostel -->
-    <div class="reviews-section-wrap">
-      <div class="section-title-row">
-        <h2 class="section-title" style="margin: 0;">Resident Feedback &amp; Reviews</h2>
-        <a [routerLink]="['/reviews']" [queryParams]="{ hostelId: hostel.hostelId }" class="view-all-reviews-link">
-          View All {{ hostelReviews.length }} Reviews &rarr;
-        </a>
-      </div>
 
-      <div class="detail-reviews-grid" *ngIf="hostelReviews.length > 0">
-        <div class="detail-review-card" *ngFor="let rev of hostelReviews.slice(0, 3)">
-          <div class="rev-header">
-            <div class="avatar">{{ getInitials(rev.studentName) }}</div>
-            <div class="rev-user">
-              <h4>{{ rev.studentName }}</h4>
-              <p>{{ rev.studentDept }}</p>
-            </div>
-            <div class="rev-star">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" stroke-width="1" style="vertical-align: middle; margin-right: 2px;">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              {{ rev.rating | number:'1.1-1' }}
-            </div>
-          </div>
-          <p class="rev-body">"{{ rev.comment }}"</p>
-          <span class="rev-date">{{ rev.date }}</span>
-        </div>
-      </div>
-    </div>
 
     <div class="cta-box">
       <ng-container *ngIf="hostel.isAllocationOpen; else closedState">

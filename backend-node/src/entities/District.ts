@@ -12,6 +12,9 @@ export class District {
   @Column({ name: 'Province', type: 'varchar', length: 50, default: 'Sindh' })
   province!: string;
 
+  @Column({ name: 'IsAllowed', type: 'boolean', default: true })
+  isAllowed!: boolean;
+
   @CreateDateColumn({ name: 'CreatedAt' })
   createdAt!: Date;
 

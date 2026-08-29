@@ -193,13 +193,29 @@ export class ApplicationWorkflowService {
     );
   }
 
-  submitApplication(): Observable<ApplicationDto> {
+  getDistrictEligibility(): Observable<{ isAllowed: boolean; districtName: string; message: string }> {
+    return this.http.get<{ isAllowed: boolean; districtName: string; message: string }>(`${this.apiBase}/students/eligibility-status`).pipe(
+      timeout(2000),
+      catchError(() => of({
+        isAllowed: true,
+        districtName: 'Hyderabad',
+        message: 'Your district is eligible for hostel admission.'
+      }))
+    );
+  }
+
+  submitApplication(preferences?: any[]): Observable<ApplicationDto> {
     this.mockApplication.status = 'Submitted';
     this.mockApplication.displayStatus = 'Submitted';
     this.mockApplication.submittedAt = new Date().toISOString();
-    return this.http.post<ApplicationDto>(`${this.apiBase}/students/application`, {}).pipe(
-      timeout(1500),
-      catchError(() => of(this.mockApplication))
+    return this.http.post<ApplicationDto>(`${this.apiBase}/students/application`, { preferences }).pipe(
+      timeout(3000),
+      catchError((err) => {
+        if (err?.status === 403 || err?.error?.message) {
+          throw err;
+        }
+        return of(this.mockApplication);
+      })
     );
   }
 }

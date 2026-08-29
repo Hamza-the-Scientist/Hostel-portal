@@ -21,19 +21,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Bed.prototype, "bedId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RoomId' }),
+    (0, typeorm_1.Column)({ name: 'RoomId', type: 'int' }),
     __metadata("design:type", Number)
 ], Bed.prototype, "roomId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'BedLabel', length: 10 }),
+    (0, typeorm_1.Column)({ name: 'BedLabel', type: 'varchar', length: 10 }),
     __metadata("design:type", String)
 ], Bed.prototype, "bedLabel", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], Bed.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Bed.prototype, "isDeleted", void 0);
 __decorate([

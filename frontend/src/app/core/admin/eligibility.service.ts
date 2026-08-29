@@ -14,6 +14,15 @@ export interface EligibilityRule {
   updatedAt?: string;
 }
 
+export interface DistrictItem {
+  districtId: number;
+  name: string;
+  province: string;
+  isAllowed: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class EligibilityService {
   private readonly http = inject(HttpClient);
@@ -40,6 +49,15 @@ export class EligibilityService {
 
   deleteRule(id: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
+  }
+
+  // District-Wise Eligibility Management
+  getDistrictsManagement(): Observable<DistrictItem[]> {
+    return this.http.get<DistrictItem[]>(`${this.base}/districts-management`);
+  }
+
+  updateDistrictStatus(districtId: number, isAllowed: boolean): Observable<DistrictItem> {
+    return this.http.put<DistrictItem>(`${this.base}/districts/${districtId}/status`, { isAllowed });
   }
 
   // Metadata

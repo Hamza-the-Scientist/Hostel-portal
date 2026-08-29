@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], AdminSettings.prototype, "settingsId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AllocationOpen', default: true }),
+    (0, typeorm_1.Column)({ name: 'AllocationOpen', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], AdminSettings.prototype, "allocationOpen", void 0);
 __decorate([
@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", Number)
 ], AdminSettings.prototype, "maxAllocationPerCycle", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AllocationEnabled', default: true }),
+    (0, typeorm_1.Column)({ name: 'AllocationEnabled', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], AdminSettings.prototype, "allocationEnabled", void 0);
 __decorate([

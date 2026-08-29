@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Floor.prototype, "floorId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'BlockId' }),
+    (0, typeorm_1.Column)({ name: 'BlockId', type: 'int' }),
     __metadata("design:type", Number)
 ], Floor.prototype, "blockId", void 0);
 __decorate([

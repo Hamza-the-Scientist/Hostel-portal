@@ -20,7 +20,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Resident.prototype, "residentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AllocationId' }),
+    (0, typeorm_1.Column)({ name: 'AllocationId', type: 'int' }),
     __metadata("design:type", Number)
 ], Resident.prototype, "allocationId", void 0);
 __decorate([
@@ -32,7 +32,7 @@ __decorate([
     __metadata("design:type", Object)
 ], Resident.prototype, "checkOutDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsCurrentResident', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsCurrentResident', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], Resident.prototype, "isCurrentResident", void 0);
 __decorate([

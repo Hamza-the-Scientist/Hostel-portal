@@ -60,7 +60,7 @@ class HostelService {
                 ? 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80'
                 : 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80');
         }
-        const eligibilityList = hostel.eligibilityRules ? hostel.eligibilityRules.map((e) => e.ruleName) : [];
+        const eligibilityList = hostel.eligibilityRules ? hostel.eligibilityRules.map((e) => `${e.mode} ${e.ruleType}: ${e.values ? e.values.join(', ') : ''}`) : [];
         if (eligibilityList.length === 0 && hostel.eligibilityRequirement) {
             eligibilityList.push(hostel.eligibilityRequirement);
         }
@@ -69,9 +69,10 @@ class HostelService {
             name: hostel.name,
             gender: hostel.gender,
             location: hostel.address || 'Main Campus, Jamshoro',
-            description: hostel.description || '',
-            warden: hostel.warden || 'Prof. Dr. Provost Office',
-            wardenPhone: hostel.wardenPhone || '+92 300 0000000',
+            provost: hostel.provost || hostel.warden || 'Prof. Dr. Provost Office',
+            provostPhone: hostel.provostPhone || hostel.wardenPhone || '+92 300 0000000',
+            warden: hostel.provost || hostel.warden || 'Prof. Dr. Provost Office',
+            wardenPhone: hostel.provostPhone || hostel.wardenPhone || '+92 300 0000000',
             totalCapacity: hostel.totalCapacity,
             occupiedBeds: 0,
             availableBeds: hostel.totalCapacity,

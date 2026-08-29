@@ -3,6 +3,7 @@ export declare class District {
     districtId: number;
     name: string;
     province: string;
+    isAllowed: boolean;
     createdAt: Date;
     updatedAt: Date;
     students: Student[];

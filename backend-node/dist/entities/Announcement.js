@@ -20,11 +20,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Announcement.prototype, "announcementId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AdminId' }),
+    (0, typeorm_1.Column)({ name: 'AdminId', type: 'int' }),
     __metadata("design:type", Number)
 ], Announcement.prototype, "adminId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Title', length: 300 }),
+    (0, typeorm_1.Column)({ name: 'Title', type: 'varchar', length: 300 }),
     __metadata("design:type", String)
 ], Announcement.prototype, "title", void 0);
 __decorate([
@@ -32,7 +32,7 @@ __decorate([
     __metadata("design:type", String)
 ], Announcement.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsPublished', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsPublished', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Announcement.prototype, "isPublished", void 0);
 __decorate([
@@ -44,7 +44,7 @@ __decorate([
     __metadata("design:type", Object)
 ], Announcement.prototype, "expiresAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'TargetAudience', length: 50, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'TargetAudience', type: 'varchar', length: 50, nullable: true }),
     __metadata("design:type", Object)
 ], Announcement.prototype, "targetAudience", void 0);
 __decorate([

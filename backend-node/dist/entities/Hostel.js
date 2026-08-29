@@ -18,6 +18,18 @@ const Review_1 = require("./Review");
 const EligibilityRule_1 = require("./EligibilityRule");
 const ApplicationHostelPreference_1 = require("./ApplicationHostelPreference");
 let Hostel = class Hostel {
+    get provost() {
+        return this.warden;
+    }
+    set provost(value) {
+        this.warden = value;
+    }
+    get provostPhone() {
+        return this.wardenPhone;
+    }
+    set provostPhone(value) {
+        this.wardenPhone = value;
+    }
 };
 exports.Hostel = Hostel;
 __decorate([
@@ -25,11 +37,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Hostel.prototype, "hostelId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Name', length: 150 }),
+    (0, typeorm_1.Column)({ name: 'Name', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], Hostel.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Gender', length: 10 }),
+    (0, typeorm_1.Column)({ name: 'Gender', type: 'varchar', length: 10 }),
     __metadata("design:type", String)
 ], Hostel.prototype, "gender", void 0);
 __decorate([
@@ -37,7 +49,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Hostel.prototype, "totalCapacity", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Address', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Address', type: 'text', nullable: true }),
     __metadata("design:type", Object)
 ], Hostel.prototype, "address", void 0);
 __decorate([
@@ -49,19 +61,19 @@ __decorate([
     __metadata("design:type", Object)
 ], Hostel.prototype, "eligibilityRequirement", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Warden', length: 150, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Warden', type: 'varchar', length: 150, nullable: true }),
     __metadata("design:type", Object)
 ], Hostel.prototype, "warden", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'WardenPhone', length: 20, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'WardenPhone', type: 'varchar', length: 20, nullable: true }),
     __metadata("design:type", Object)
 ], Hostel.prototype, "wardenPhone", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], Hostel.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Hostel.prototype, "isDeleted", void 0);
 __decorate([

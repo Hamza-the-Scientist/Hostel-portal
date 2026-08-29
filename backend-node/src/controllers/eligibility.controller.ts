@@ -13,6 +13,30 @@ export class EligibilityController {
     }
   }
 
+  static async getDistrictsManagement(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const districts = await EligibilityService.getDistrictsManagement();
+      res.json(districts);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateDistrictStatus(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const { isAllowed } = req.body;
+      if (isAllowed === undefined) {
+        res.status(400).json({ message: 'isAllowed is required' });
+        return;
+      }
+      const updated = await EligibilityService.updateDistrictStatus(id, Boolean(isAllowed));
+      res.json(updated);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getCampuses(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const campuses = await EligibilityService.getCampuses();

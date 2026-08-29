@@ -23,31 +23,31 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Email', length: 256, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Email', type: 'varchar', length: 256, unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'PasswordHash', length: 512 }),
+    (0, typeorm_1.Column)({ name: 'PasswordHash', type: 'varchar', length: 512 }),
     __metadata("design:type", String)
 ], User.prototype, "passwordHash", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'FirstName', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'FirstName', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], User.prototype, "firstName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'LastName', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'LastName', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Role', length: 20 }),
+    (0, typeorm_1.Column)({ name: 'Role', type: 'varchar', length: 20 }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], User.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'PhoneNumber', length: 20, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'PhoneNumber', type: 'varchar', length: 20, nullable: true }),
     __metadata("design:type", Object)
 ], User.prototype, "phoneNumber", void 0);
 __decorate([
@@ -55,7 +55,7 @@ __decorate([
     __metadata("design:type", Object)
 ], User.prototype, "lastLoginAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "isDeleted", void 0);
 __decorate([

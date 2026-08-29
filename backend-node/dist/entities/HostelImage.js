@@ -20,15 +20,15 @@ __decorate([
     __metadata("design:type", Number)
 ], HostelImage.prototype, "imageId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], HostelImage.prototype, "hostelId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ImageUrl', length: 500 }),
+    (0, typeorm_1.Column)({ name: 'ImageUrl', type: 'varchar', length: 500 }),
     __metadata("design:type", String)
 ], HostelImage.prototype, "imageUrl", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsPrimary', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsPrimary', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], HostelImage.prototype, "isPrimary", void 0);
 __decorate([

@@ -25,19 +25,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Student.prototype, "studentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'UserId' }),
+    (0, typeorm_1.Column)({ name: 'UserId', type: 'int' }),
     __metadata("design:type", Number)
 ], Student.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RegistrationNumber', length: 50, unique: true }),
+    (0, typeorm_1.Column)({ name: 'RegistrationNumber', type: 'varchar', length: 50, unique: true }),
     __metadata("design:type", String)
 ], Student.prototype, "registrationNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Cnic', length: 13, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Cnic', type: 'varchar', length: 13, unique: true }),
     __metadata("design:type", String)
 ], Student.prototype, "cnic", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Gender', length: 10 }),
+    (0, typeorm_1.Column)({ name: 'Gender', type: 'varchar', length: 10 }),
     __metadata("design:type", String)
 ], Student.prototype, "gender", void 0);
 __decorate([
@@ -45,11 +45,11 @@ __decorate([
     __metadata("design:type", String)
 ], Student.prototype, "dateOfBirth", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DistrictId', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'DistrictId', type: 'int', nullable: true }),
     __metadata("design:type", Object)
 ], Student.prototype, "districtId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Student.prototype, "isDeleted", void 0);
 __decorate([

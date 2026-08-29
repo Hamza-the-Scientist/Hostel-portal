@@ -23,15 +23,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Application.prototype, "applicationId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'StudentId' }),
+    (0, typeorm_1.Column)({ name: 'StudentId', type: 'int' }),
     __metadata("design:type", Number)
 ], Application.prototype, "studentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AcademicYearId' }),
+    (0, typeorm_1.Column)({ name: 'AcademicYearId', type: 'int' }),
     __metadata("design:type", Number)
 ], Application.prototype, "academicYearId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Status', length: 20, default: 'Submitted' }),
+    (0, typeorm_1.Column)({ name: 'Status', type: 'varchar', length: 20, default: 'Submitted' }),
     __metadata("design:type", String)
 ], Application.prototype, "status", void 0);
 __decorate([

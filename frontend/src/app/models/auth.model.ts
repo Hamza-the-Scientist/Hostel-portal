@@ -36,4 +36,4 @@ export interface AuthResponse {
   data?: any;
 }
 
-export type UserRole = 'Student' | 'Admin' | 'SuperAdmin';
+export type UserRole = 'Student' | 'Admin' | 'SuperAdmin' | 'Provost';

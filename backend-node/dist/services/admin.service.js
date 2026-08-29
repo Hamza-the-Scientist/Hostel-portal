@@ -13,6 +13,7 @@ const AdminSettings_1 = require("../entities/AdminSettings");
 const RoomChangeRequest_1 = require("../entities/RoomChangeRequest");
 const Complaint_1 = require("../entities/Complaint");
 const Allocation_1 = require("../entities/Allocation");
+const ApplicationHostelPreference_1 = require("../entities/ApplicationHostelPreference");
 class AdminService {
     constructor() {
         this.studentRepo = database_1.AppDataSource.getRepository(Student_1.Student);
@@ -217,12 +218,14 @@ class AdminService {
         if (!hostel) {
             throw { status: 404, message: 'Hostel not found' };
         }
-        // Soft delete: sets isActive = false
-        hostel.isActive = false;
-        hostel.isDeleted = true;
-        hostel.deletedAt = new Date();
-        await this.hostelRepo.save(hostel);
-        return { message: 'Hostel deactivated successfully' };
+        // Delete associated child records before removing hostel
+        await this.amenityRepo.delete({ hostelId: id });
+        await this.imageRepo.delete({ hostelId: id });
+        const prefRepo = database_1.AppDataSource.getRepository(ApplicationHostelPreference_1.ApplicationHostelPreference);
+        await prefRepo.delete({ hostelId: id });
+        // Permanent Hard Delete from database
+        await this.hostelRepo.remove(hostel);
+        return { message: 'Hostel permanently deleted successfully' };
     }
     async getHostelById(id) {
         const h = await this.hostelRepo.findOne({

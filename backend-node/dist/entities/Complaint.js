@@ -19,23 +19,23 @@ __decorate([
     __metadata("design:type", Number)
 ], Complaint.prototype, "complaintId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ResidentId' }),
+    (0, typeorm_1.Column)({ name: 'ResidentId', type: 'int' }),
     __metadata("design:type", Number)
 ], Complaint.prototype, "residentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Category', length: 20 }),
+    (0, typeorm_1.Column)({ name: 'Category', type: 'varchar', length: 20 }),
     __metadata("design:type", String)
 ], Complaint.prototype, "category", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Description', length: 2000 }),
+    (0, typeorm_1.Column)({ name: 'Description', type: 'varchar', length: 2000 }),
     __metadata("design:type", String)
 ], Complaint.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Status', length: 20, default: 'Open' }),
+    (0, typeorm_1.Column)({ name: 'Status', type: 'varchar', length: 20, default: 'Open' }),
     __metadata("design:type", String)
 ], Complaint.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Complaint.prototype, "isDeleted", void 0);
 __decorate([

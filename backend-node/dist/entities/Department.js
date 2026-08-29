@@ -20,11 +20,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Department.prototype, "departmentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Name', length: 150 }),
+    (0, typeorm_1.Column)({ name: 'Name', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], Department.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Code', length: 20, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Code', type: 'varchar', length: 20, unique: true }),
     __metadata("design:type", String)
 ], Department.prototype, "code", void 0);
 __decorate([

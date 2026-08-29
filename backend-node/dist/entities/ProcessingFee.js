@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], ProcessingFee.prototype, "feeId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ApplicationId', unique: true }),
+    (0, typeorm_1.Column)({ name: 'ApplicationId', type: 'int', unique: true }),
     __metadata("design:type", Number)
 ], ProcessingFee.prototype, "applicationId", void 0);
 __decorate([
@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", Number)
 ], ProcessingFee.prototype, "amount", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Status', length: 10, default: 'Pending' }),
+    (0, typeorm_1.Column)({ name: 'Status', type: 'varchar', length: 10, default: 'Pending' }),
     __metadata("design:type", String)
 ], ProcessingFee.prototype, "status", void 0);
 __decorate([

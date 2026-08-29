@@ -19,11 +19,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Challan.prototype, "challanId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'FeeId' }),
+    (0, typeorm_1.Column)({ name: 'FeeId', type: 'int' }),
     __metadata("design:type", Number)
 ], Challan.prototype, "feeId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ChallanNumber', length: 50, unique: true }),
+    (0, typeorm_1.Column)({ name: 'ChallanNumber', type: 'varchar', length: 50, unique: true }),
     __metadata("design:type", String)
 ], Challan.prototype, "challanNumber", void 0);
 __decorate([

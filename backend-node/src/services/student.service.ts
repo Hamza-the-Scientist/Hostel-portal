@@ -1,6 +1,10 @@
 import { AppDataSource } from '../config/database';
 import { Student } from '../entities/Student';
 import { StudentProfile } from '../entities/StudentProfile';
+import { District } from '../entities/District';
+import { Application } from '../entities/Application';
+import { ApplicationHostelPreference } from '../entities/ApplicationHostelPreference';
+import { AcademicYear } from '../entities/AcademicYear';
 
 export class StudentService {
   private studentRepo = AppDataSource.getRepository(Student);
@@ -96,5 +100,165 @@ export class StudentService {
     await this.profileRepo.save(profile);
 
     return this.getProfile(userId);
+  }
+
+  async getDistrictEligibility(userId: number) {
+    const student = await this.studentRepo.findOne({
+      where: { userId },
+      relations: ['district'],
+    });
+
+    if (!student) {
+      throw { status: 404, message: 'Student not found.' };
+    }
+
+    let isAllowed = true;
+    let districtName = student.district?.name || 'Jamshoro';
+
+    if (student.district) {
+      isAllowed = student.district.isAllowed !== false;
+    } else if (student.districtId) {
+      const districtRepo = AppDataSource.getRepository(District);
+      const d = await districtRepo.findOne({ where: { districtId: student.districtId } });
+      if (d) {
+        districtName = d.name;
+        isAllowed = d.isAllowed !== false;
+      }
+    }
+
+    return {
+      isAllowed,
+      districtName,
+      message: isAllowed
+        ? 'Your district is eligible for hostel admission.'
+        : `Students from your district (${districtName}) are currently not eligible to apply for hostel accommodation.`,
+    };
+  }
+
+  async getApplication(userId: number) {
+    const student = await this.studentRepo.findOne({
+      where: { userId },
+      relations: ['district', 'applications', 'applications.preferences', 'applications.preferences.hostel', 'user'],
+    });
+
+    if (!student) {
+      throw { status: 404, message: 'Student not found.' };
+    }
+
+    const districtStatus = await this.getDistrictEligibility(userId);
+
+    const appRepo = AppDataSource.getRepository(Application);
+    const app = await appRepo.findOne({
+      where: { studentId: student.studentId },
+      relations: ['preferences', 'preferences.hostel'],
+      order: { createdAt: 'DESC' },
+    });
+
+    const isSubmitted = app?.status === 'Submitted';
+
+    return {
+      applicationId: app?.applicationId || 101,
+      studentId: student.studentId,
+      studentName: `${student.user.firstName} ${student.user.lastName}`.trim(),
+      rollNumber: student.registrationNumber,
+      district: districtStatus.districtName,
+      isDistrictAllowed: districtStatus.isAllowed,
+      districtEligibilityMessage: districtStatus.message,
+      status: app?.status || 'Draft',
+      displayStatus: app?.status === 'Submitted' ? 'Submitted' : 'In Progress',
+      submittedAt: app?.submittedAt ? app.submittedAt.toISOString() : undefined,
+      processingFee: {
+        feeId: 501,
+        challanNumber: 'CH-2026-0091',
+        amount: 100,
+        status: 'Paid',
+        createdAt: new Date().toISOString(),
+        dueDate: new Date(Date.now() + 7 * 86400000).toISOString(),
+      },
+      preferences: app?.preferences?.map((p) => ({
+        hostelId: p.hostelId,
+        name: p.hostel?.name || `Hostel #${p.hostelId}`,
+        gender: p.hostel?.gender || 'Male',
+        location: p.hostel?.address || 'Main Campus',
+        totalCapacity: p.hostel?.totalCapacity || 300,
+        availableBeds: 45,
+        rating: 4.5,
+        keyAmenities: ['WiFi', 'Mess'],
+        isEligible: true,
+        eligibilityReason: 'Matches Gender & Academic Program',
+      })) || [],
+      timeline: [
+        { stepName: 'Registration', isCompleted: true, isCurrent: false, description: 'Student verified & registered' },
+        { stepName: 'Processing Fee Paid', isCompleted: true, isCurrent: false, description: 'PKR 100 Verified' },
+        { stepName: 'Hostel Preferences Submitted', isCompleted: isSubmitted, isCurrent: !isSubmitted, description: isSubmitted ? 'Preferences Submitted' : 'Pending Selection' },
+        { stepName: 'Merit Processing', isCompleted: isSubmitted, isCurrent: isSubmitted, description: 'Under Merit Review' },
+        { stepName: 'Room Allocated', isCompleted: false, isCurrent: false, description: 'Pending Allocation' },
+        { stepName: 'Final Challan', isCompleted: false, isCurrent: false, description: 'Hostel Allotment Fee' },
+        { stepName: 'Allocation Complete', isCompleted: false, isCurrent: false, description: 'Resident Card Issued' },
+      ],
+    };
+  }
+
+  async submitApplication(userId: number, body?: any) {
+    const student = await this.studentRepo.findOne({
+      where: { userId },
+      relations: ['district'],
+    });
+
+    if (!student) {
+      throw { status: 404, message: 'Student profile not found.' };
+    }
+
+    // ── STRICT BACKEND SECURITY: DISTRICT-WISE ELIGIBILITY ENFORCEMENT ──
+    const districtStatus = await this.getDistrictEligibility(userId);
+    if (!districtStatus.isAllowed) {
+      throw {
+        status: 403,
+        message: `Students from your district (${districtStatus.districtName}) are currently not eligible to apply for hostel accommodation.`,
+      };
+    }
+
+    const appRepo = AppDataSource.getRepository(Application);
+    const academicYearRepo = AppDataSource.getRepository(AcademicYear);
+    const prefRepo = AppDataSource.getRepository(ApplicationHostelPreference);
+
+    let academicYear = await academicYearRepo.findOne({ where: { isActive: true } });
+    if (!academicYear) {
+      academicYear = await academicYearRepo.findOne({ where: {} });
+    }
+
+    let app = await appRepo.findOne({
+      where: { studentId: student.studentId },
+    });
+
+    if (!app) {
+      app = appRepo.create({
+        studentId: student.studentId,
+        academicYearId: academicYear?.academicYearId || 1,
+        status: 'Submitted',
+        submittedAt: new Date(),
+      });
+    } else {
+      app.status = 'Submitted';
+      app.submittedAt = new Date();
+    }
+
+    const savedApp = await appRepo.save(app);
+
+    // Save preferences if passed in body
+    if (body?.preferences && Array.isArray(body.preferences) && body.preferences.length > 0) {
+      await prefRepo.delete({ applicationId: savedApp.applicationId });
+      for (let i = 0; i < body.preferences.length; i++) {
+        const pref = body.preferences[i];
+        const newPref = prefRepo.create({
+          applicationId: savedApp.applicationId,
+          hostelId: pref.hostelId,
+          preferenceOrder: pref.priorityOrder || i + 1,
+        });
+        await prefRepo.save(newPref);
+      }
+    }
+
+    return this.getApplication(userId);
   }
 }

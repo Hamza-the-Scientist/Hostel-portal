@@ -1,1 +1,1 @@
-{"version":3,"file":"hostel.service.d.ts","sourceRoot":"","sources":["../../src/services/hostel.service.ts"],"names":[],"mappings":"AAGA,qBAAa,aAAa;IACxB,OAAO,CAAC,UAAU,CAAuC;IAEnD,gBAAgB;;;;;;;;;;;IAsChB,mBAAmB,CAAC,EAAE,EAAE,MAAM;;;;;;;;;;;;;;;;;;CAiDrC"}
+{"version":3,"file":"hostel.service.d.ts","sourceRoot":"","sources":["../../src/services/hostel.service.ts"],"names":[],"mappings":"AAGA,qBAAa,aAAa;IACxB,OAAO,CAAC,UAAU,CAAuC;IAEnD,gBAAgB;;;;;;;;;;;IAsChB,mBAAmB,CAAC,EAAE,EAAE,MAAM;;;;;;;;;;;;;;;;;;;CAkDrC"}

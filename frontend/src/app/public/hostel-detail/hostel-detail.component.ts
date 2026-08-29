@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PublicService } from '../public.service';
-import { HostelDetail, HostelReview } from '../public.model';
+import { HostelDetail } from '../public.model';
 
 @Component({
   selector: 'app-hostel-detail',
@@ -55,157 +55,6 @@ import { HostelDetail, HostelReview } from '../public.model';
     .badge.male { background: #E0F2FE; color: #0369A1; border: 1px solid #7DD3FC; }
     .badge.female { background: #FCE4EC; color: #C2185B; border: 1px solid #F48FB1; }
 
-    .rating-reviews-link {
-      display: inline-block;
-      text-align: right;
-      text-decoration: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      transition: background 200ms ease;
-    }
-
-    .rating-reviews-link:hover {
-      background: rgba(1, 92, 58, 0.08);
-    }
-
-    .rating-star {
-      font-size: 1.5rem;
-      color: #F2C94C;
-      font-weight: 800;
-    }
-
-    .reviews-count-text {
-      font-size: 0.85rem;
-      color: var(--color-primary);
-      font-weight: 700;
-    }
-
-    .stats {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--color-border);
-    }
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-    }
-    .stat-label { font-size: 0.85rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-    .stat-value { font-size: 1.25rem; font-weight: 800; color: var(--color-primary-deep); }
-    
-    .section-title { font-size: 1.5rem; margin-bottom: 1rem; margin-top: 2rem; color: var(--color-primary-deep); font-weight: 800; }
-    
-    .amenities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .amenity-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: #F4FBF7;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--color-border);
-      font-weight: 600;
-      color: var(--color-text-main);
-    }
-    .amenity-icon {
-      display: flex;
-      align-items: center;
-      color: var(--color-primary);
-    }
-
-    /* Reviews Section in Detail Page */
-    .reviews-section-wrap {
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--color-border);
-    }
-
-    .section-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.25rem;
-    }
-
-    .view-all-reviews-link {
-      color: var(--color-primary);
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-    }
-
-    .view-all-reviews-link:hover {
-      text-decoration: underline;
-    }
-
-    .detail-reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .detail-review-card {
-      background: #FFFFFF;
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .rev-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
-      color: #013828;
-      font-weight: 800;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .rev-user h4 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.15rem 0; color: var(--color-primary-deep); }
-    .rev-user p { font-size: 0.78rem; color: var(--color-text-muted); margin: 0; }
-
-    .rev-star {
-      margin-left: auto;
-      color: #F2C94C;
-      font-weight: 800;
-      font-size: 0.9rem;
-      background: rgba(242, 201, 76, 0.15);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-    }
-
-    .rev-body {
-      font-size: 0.88rem;
-      color: var(--color-text-main);
-      line-height: 1.5;
-      font-style: italic;
-      margin-bottom: 0.85rem;
-    }
-
-    .rev-date {
-      font-size: 0.78rem;
-      color: var(--color-text-muted);
-    }
-
     .cta-box {
       margin-top: 3rem;
       padding: 2rem;
@@ -225,7 +74,6 @@ import { HostelDetail, HostelReview } from '../public.model';
       .stats { flex-wrap: wrap; }
       .content { padding: 1.5rem; }
       .banner { height: 250px; }
-      .detail-reviews-grid { grid-template-columns: 1fr; }
     }
   `]
 })
@@ -236,7 +84,6 @@ export class HostelDetailComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   hostel: HostelDetail | null = null;
-  hostelReviews: HostelReview[] = [];
   isLoading = true;
 
   ngOnInit() {
@@ -254,26 +101,10 @@ export class HostelDetailComponent implements OnInit {
           this.cdr.detectChanges();
         }
       });
-
-      this.publicService.getReviews(+id).subscribe({
-        next: (reviews) => {
-          this.hostelReviews = reviews;
-          this.cdr.detectChanges();
-        }
-      });
     } else {
       this.isLoading = false;
       this.cdr.detectChanges();
     }
-  }
-
-  getInitials(name: string): string {
-    if (!name) return 'S';
-    const parts = name.trim().split(' ');
-    if (parts.length >= 2) {
-      return (parts[0][0] + parts[1][0]).toUpperCase();
-    }
-    return parts[0].substring(0, 2).toUpperCase();
   }
 
   getAmenityIcon(amenity: string): SafeHtml {

@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Payment.prototype, "paymentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ChallanId' }),
+    (0, typeorm_1.Column)({ name: 'ChallanId', type: 'int' }),
     __metadata("design:type", Number)
 ], Payment.prototype, "challanId", void 0);
 __decorate([
@@ -27,11 +27,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Payment.prototype, "amount", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'TransactionRef', length: 100, unique: true }),
+    (0, typeorm_1.Column)({ name: 'TransactionRef', type: 'varchar', length: 100, unique: true }),
     __metadata("design:type", String)
 ], Payment.prototype, "transactionRef", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'PaymentMethod', length: 50, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'PaymentMethod', type: 'varchar', length: 50, nullable: true }),
     __metadata("design:type", Object)
 ], Payment.prototype, "paymentMethod", void 0);
 __decorate([

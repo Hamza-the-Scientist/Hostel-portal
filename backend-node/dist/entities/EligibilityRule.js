@@ -20,13 +20,25 @@ __decorate([
     __metadata("design:type", Number)
 ], EligibilityRule.prototype, "ruleId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], EligibilityRule.prototype, "hostelId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RuleName', length: 150 }),
+    (0, typeorm_1.Column)({ name: 'RuleType', type: 'varchar', length: 50 }),
     __metadata("design:type", String)
-], EligibilityRule.prototype, "ruleName", void 0);
+], EligibilityRule.prototype, "ruleType", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'RuleMode', type: 'varchar', length: 50 }),
+    __metadata("design:type", String)
+], EligibilityRule.prototype, "mode", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'Values', type: 'simple-json', nullable: true }),
+    __metadata("design:type", Array)
+], EligibilityRule.prototype, "values", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
+    __metadata("design:type", Boolean)
+], EligibilityRule.prototype, "isActive", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'CreatedAt' }),
     __metadata("design:type", Date)

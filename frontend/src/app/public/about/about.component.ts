@@ -41,7 +41,7 @@ import { RouterModule } from '@angular/router';
               </svg>
             </div>
             <h3>24/7 Security &amp; Care</h3>
-            <p>Guarded perimeters, CCTV coverage, resident wardens, and dedicated student support for round-the-clock peace of mind.</p>
+            <p>Guarded perimeters, CCTV coverage, resident provost administration, and dedicated student support for round-the-clock peace of mind.</p>
           </div>
           <div class="pillar-card">
             <div class="icon-wrap">

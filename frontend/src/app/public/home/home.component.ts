@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PublicService } from '../public.service';
-import { HostelSummary, Announcement, HostelReview } from '../public.model';
+import { HostelSummary, Announcement } from '../public.model';
 
 export interface HeroSlide {
   id: number;
@@ -683,233 +683,6 @@ export interface InfoSlide {
       box-shadow: var(--shadow-sm);
     }
 
-    /* What Our Residents Say Section */
-    .reviews-banner-section {
-      background: linear-gradient(180deg, #FFFFFF 0%, #F4FBF7 100%);
-      padding: 4.5rem 1.5rem 4rem 1.5rem;
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .section-header-wrap {
-      text-align: center;
-      max-width: 720px;
-      margin: 0 auto 3rem auto;
-    }
-
-    .section-badge {
-      display: inline-block;
-      padding: 0.35rem 0.9rem;
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid var(--color-secondary);
-      border-radius: 9999px;
-      color: var(--color-secondary-dark);
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-    }
-
-    .section-heading {
-      font-size: 2.3rem;
-      font-weight: 800;
-      color: var(--color-primary-deep);
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.02em;
-    }
-
-    .section-subheading {
-      color: var(--color-text-muted);
-      font-size: 1.05rem;
-      line-height: 1.6;
-    }
-
-    .reviews-slider-wrapper {
-      position: relative;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .reviews-slider-container {
-      display: flex;
-      gap: 1.5rem;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 1rem 0.5rem 2rem 0.5rem;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .reviews-slider-container::-webkit-scrollbar {
-      display: none;
-    }
-
-    .review-slide-card {
-      flex: 0 0 380px;
-      background: #FFFFFF;
-      border: 1.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: 1.75rem;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .review-slide-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--color-primary);
-      box-shadow: var(--shadow-md);
-    }
-
-    .quote-mark {
-      position: absolute;
-      top: 0.8rem;
-      right: 1.5rem;
-      font-size: 4rem;
-      color: rgba(1, 92, 58, 0.1);
-      font-family: Georgia, serif;
-      pointer-events: none;
-      line-height: 1;
-    }
-
-    .rev-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .avatar-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #D4AF37 0%, #B8962A 100%);
-      color: #013828;
-      font-weight: 800;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .meta { flex: 1; }
-    .meta .name { font-size: 1.02rem; font-weight: 700; color: var(--color-primary-deep); margin: 0 0 0.15rem 0; }
-    .meta .dept { font-size: 0.8rem; color: var(--color-text-muted); margin: 0; }
-
-    .star-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      background: rgba(251, 191, 36, 0.12);
-      border: 1px solid rgba(251, 191, 36, 0.25);
-      padding: 0.25rem 0.65rem;
-      border-radius: 9999px;
-      color: #FBBF24;
-      font-weight: 800;
-      font-size: 0.85rem;
-    }
-
-    .hostel-pill-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      align-self: flex-start;
-      padding: 0.28rem 0.65rem;
-      background: #F4FBF7;
-      border: 1px solid var(--color-border);
-      border-radius: 6px;
-      color: var(--color-primary-dark);
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      margin-bottom: 1rem;
-      transition: all 200ms ease;
-    }
-
-    .hostel-pill-link:hover {
-      background: var(--color-primary);
-      color: #FFFFFF;
-    }
-
-    .rev-comment {
-      color: var(--color-text-main);
-      font-size: 0.92rem;
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
-      font-style: italic;
-    }
-
-    .rev-card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 0.85rem;
-      border-top: 1px solid var(--color-border);
-      font-size: 0.8rem;
-    }
-
-    .date-badge { color: var(--color-text-muted); }
-    .read-all-link { color: var(--color-primary); font-weight: 700; text-decoration: none; }
-    .read-all-link:hover { text-decoration: underline; }
-
-    .rev-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      border: 1.5px solid var(--color-primary);
-      color: var(--color-primary);
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.25s ease;
-    }
-
-    .rev-arrow.left { left: -22px; }
-    .rev-arrow.right { right: -22px; }
-    .rev-arrow:hover { background: var(--color-primary); color: #FFFFFF; }
-
-    .reviews-cta-bar {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .btn-all-reviews {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.85rem 2rem;
-      background: linear-gradient(135deg, #015C3A 0%, #013828 100%);
-      color: #FFFFFF;
-      font-weight: 800;
-      font-size: 0.95rem;
-      border-radius: 9999px;
-      text-decoration: none;
-      box-shadow: var(--shadow-md);
-      transition: all 0.3s ease;
-    }
-
-    .btn-all-reviews:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    @media (max-width: 768px) {
-      .review-slide-card { flex: 0 0 300px; }
-      .rev-arrow.left { left: 5px; }
-      .rev-arrow.right { right: 5px; }
-    }
   `]
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -918,11 +691,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('sliderContainer') sliderContainer!: ElementRef<HTMLDivElement>;
-  @ViewChild('reviewsSliderContainer') reviewsSliderContainer!: ElementRef<HTMLDivElement>;
 
   hostels: HostelSummary[] = [];
   announcements: Announcement[] = [];
-  randomReviews: HostelReview[] = [];
   activeFilter: 'All' | 'Male' | 'Female' = 'All';
 
   // Hero Text Slider Dataset (5 Variants)
@@ -982,7 +753,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       title: 'Safe, Comfortable & Student-Centric',
       subtitle: 'Dedicated residential blocks designed to provide peace of mind, high security, and a productive environment for academic focus.',
       bullets: [
-        { label: '24/7 Security Protocols', desc: 'Gated perimeters, CCTV coverage, and dedicated wardens.' },
+        { label: '24/7 Security Protocols', desc: 'Gated perimeters, CCTV coverage, and dedicated provost administration.' },
         { label: 'Modern Utility Access', desc: 'High-speed campus Wi-Fi, RO filtered water, and power backup.' },
         { label: 'Dedicated Dining', desc: 'Subsidized mess facilities with daily monitored hygienic meals.' }
       ]
@@ -1040,11 +811,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.publicService.getAnnouncements().subscribe({
       next: (data) => this.announcements = data,
       error: (err) => console.error('Failed to load announcements', err)
-    });
-
-    this.publicService.getRandomReviews(10).subscribe({
-      next: (data) => this.randomReviews = data,
-      error: (err) => console.error('Failed to load random reviews', err)
     });
   }
 
@@ -1185,26 +951,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       svg = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
     }
     return this.sanitizer.bypassSecurityTrustHtml(svg);
-  }
-
-  scrollReviewSlider(direction: 'left' | 'right') {
-    if (this.reviewsSliderContainer) {
-      const scrollAmount = 400;
-      const currentScroll = this.reviewsSliderContainer.nativeElement.scrollLeft;
-      this.reviewsSliderContainer.nativeElement.scrollTo({
-        left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  }
-
-  getInitials(name: string): string {
-    if (!name) return 'S';
-    const parts = name.trim().split(' ');
-    if (parts.length >= 2) {
-      return (parts[0][0] + parts[1][0]).toUpperCase();
-    }
-    return parts[0].substring(0, 2).toUpperCase();
   }
 }
 

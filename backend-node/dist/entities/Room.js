@@ -21,23 +21,23 @@ __decorate([
     __metadata("design:type", Number)
 ], Room.prototype, "roomId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'FloorId' }),
+    (0, typeorm_1.Column)({ name: 'FloorId', type: 'int' }),
     __metadata("design:type", Number)
 ], Room.prototype, "floorId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RoomNumber', length: 20 }),
+    (0, typeorm_1.Column)({ name: 'RoomNumber', type: 'varchar', length: 20 }),
     __metadata("design:type", String)
 ], Room.prototype, "roomNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RoomType', length: 10, default: 'Double' }),
+    (0, typeorm_1.Column)({ name: 'RoomType', type: 'varchar', length: 10, default: 'Double' }),
     __metadata("design:type", String)
 ], Room.prototype, "roomType", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], Room.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsDeleted', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsDeleted', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Room.prototype, "isDeleted", void 0);
 __decorate([

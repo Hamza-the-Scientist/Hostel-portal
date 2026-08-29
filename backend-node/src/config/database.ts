@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
-import path from 'path';
+import * as Entities from '../entities';
 
 dotenv.config();
 
@@ -11,8 +11,8 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'SindhDormitoryDb',
-  entities: [path.join(__dirname, '..', 'entities', '*.{ts,js}')],
-  synchronize: false,  // Set to false to use existing database schema without table recreation conflicts
+  entities: Object.values(Entities),
+  synchronize: false,
   logging: false,
   charset: 'utf8mb4',
 });

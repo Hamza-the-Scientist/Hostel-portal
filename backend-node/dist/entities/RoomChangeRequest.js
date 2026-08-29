@@ -19,19 +19,19 @@ __decorate([
     __metadata("design:type", Number)
 ], RoomChangeRequest.prototype, "requestId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ResidentId' }),
+    (0, typeorm_1.Column)({ name: 'ResidentId', type: 'int' }),
     __metadata("design:type", Number)
 ], RoomChangeRequest.prototype, "residentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RequestedRoomId', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'RequestedRoomId', type: 'int', nullable: true }),
     __metadata("design:type", Object)
 ], RoomChangeRequest.prototype, "requestedRoomId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Reason', length: 1000, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Reason', type: 'varchar', length: 1000, nullable: true }),
     __metadata("design:type", Object)
 ], RoomChangeRequest.prototype, "reason", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Status', length: 20, default: 'Pending' }),
+    (0, typeorm_1.Column)({ name: 'Status', type: 'varchar', length: 20, default: 'Pending' }),
     __metadata("design:type", String)
 ], RoomChangeRequest.prototype, "status", void 0);
 __decorate([

@@ -14,6 +14,10 @@ export declare class Hostel {
     eligibilityRequirement: string | null;
     warden: string | null;
     wardenPhone: string | null;
+    get provost(): string | null;
+    set provost(value: string | null);
+    get provostPhone(): string | null;
+    set provostPhone(value: string | null);
     isActive: boolean;
     isDeleted: boolean;
     deletedAt: Date | null;

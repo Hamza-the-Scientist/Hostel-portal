@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], AcademicYear.prototype, "academicYearId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Label', length: 20, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Label', type: 'varchar', length: 20, unique: true }),
     __metadata("design:type", String)
 ], AcademicYear.prototype, "label", void 0);
 __decorate([
@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], AcademicYear.prototype, "endDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], AcademicYear.prototype, "isActive", void 0);
 __decorate([

@@ -20,13 +20,17 @@ __decorate([
     __metadata("design:type", Number)
 ], District.prototype, "districtId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Name', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'Name', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], District.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Province', length: 50, default: 'Sindh' }),
+    (0, typeorm_1.Column)({ name: 'Province', type: 'varchar', length: 50, default: 'Sindh' }),
     __metadata("design:type", String)
 ], District.prototype, "province", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'IsAllowed', type: 'boolean', default: true }),
+    __metadata("design:type", Boolean)
+], District.prototype, "isAllowed", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'CreatedAt' }),
     __metadata("design:type", Date)

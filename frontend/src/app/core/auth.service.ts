@@ -28,13 +28,13 @@ export class AuthService {
     const rawRole = user.role;
     if (typeof rawRole === 'string') {
       const lower = rawRole.toLowerCase();
-      if (lower === 'admin') return 'Admin';
+      if (lower === 'admin' || lower === 'provost') return 'Admin';
       if (lower === 'superadmin') return 'SuperAdmin';
       if (lower === 'student') return 'Student';
       return rawRole;
     }
     if (typeof rawRole === 'number') {
-      const roleMap: Record<number, string> = { 1: 'Student', 2: 'Admin', 3: 'SuperAdmin' };
+      const roleMap: Record<number, string> = { 1: 'Student', 2: 'Admin', 3: 'SuperAdmin', 4: 'Admin' };
       return roleMap[rawRole] ?? null;
     }
     return null;
@@ -67,7 +67,7 @@ export class AuthService {
     localStorage.removeItem(ROLE_KEY);
     this._currentUser.set(null);
 
-    if (role === 'Admin' || role === 'SuperAdmin') {
+    if (role === 'Admin' || role === 'SuperAdmin' || role === 'Provost') {
       this.router.navigate(['/auth/admin-login']);
     } else {
       this.router.navigate(['/auth/student-login']);
@@ -93,12 +93,12 @@ export class AuthService {
     let normalizedRole: string = 'Student';
     if (typeof rawRole === 'string') {
       const lower = rawRole.toLowerCase();
-      if (lower === 'admin') normalizedRole = 'Admin';
+      if (lower === 'admin' || lower === 'provost') normalizedRole = 'Admin';
       else if (lower === 'superadmin') normalizedRole = 'SuperAdmin';
       else if (lower === 'student') normalizedRole = 'Student';
       else normalizedRole = rawRole;
     } else if (typeof rawRole === 'number') {
-      const roleMap: Record<number, string> = { 1: 'Student', 2: 'Admin', 3: 'SuperAdmin' };
+      const roleMap: Record<number, string> = { 1: 'Student', 2: 'Admin', 3: 'SuperAdmin', 4: 'Admin' };
       normalizedRole = roleMap[rawRole] ?? 'Student';
     }
 

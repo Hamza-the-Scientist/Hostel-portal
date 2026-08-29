@@ -20,19 +20,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Program.prototype, "programId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DepartmentId' }),
+    (0, typeorm_1.Column)({ name: 'DepartmentId', type: 'int' }),
     __metadata("design:type", Number)
 ], Program.prototype, "departmentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Name', length: 150 }),
+    (0, typeorm_1.Column)({ name: 'Name', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], Program.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Code', length: 20, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Code', type: 'varchar', length: 20, unique: true }),
     __metadata("design:type", String)
 ], Program.prototype, "code", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DegreeType', length: 20 }),
+    (0, typeorm_1.Column)({ name: 'DegreeType', type: 'varchar', length: 20 }),
     __metadata("design:type", String)
 ], Program.prototype, "degreeType", void 0);
 __decorate([

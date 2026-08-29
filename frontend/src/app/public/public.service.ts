@@ -9,7 +9,7 @@ import { HostelSummary, HostelDetail, Announcement, HostelReview } from './publi
 export class PublicService {
   private readonly http = inject(HttpClient);
 
-  private hostelsList: (HostelSummary & { description?: string; warden?: string; wardenPhone?: string })[] = [
+  private hostelsList: (HostelSummary & { description?: string; provost?: string; provostPhone?: string; warden?: string; wardenPhone?: string })[] = [
     // MALE HOSTELS
     {
       hostelId: 1,
@@ -206,7 +206,7 @@ export class PublicService {
       studentDept: 'Software Engineering, 3rd Year',
       rating: 4.5,
       date: 'January 2026',
-      comment: 'Living at Allama Iqbal Hostel for two years now. The Wi-Fi connection in the reading room is remarkably fast for assignments, and the warden Dr. Farooq is very approachable whenever we need permission or room maintenance.',
+      comment: 'Living at Allama Iqbal Hostel for two years now. The Wi-Fi connection in the reading room is remarkably fast for assignments, and the provost Dr. Farooq is very approachable whenever we need permission or room maintenance.',
       helpfulCount: 14
     },
     {
@@ -307,7 +307,7 @@ export class PublicService {
       studentDept: 'Commerce, Final Year',
       rating: 4.2,
       date: 'October 2025',
-      comment: 'Warden Prof. Tariq Hussain is quick to address any plumbing or electrical issues reported by students.',
+      comment: 'Provost Prof. Tariq Hussain is quick to address any plumbing or electrical issues reported by students.',
       helpfulCount: 10
     },
     {
@@ -397,7 +397,7 @@ export class PublicService {
       studentDept: 'Microbiology, 1st Year',
       rating: 4.5,
       date: 'August 2025',
-      comment: 'Best hostel experience in Jamshoro campus. Warden Engr. Mansoor is polite and supportive.',
+      comment: 'Best hostel experience in Jamshoro campus. Provost Engr. Mansoor is polite and supportive.',
       helpfulCount: 16
     },
 
@@ -500,7 +500,7 @@ export class PublicService {
       studentDept: 'Biochemistry PhD Scholar',
       rating: 4.6,
       date: 'November 2025',
-      comment: 'Excellent laundry service and prompt housekeeping. Warden Prof. Dr. Zahid Nizamani is extremely accommodating.',
+      comment: 'Excellent laundry service and prompt housekeeping. Provost Prof. Dr. Zahid Nizamani is extremely accommodating.',
       helpfulCount: 14
     },
     {
@@ -557,7 +557,7 @@ export class PublicService {
       studentDept: 'Information Technology, Final Year',
       rating: 4.6,
       date: 'December 2025',
-      comment: 'The female warden Dr. Shaheen Shah is like a caring parent to all residents. Mess food is fresh, clean, and nutritious. Never had any issues with Wi-Fi signal strength in Block A.',
+      comment: 'The provost Dr. Shaheen Shah is like a caring parent to all residents. Mess food is fresh, clean, and nutritious. Never had any issues with Wi-Fi signal strength in Block A.',
       helpfulCount: 24
     },
     {
@@ -601,7 +601,7 @@ export class PublicService {
       studentDept: 'Microbiology, 3rd Year',
       rating: 4.5,
       date: 'August 2025',
-      comment: 'Clean washrooms, regular sanitation, and cooperative warden office staff.',
+      comment: 'Clean washrooms, regular sanitation, and cooperative provost office staff.',
       helpfulCount: 18
     },
 
@@ -636,7 +636,7 @@ export class PublicService {
       studentDept: 'Psychology, 2nd Year',
       rating: 4.4,
       date: 'November 2025',
-      comment: 'Doctor on call facility proved very helpful when my roommate caught seasonal fever. The warden arranged medical aid immediately.',
+      comment: 'Doctor on call facility proved very helpful when my roommate caught seasonal fever. The provost arranged medical aid immediately.',
       helpfulCount: 14
     },
     {
@@ -737,7 +737,7 @@ export class PublicService {
       studentDept: 'Biotechnology, MS Scholar',
       rating: 4.8,
       date: 'August 2025',
-      comment: 'Truly international standard! Exceptional wardens and top level hygiene.',
+      comment: 'Truly international standard! Exceptional provost staff and top level hygiene.',
       helpfulCount: 24
     },
 
@@ -745,7 +745,7 @@ export class PublicService {
     // Block Hostel C
     { id: 401, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Imtiaz Ali Shah', studentDept: 'Physics MS', rating: 4.2, date: 'Jan 2026', comment: 'Very peaceful block for senior students. Quiet environment for thesis research.', helpfulCount: 8 },
     { id: 402, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Faisal Solangi', studentDept: 'Maths 4th Year', rating: 4.0, date: 'Dec 2025', comment: 'Clean rooms with high ceilings. Filtered water plant on ground floor.', helpfulCount: 6 },
-    { id: 403, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Sheraz Memon', studentDept: 'Chemistry 3rd Year', rating: 4.1, date: 'Nov 2025', comment: 'Friendly warden Dr. Daudpota. Good security around the block.', helpfulCount: 5 },
+    { id: 403, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Sheraz Memon', studentDept: 'Chemistry 3rd Year', rating: 4.1, date: 'Nov 2025', comment: 'Friendly provost Dr. Daudpota. Good security around the block.', helpfulCount: 5 },
     { id: 404, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Ali Raza Soomro', studentDept: 'Geology 2nd Year', rating: 4.0, date: 'Oct 2025', comment: 'Wi-Fi reaches rooms reliably. Walking distance to central labs.', helpfulCount: 4 },
     { id: 405, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Babar Chandio', studentDept: 'Stats 1st Year', rating: 4.1, date: 'Sep 2025', comment: 'Cozy building, spacious rooms.', helpfulCount: 7 },
     { id: 406, hostelId: 4, hostelName: '(Allama Dr. Daudpota) Block Hostel "C"', studentName: 'Tariq Mahar', studentDept: 'Botany 3rd Year', rating: 4.2, date: 'Aug 2025', comment: 'Quiet study room is very beneficial.', helpfulCount: 6 },
@@ -762,7 +762,7 @@ export class PublicService {
     { id: 601, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Sameer Junejo', studentDept: 'English Lit 2nd Year', rating: 4.0, date: 'Jan 2026', comment: 'Active badminton matches in the courtyard every evening. Fun hostel environment.', helpfulCount: 11 },
     { id: 602, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Adnan Rind', studentDept: 'Sociology 3rd Year', rating: 3.9, date: 'Dec 2025', comment: 'Near central university library, which saves a lot of walking time.', helpfulCount: 8 },
     { id: 603, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Shoaib Khowaja', studentDept: 'Economics 4th Year', rating: 4.0, date: 'Nov 2025', comment: 'RO water plant provides cold purified drinking water.', helpfulCount: 7 },
-    { id: 604, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Nabeel Jatoi', studentDept: 'Mass Comm 2nd Year', rating: 3.8, date: 'Oct 2025', comment: 'Decent food in mess, good warden response time.', helpfulCount: 5 },
+    { id: 604, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Nabeel Jatoi', studentDept: 'Mass Comm 2nd Year', rating: 3.8, date: 'Oct 2025', comment: 'Decent food in mess, good provost response time.', helpfulCount: 5 },
     { id: 605, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Khurram Bhatti', studentDept: 'Commerce', rating: 3.9, date: 'Sep 2025', comment: 'Clean corridors and nightly security rounds.', helpfulCount: 6 },
     { id: 606, hostelId: 6, hostelName: '(Hasrat Mohani) Block Hostel "D"', studentName: 'Rizwan Laghari', studentDept: 'Physics', rating: 4.0, date: 'Aug 2025', comment: 'Friendly roommates and supportive study environment.', helpfulCount: 4 },
 
@@ -772,13 +772,13 @@ export class PublicService {
     { id: 1103, hostelId: 11, hostelName: 'Fatima Jinnah Girls Hostel', studentName: 'Sana Kalhoro', studentDept: 'Pharmacy 4th Year', rating: 4.3, date: 'Nov 2025', comment: 'Clean dining hall with hygienic cooked meals.', helpfulCount: 12 },
     { id: 1104, hostelId: 11, hostelName: 'Fatima Jinnah Girls Hostel', studentName: 'Afshan Solangi', studentDept: 'Physics 1st Year', rating: 4.4, date: 'Oct 2025', comment: 'Spacious rooms with study desks for each student.', helpfulCount: 10 },
     { id: 1105, hostelId: 11, hostelName: 'Fatima Jinnah Girls Hostel', studentName: 'Bushra Unar', studentDept: 'Biotechnology', rating: 4.5, date: 'Sep 2025', comment: 'Prompt security checks at gate ensure maximum safety.', helpfulCount: 14 },
-    { id: 1106, hostelId: 11, hostelName: 'Fatima Jinnah Girls Hostel', studentName: 'Zainab Soomro', studentDept: 'Maths 2nd Year', rating: 4.4, date: 'Aug 2025', comment: 'Warden Mrs. Parveen is very attentive to student needs.', helpfulCount: 11 },
+    { id: 1106, hostelId: 11, hostelName: 'Fatima Jinnah Girls Hostel', studentName: 'Zainab Soomro', studentDept: 'Maths 2nd Year', rating: 4.4, date: 'Aug 2025', comment: 'Provost Mrs. Parveen is very attentive to student needs.', helpfulCount: 11 },
 
     // Bakhtawar Bhutto Girls Hostel
     { id: 1301, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Sahar Solangi', studentDept: 'Microbiology 3rd Year', rating: 4.3, date: 'Jan 2026', comment: 'Newly renovated building with vibrant rooms. Table tennis board in common room is super fun.', helpfulCount: 13 },
     { id: 1302, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Alishba Shah', studentDept: 'Chemistry 2nd Year', rating: 4.2, date: 'Dec 2025', comment: 'Fresh mess menu changed every week based on student voting.', helpfulCount: 11 },
     { id: 1303, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Komal Chandio', studentDept: 'Botany 4th Year', rating: 4.1, date: 'Nov 2025', comment: 'Purified water filter on every floor works great.', helpfulCount: 9 },
-    { id: 1304, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Faiza Junejo', studentDept: 'Zoology 1st Year', rating: 4.3, date: 'Oct 2025', comment: 'Friendly matron available 24/7 in warden office.', helpfulCount: 8 },
+    { id: 1304, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Faiza Junejo', studentDept: 'Zoology 1st Year', rating: 4.3, date: 'Oct 2025', comment: 'Friendly matron available 24/7 in provost office.', helpfulCount: 8 },
     { id: 1305, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Sumaira Khowaja', studentDept: 'English Lit', rating: 4.2, date: 'Sep 2025', comment: 'Good Wi-Fi coverage across all rooms.', helpfulCount: 7 },
     { id: 1306, hostelId: 13, hostelName: 'Bakhtawar Bhutto Girls Hostel', studentName: 'Noreen Abro', studentDept: 'Sociology', rating: 4.2, date: 'Aug 2025', comment: 'Clean corridors and peaceful atmosphere.', helpfulCount: 6 },
 
@@ -801,7 +801,7 @@ export class PublicService {
     // Syeda Zainab Girls Hostel
     { id: 1601, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Farah Unar', studentDept: 'Medicine & Surgery 4th Year', rating: 4.6, date: 'Jan 2026', comment: 'The 24-hour silent library during exam season was a lifesaver for my professional exams! Solar generator keeps study lights on.', helpfulCount: 22 },
     { id: 1602, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Zainab Fatima', studentDept: 'Pharmacy 3rd Year', rating: 4.5, date: 'Dec 2025', comment: 'Purified water plant on ground floor, super clean washrooms, and strict female security staff.', helpfulCount: 18 },
-    { id: 1603, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Komal Baloch', studentDept: 'Biotechnology 2nd Year', rating: 4.5, date: 'Nov 2025', comment: 'Very supportive warden Dr. Yasmin Unar.', helpfulCount: 13 },
+    { id: 1603, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Komal Baloch', studentDept: 'Biotechnology 2nd Year', rating: 4.5, date: 'Nov 2025', comment: 'Very supportive provost Dr. Yasmin Unar.', helpfulCount: 13 },
     { id: 1604, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Saima Solangi', studentDept: 'Physics 1st Year', rating: 4.4, date: 'Oct 2025', comment: 'Wi-Fi connection is fast and continuous.', helpfulCount: 11 },
     { id: 1605, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Sidra Kalhoro', studentDept: 'CS 4th Year', rating: 4.5, date: 'Sep 2025', comment: 'Great solar power backup during load shedding.', helpfulCount: 15 },
     { id: 1606, hostelId: 16, hostelName: 'Syeda Zainab Girls Hostel', studentName: 'Mariam Soomro', studentDept: 'Law Faculty', rating: 4.5, date: 'Aug 2025', comment: 'Silent study corners on top floor.', helpfulCount: 10 },
@@ -811,7 +811,7 @@ export class PublicService {
     { id: 1702, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Shazia Memon', studentDept: 'Software Eng 2nd Year', rating: 4.4, date: 'Dec 2025', comment: 'Medical room staff responds immediately when someone needs medicines or healthcare advice.', helpfulCount: 14 },
     { id: 1703, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Amina Chandio', studentDept: 'Botany 4th Year', rating: 4.3, date: 'Nov 2025', comment: 'Central mess serves hot fresh meals on time every day.', helpfulCount: 11 },
     { id: 1704, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Kinza Jatoi', studentDept: 'Economics 1st Year', rating: 4.4, date: 'Oct 2025', comment: '24/7 security gate with strict visitor log.', helpfulCount: 9 },
-    { id: 1705, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Yumna Soomro', studentDept: 'Sociology 3rd Year', rating: 4.4, date: 'Sep 2025', comment: 'Friendly female guards and supportive warden.', helpfulCount: 12 },
+    { id: 1705, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Yumna Soomro', studentDept: 'Sociology 3rd Year', rating: 4.4, date: 'Sep 2025', comment: 'Friendly female guards and supportive provost.', helpfulCount: 12 },
     { id: 1706, hostelId: 17, hostelName: 'Bibi Ayesha Girls Hostel', studentName: 'Hira Abro', studentDept: 'Zoology 2nd Year', rating: 4.3, date: 'Aug 2025', comment: 'Clean common room with TV and seating.', helpfulCount: 8 }
   ];
 
@@ -858,8 +858,10 @@ export class PublicService {
       gender: found.gender,
       location: found.location,
       description: found.description || 'Modern and secure hostel block on the main campus.',
-      warden: found.warden,
-      wardenPhone: found.wardenPhone,
+      provost: (found as any).provost || found.warden,
+      provostPhone: (found as any).provostPhone || found.wardenPhone,
+      warden: (found as any).provost || found.warden,
+      wardenPhone: (found as any).provostPhone || found.wardenPhone,
       totalCapacity: found.totalCapacity,
       occupiedBeds: found.totalCapacity - found.availableBeds,
       availableBeds: found.availableBeds,

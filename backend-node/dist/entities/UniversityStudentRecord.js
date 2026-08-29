@@ -22,15 +22,15 @@ __decorate([
     __metadata("design:type", Number)
 ], UniversityStudentRecord.prototype, "recordId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'StudentId' }),
+    (0, typeorm_1.Column)({ name: 'StudentId', type: 'int' }),
     __metadata("design:type", Number)
 ], UniversityStudentRecord.prototype, "studentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DepartmentId', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'DepartmentId', type: 'int', nullable: true }),
     __metadata("design:type", Object)
 ], UniversityStudentRecord.prototype, "departmentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ProgramId', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'ProgramId', type: 'int', nullable: true }),
     __metadata("design:type", Object)
 ], UniversityStudentRecord.prototype, "programId", void 0);
 __decorate([
@@ -42,7 +42,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UniversityStudentRecord.prototype, "cgpa", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsVerified', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsVerified', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], UniversityStudentRecord.prototype, "isVerified", void 0);
 __decorate([
@@ -50,7 +50,7 @@ __decorate([
     __metadata("design:type", Object)
 ], UniversityStudentRecord.prototype, "verifiedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'VerifiedBy', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'VerifiedBy', type: 'varchar', length: 100, nullable: true }),
     __metadata("design:type", Object)
 ], UniversityStudentRecord.prototype, "verifiedBy", void 0);
 __decorate([

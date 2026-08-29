@@ -38,6 +38,20 @@ export class Hostel {
   @Column({ name: 'WardenPhone', type: 'varchar', length: 20, nullable: true })
   wardenPhone!: string | null;
 
+  get provost(): string | null {
+    return this.warden;
+  }
+  set provost(value: string | null) {
+    this.warden = value;
+  }
+
+  get provostPhone(): string | null {
+    return this.wardenPhone;
+  }
+  set provostPhone(value: string | null) {
+    this.wardenPhone = value;
+  }
+
   @Column({ name: 'IsActive', type: 'boolean', default: true })
   isActive!: boolean;
 

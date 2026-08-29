@@ -8,5 +8,8 @@ router.use(authenticateJWT);
 
 router.get('/profile', requireRole('Student'), StudentController.getProfile);
 router.put('/profile', requireRole('Student'), StudentController.updateProfile);
+router.get('/eligibility-status', requireRole('Student'), StudentController.getDistrictEligibility);
+router.get('/application', requireRole('Student'), StudentController.getApplication);
+router.post('/application', requireRole('Student'), StudentController.submitApplication);
 
 export default router;

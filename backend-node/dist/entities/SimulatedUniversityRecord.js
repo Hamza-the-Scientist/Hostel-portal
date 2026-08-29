@@ -19,43 +19,43 @@ __decorate([
     __metadata("design:type", Number)
 ], SimulatedUniversityRecord.prototype, "recordId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'FullName', length: 150 }),
+    (0, typeorm_1.Column)({ name: 'FullName', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "fullName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Cnic', length: 13, unique: true }),
+    (0, typeorm_1.Column)({ name: 'Cnic', type: 'varchar', length: 13, unique: true }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "cnic", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RollNumber', length: 50, unique: true }),
+    (0, typeorm_1.Column)({ name: 'RollNumber', type: 'varchar', length: 50, unique: true }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "rollNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'FatherName' }),
+    (0, typeorm_1.Column)({ name: 'FatherName', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "fatherName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Address' }),
+    (0, typeorm_1.Column)({ name: 'Address', type: 'varchar', length: 255 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DistrictName' }),
+    (0, typeorm_1.Column)({ name: 'DistrictName', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "districtName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Province', default: 'Sindh' }),
+    (0, typeorm_1.Column)({ name: 'Province', type: 'varchar', length: 50, default: 'Sindh' }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "province", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DepartmentName' }),
+    (0, typeorm_1.Column)({ name: 'DepartmentName', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "departmentName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ProgramName' }),
+    (0, typeorm_1.Column)({ name: 'ProgramName', type: 'varchar', length: 150 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "programName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'DegreeType', length: 20 }),
+    (0, typeorm_1.Column)({ name: 'DegreeType', type: 'varchar', length: 20 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "degreeType", void 0);
 __decorate([
@@ -71,11 +71,11 @@ __decorate([
     __metadata("design:type", Number)
 ], SimulatedUniversityRecord.prototype, "cpn", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AcademicYear', default: '2025-2026' }),
+    (0, typeorm_1.Column)({ name: 'AcademicYear', type: 'varchar', length: 20, default: '2025-2026' }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "academicYear", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Gender', length: 10 }),
+    (0, typeorm_1.Column)({ name: 'Gender', type: 'varchar', length: 10 }),
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "gender", void 0);
 __decorate([
@@ -83,11 +83,11 @@ __decorate([
     __metadata("design:type", String)
 ], SimulatedUniversityRecord.prototype, "dateOfBirth", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ProfilePictureUrl', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'ProfilePictureUrl', type: 'varchar', length: 500, nullable: true }),
     __metadata("design:type", Object)
 ], SimulatedUniversityRecord.prototype, "profilePictureUrl", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsActive', default: true }),
+    (0, typeorm_1.Column)({ name: 'IsActive', type: 'boolean', default: true }),
     __metadata("design:type", Boolean)
 ], SimulatedUniversityRecord.prototype, "isActive", void 0);
 __decorate([

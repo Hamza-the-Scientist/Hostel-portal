@@ -20,11 +20,11 @@ __decorate([
     __metadata("design:type", Number)
 ], HostelAmenity.prototype, "amenityId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], HostelAmenity.prototype, "hostelId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'AmenityName', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'AmenityName', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], HostelAmenity.prototype, "amenityName", void 0);
 __decorate([

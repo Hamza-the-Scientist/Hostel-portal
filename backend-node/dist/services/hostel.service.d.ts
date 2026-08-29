@@ -16,7 +16,8 @@ export declare class HostelService {
         name: string;
         gender: string;
         location: string;
-        description: string;
+        provost: string;
+        provostPhone: string;
         warden: string;
         wardenPhone: string;
         totalCapacity: number;

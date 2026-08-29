@@ -21,15 +21,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Admin.prototype, "adminId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'UserId' }),
+    (0, typeorm_1.Column)({ name: 'UserId', type: 'int' }),
     __metadata("design:type", Number)
 ], Admin.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'EmployeeId', length: 50, unique: true }),
+    (0, typeorm_1.Column)({ name: 'EmployeeId', type: 'varchar', length: 50, unique: true }),
     __metadata("design:type", String)
 ], Admin.prototype, "employeeId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Department', length: 100, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Department', type: 'varchar', length: 100, nullable: true }),
     __metadata("design:type", Object)
 ], Admin.prototype, "department", void 0);
 __decorate([

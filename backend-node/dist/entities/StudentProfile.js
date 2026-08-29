@@ -20,43 +20,43 @@ __decorate([
     __metadata("design:type", Number)
 ], StudentProfile.prototype, "profileId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'StudentId' }),
+    (0, typeorm_1.Column)({ name: 'StudentId', type: 'int' }),
     __metadata("design:type", Number)
 ], StudentProfile.prototype, "studentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'PhotoUrl', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'PhotoUrl', type: 'varchar', length: 255, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "photoUrl", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'GuardianName', length: 150, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'GuardianName', type: 'varchar', length: 150, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "guardianName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'GuardianPhone', length: 20, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'GuardianPhone', type: 'varchar', length: 20, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "guardianPhone", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'GuardianRelation', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'GuardianRelation', type: 'varchar', length: 100, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "guardianRelation", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HomeAddress', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'HomeAddress', type: 'text', nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "homeAddress", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'City', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'City', type: 'varchar', length: 100, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "city", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'EmergencyContact', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'EmergencyContact', type: 'varchar', length: 20, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "emergencyContact", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'BloodGroup', length: 5, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'BloodGroup', type: 'varchar', length: 5, nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "bloodGroup", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Disabilities', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Disabilities', type: 'text', nullable: true }),
     __metadata("design:type", Object)
 ], StudentProfile.prototype, "disabilities", void 0);
 __decorate([

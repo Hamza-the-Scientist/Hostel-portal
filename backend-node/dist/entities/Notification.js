@@ -20,23 +20,23 @@ __decorate([
     __metadata("design:type", Number)
 ], Notification.prototype, "notificationId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'UserId' }),
+    (0, typeorm_1.Column)({ name: 'UserId', type: 'int' }),
     __metadata("design:type", Number)
 ], Notification.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Title', length: 200 }),
+    (0, typeorm_1.Column)({ name: 'Title', type: 'varchar', length: 200 }),
     __metadata("design:type", String)
 ], Notification.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Message', length: 2000 }),
+    (0, typeorm_1.Column)({ name: 'Message', type: 'varchar', length: 2000 }),
     __metadata("design:type", String)
 ], Notification.prototype, "message", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IsRead', default: false }),
+    (0, typeorm_1.Column)({ name: 'IsRead', type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
 ], Notification.prototype, "isRead", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Link', length: 500, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Link', type: 'varchar', length: 500, nullable: true }),
     __metadata("design:type", Object)
 ], Notification.prototype, "link", void 0);
 __decorate([

@@ -20,11 +20,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Review.prototype, "reviewId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ResidentId' }),
+    (0, typeorm_1.Column)({ name: 'ResidentId', type: 'int' }),
     __metadata("design:type", Number)
 ], Review.prototype, "residentId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], Review.prototype, "hostelId", void 0);
 __decorate([
@@ -32,7 +32,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Review.prototype, "overallRating", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Comment', length: 2000, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'Comment', type: 'text', nullable: true }),
     __metadata("design:type", Object)
 ], Review.prototype, "comment", void 0);
 __decorate([

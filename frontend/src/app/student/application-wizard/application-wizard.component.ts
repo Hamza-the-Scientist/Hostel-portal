@@ -226,6 +226,10 @@ export class ApplicationWizardComponent implements OnInit {
   eligibleHostels: EligibleHostel[] = DEFAULT_HOSTELS;
   selectedPreferences: EligibleHostel[] = [];
 
+  isDistrictAllowed = true;
+  districtName = '';
+  districtRestrictionMessage = '';
+
   errorMessage = '';
   successMessage = '';
   isProcessing = false;
@@ -252,10 +256,28 @@ export class ApplicationWizardComponent implements OnInit {
 
     this.profileService.getProfile().subscribe({
       next: (p) => {
-        if (p) this.studentProfile = p;
+        if (p) {
+          this.studentProfile = p;
+          if (p.verifiedInfo?.district) {
+            this.districtName = p.verifiedInfo.district;
+          }
+        }
       },
       error: () => {
         this.studentProfile = DEFAULT_PROFILE;
+      }
+    });
+
+    this.workflowService.getDistrictEligibility().subscribe({
+      next: (status) => {
+        if (status) {
+          this.isDistrictAllowed = status.isAllowed;
+          this.districtName = status.districtName || this.studentProfile.verifiedInfo.district;
+          this.districtRestrictionMessage = status.message || (status.isAllowed ? '' : `Students from your district (${this.districtName}) are currently not eligible to apply for hostel accommodation.`);
+          if (!status.isAllowed) {
+            this.errorMessage = this.districtRestrictionMessage;
+          }
+        }
       }
     });
 
@@ -286,6 +308,11 @@ export class ApplicationWizardComponent implements OnInit {
   }
 
   goToStep(step: number) {
+    if (!this.isDistrictAllowed && step > 1) {
+      this.errorMessage = this.districtRestrictionMessage || `Students from your district (${this.districtName}) are currently not eligible to apply for hostel accommodation.`;
+      return;
+    }
+
     this.errorMessage = '';
     this.successMessage = '';
     this.currentStep = step;
@@ -388,22 +415,32 @@ export class ApplicationWizardComponent implements OnInit {
   }
 
   submitFinalApplication() {
+    if (!this.isDistrictAllowed) {
+      this.errorMessage = this.districtRestrictionMessage || `Students from your district (${this.districtName}) are currently not eligible to apply for hostel accommodation.`;
+      return;
+    }
+
     this.isProcessing = true;
     this.errorMessage = '';
 
-    this.application.status = 'Submitted';
-    this.application.displayStatus = 'Submitted';
-    this.application.submittedAt = new Date().toISOString();
-    this.updateTimelineState();
+    const payloadPreferences = this.selectedPreferences.map((h, i) => ({
+      hostelId: h.hostelId,
+      priorityOrder: i + 1
+    }));
 
-    this.workflowService.submitApplication().subscribe({
-      next: () => {
+    this.workflowService.submitApplication(payloadPreferences).subscribe({
+      next: (app) => {
         this.isProcessing = false;
+        if (app) this.application = app;
+        this.application.status = 'Submitted';
+        this.application.displayStatus = 'Submitted';
+        this.application.submittedAt = new Date().toISOString();
+        this.updateTimelineState();
         this.currentStep = 6;
       },
-      error: () => {
+      error: (err) => {
         this.isProcessing = false;
-        this.currentStep = 6;
+        this.errorMessage = err.error?.message || err.message || `Students from your district (${this.districtName}) are currently not eligible to apply for hostel accommodation.`;
       }
     });
   }

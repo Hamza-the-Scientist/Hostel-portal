@@ -15,6 +15,7 @@ const student_routes_1 = __importDefault(require("./routes/student.routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
 const hostel_routes_1 = __importDefault(require("./routes/hostel.routes"));
 const announcement_routes_1 = __importDefault(require("./routes/announcement.routes"));
+const eligibility_routes_1 = __importDefault(require("./routes/eligibility.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
@@ -50,6 +51,7 @@ app.use('/api/students', student_routes_1.default);
 app.use('/api/admin', admin_routes_1.default);
 app.use('/api/hostels', hostel_routes_1.default);
 app.use('/api/announcements', announcement_routes_1.default);
+app.use('/api/eligibility', eligibility_routes_1.default);
 // ── Global Error Handler ──────────────────────────────────────────────────────
 app.use(errorHandler_1.errorHandler);
 // ── Database Initialization & Server Startup ──────────────────────────────────

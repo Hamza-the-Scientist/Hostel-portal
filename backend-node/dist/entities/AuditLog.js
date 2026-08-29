@@ -20,15 +20,15 @@ __decorate([
     __metadata("design:type", Number)
 ], AuditLog.prototype, "logId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'TableName', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'TableName', type: 'varchar', length: 100 }),
     __metadata("design:type", String)
 ], AuditLog.prototype, "tableName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RecordId', length: 50 }),
+    (0, typeorm_1.Column)({ name: 'RecordId', type: 'varchar', length: 50 }),
     __metadata("design:type", String)
 ], AuditLog.prototype, "recordId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'Action', length: 10 }),
+    (0, typeorm_1.Column)({ name: 'Action', type: 'varchar', length: 10 }),
     __metadata("design:type", String)
 ], AuditLog.prototype, "action", void 0);
 __decorate([
@@ -40,11 +40,11 @@ __decorate([
     __metadata("design:type", Object)
 ], AuditLog.prototype, "newValues", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'IpAddress', length: 45, nullable: true }),
+    (0, typeorm_1.Column)({ name: 'IpAddress', type: 'varchar', length: 45, nullable: true }),
     __metadata("design:type", Object)
 ], AuditLog.prototype, "ipAddress", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'PerformedByUserId', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'PerformedByUserId', type: 'int', nullable: true }),
     __metadata("design:type", Object)
 ], AuditLog.prototype, "performedByUserId", void 0);
 __decorate([

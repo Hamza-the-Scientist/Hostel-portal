@@ -21,11 +21,11 @@ __decorate([
     __metadata("design:type", Number)
 ], ApplicationHostelPreference.prototype, "prefId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'ApplicationId' }),
+    (0, typeorm_1.Column)({ name: 'ApplicationId', type: 'int' }),
     __metadata("design:type", Number)
 ], ApplicationHostelPreference.prototype, "applicationId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], ApplicationHostelPreference.prototype, "hostelId", void 0);
 __decorate([

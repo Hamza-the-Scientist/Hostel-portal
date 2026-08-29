@@ -65,7 +65,7 @@ class AuthService {
         if (!isValid) {
             throw { status: 401, message: 'Invalid email or password.' };
         }
-        if (user.role !== 'Admin' && user.role !== 'SuperAdmin') {
+        if (user.role !== 'Admin' && user.role !== 'SuperAdmin' && user.role !== 'Provost' && user.role !== 'Warden') {
             throw { status: 401, message: 'Unauthorized access.' };
         }
         user.lastLoginAt = new Date();

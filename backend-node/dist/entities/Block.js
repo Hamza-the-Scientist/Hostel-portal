@@ -21,11 +21,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Block.prototype, "blockId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'HostelId' }),
+    (0, typeorm_1.Column)({ name: 'HostelId', type: 'int' }),
     __metadata("design:type", Number)
 ], Block.prototype, "hostelId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'BlockName', length: 50 }),
+    (0, typeorm_1.Column)({ name: 'BlockName', type: 'varchar', length: 50 }),
     __metadata("design:type", String)
 ], Block.prototype, "blockName", void 0);
 __decorate([

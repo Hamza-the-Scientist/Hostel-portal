@@ -86,8 +86,8 @@ export const seedDatabase = async (): Promise<void> => {
       department: 'Hostel Administration',
     });
     await adminRepo.save(admin);
-    console.log('✅ Admin Account Seeded (Email: admin@usindh.edu.pk | Pass: AdminPassword123!)');
   }
+  console.log('✅ Admin Account Seeded (Email: admin@usindh.edu.pk | Pass: AdminPassword123!)');
 
   // 3. Seed AdminSettings
   let settings = await settingsRepo.findOne({ where: {} });
@@ -99,16 +99,28 @@ export const seedDatabase = async (): Promise<void> => {
       effectiveFrom: new Date(),
     });
     await settingsRepo.save(settings);
-    console.log('✅ AdminSettings Seeded');
   }
+  console.log('✅ AdminSettings Seeded');
 
   // 4. Seed Districts
-  const districtList = ['Hyderabad', 'Jamshoro', 'Mirpurkhas', 'Sukkur', 'Larkana', 'Dadu'];
+  try {
+    await AppDataSource.query("ALTER TABLE Districts ADD COLUMN IsAllowed TINYINT(1) NOT NULL DEFAULT 1");
+  } catch (_colErr) {
+    // Column already exists
+  }
+
+  const districtList = [
+    'Badin', 'Dadu', 'Ghotki', 'Hyderabad', 'Jacobabad', 'Jamshoro',
+    'Karachi Central', 'Karachi East', 'Karachi South', 'Karachi West', 'Keamari', 'Korangi', 'Malir',
+    'Kashmore', 'Khairpur', 'Larkana', 'Matiari', 'Mirpurkhas', 'Naushahro Feroze',
+    'Qambar Shahdadkot', 'Sanghar', 'Shaheed Benazirabad', 'Shikarpur', 'Sujawal',
+    'Sukkur', 'Tando Allahyar', 'Tando Muhammad Khan', 'Tharparkar', 'Thatta', 'Umerkot'
+  ];
   const districtMap = new Map<string, District>();
   for (const name of districtList) {
     let dist = await districtRepo.findOne({ where: { name } });
     if (!dist) {
-      dist = districtRepo.create({ name, province: 'Sindh' });
+      dist = districtRepo.create({ name, province: 'Sindh', isAllowed: true });
       await districtRepo.save(dist);
     }
     districtMap.set(name, dist);
@@ -746,9 +758,9 @@ export const seedDatabase = async (): Promise<void> => {
         targetAudience: 'All',
       });
       await announcementRepo.save(ann);
-      console.log('✅ Announcements Seeded');
     }
   }
+  console.log('✅ Announcements Seeded');
 
   console.log('🎉 Seeding Complete!');
 };

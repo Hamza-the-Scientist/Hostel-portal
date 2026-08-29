@@ -36,7 +36,7 @@ import { HostelSummary } from '../public.model';
                   type="text" 
                   [(ngModel)]="draftSearch" 
                   (keyup.enter)="applyFilters()"
-                  placeholder="Search hostel by name, location, or warden..."
+                  placeholder="Search hostel by name, location, or provost..."
                   class="search-input"
                 />
                 <button *ngIf="draftSearch" (click)="draftSearch = ''; applyFilters()" class="clear-input-btn" aria-label="Clear Search">✕</button>
@@ -184,7 +184,6 @@ import { HostelSummary } from '../public.model';
               >
                 <div class="badge-overlay">
                   <span class="gender-badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }}</span>
-                  <span class="rating-badge">★ {{ hostel.rating | number:'1.1-1' }}</span>
                 </div>
               </div>
 
