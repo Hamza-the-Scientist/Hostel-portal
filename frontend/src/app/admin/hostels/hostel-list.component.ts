@@ -237,7 +237,7 @@ import { HostelFormComponent } from './hostel-form.component';
     }
 
     :host ::ng-deep .mat-mdc-header-row {
-      background: linear-gradient(135deg, #2f503fff 0%, #416a4aff 100%) !important;
+      background: linear-gradient(135deg, #013828, #015C3A) !important;
     
     }
 

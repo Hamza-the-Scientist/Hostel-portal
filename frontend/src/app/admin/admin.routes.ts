@@ -4,7 +4,7 @@ import { AdminLayoutComponent } from './layout/admin-layout.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard.component';
 import { HostelListComponent } from './hostels/hostel-list.component';
 import { RoomListComponent } from './rooms/room-list.component';
-import { EligibilityBuilderComponent } from './eligibility/eligibility-builder.component';
+import { EligibilityComponent } from './eligibility/eligibility.component';
 import { StudentManagementComponent } from './students/student-management.component';
 import { ResidentManagementComponent } from './residents/resident-management.component';
 import { AdminApplicationViewComponent } from './applications/admin-application-view.component';
@@ -20,7 +20,7 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'hostels', component: HostelListComponent },
       { path: 'rooms', component: RoomListComponent },
-      { path: 'eligibility', component: EligibilityBuilderComponent },
+      { path: 'eligibility', component: EligibilityComponent },
       { path: 'students', component: StudentManagementComponent },
       { path: 'residents', component: ResidentManagementComponent },
       { path: 'applications', component: AdminApplicationViewComponent },

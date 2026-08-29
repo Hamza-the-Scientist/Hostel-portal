@@ -11,6 +11,7 @@ import studentRoutes from './routes/student.routes';
 import adminRoutes from './routes/admin.routes';
 import hostelRoutes from './routes/hostel.routes';
 import announcementRoutes from './routes/announcement.routes';
+import eligibilityRoutes from './routes/eligibility.routes';
 
 dotenv.config();
 
@@ -53,6 +54,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/hostels', hostelRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/eligibility', eligibilityRoutes);
 
 // ── Global Error Handler ──────────────────────────────────────────────────────
 app.use(errorHandler);

@@ -9,8 +9,17 @@ export class EligibilityRule {
   @Column({ name: 'HostelId', type: 'int' })
   hostelId!: number;
 
-  @Column({ name: 'RuleName', type: 'varchar', length: 150 })
-  ruleName!: string;
+  @Column({ name: 'RuleType', type: 'varchar', length: 50 })
+  ruleType!: string;
+
+  @Column({ name: 'RuleMode', type: 'varchar', length: 50 })
+  mode!: string;
+
+  @Column({ name: 'Values', type: 'simple-json', nullable: true })
+  values!: string[];
+
+  @Column({ name: 'IsActive', type: 'boolean', default: true })
+  isActive!: boolean;
 
   @CreateDateColumn({ name: 'CreatedAt' })
   createdAt!: Date;

@@ -67,7 +67,7 @@ export class HostelService {
       );
     }
 
-    const eligibilityList = hostel.eligibilityRules ? hostel.eligibilityRules.map((e) => e.ruleName) : [];
+    const eligibilityList = hostel.eligibilityRules ? hostel.eligibilityRules.map((e) => `${e.mode} ${e.ruleType}: ${e.values ? e.values.join(', ') : ''}`) : [];
     if (eligibilityList.length === 0 && hostel.eligibilityRequirement) {
       eligibilityList.push(hostel.eligibilityRequirement);
     }
