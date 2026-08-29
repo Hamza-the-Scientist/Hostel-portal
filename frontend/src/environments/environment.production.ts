@@ -1,5 +1,5 @@
-// src/environments/environment.production.ts — Production environment
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.sindhdormitory.edu.pk/api', // Replace with actual production URL
+  apiBaseUrl: 'http://localhost:5000/api',
+  apiUrl: 'http://localhost:5000'
 };

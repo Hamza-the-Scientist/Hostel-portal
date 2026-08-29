@@ -17,7 +17,22 @@ export class AdminSettings {
   @Column({ name: 'AllocationEnabled', type: 'boolean', default: true })
   allocationEnabled!: boolean;
 
-  @Column({ name: 'EffectiveFrom', type: 'datetime' })
+  @Column({ name: 'SindhProvinceFee', type: 'decimal', precision: 10, scale: 2, default: 25000 })
+  sindhProvinceFee!: number;
+
+  @Column({ name: 'OtherProvincesFee', type: 'decimal', precision: 10, scale: 2, default: 35000 })
+  otherProvincesFee!: number;
+
+  @Column({ name: 'InternationalStudentsFee', type: 'decimal', precision: 10, scale: 2, default: 75000 })
+  internationalStudentsFee!: number;
+
+  @Column({ name: 'ProcessingFee', type: 'decimal', precision: 10, scale: 2, default: 100 })
+  processingFee!: number;
+
+  @Column({ name: 'AcademicYear', type: 'varchar', length: 50, default: '2025-2026' })
+  academicYear!: string;
+
+  @Column({ name: 'EffectiveFrom', type: 'datetime', nullable: true })
   effectiveFrom!: Date;
 
   @CreateDateColumn({ name: 'CreatedAt' })

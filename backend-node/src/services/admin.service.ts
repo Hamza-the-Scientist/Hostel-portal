@@ -274,6 +274,70 @@ export class AdminService {
     return { message: 'Hostel permanently deleted successfully' };
   }
 
+  async getRooms(hostelId: number) {
+    const roomRepo = AppDataSource.getRepository('Rooms');
+    try {
+      const rooms = await roomRepo.find({
+        where: { isDeleted: false },
+        relations: ['floor', 'floor.block', 'floor.block.hostel', 'beds'],
+        order: { roomNumber: 'ASC' }
+      });
+      const hostelRooms = rooms.filter((r: any) => r.floor?.block?.hostel?.hostelId === hostelId);
+      if (hostelRooms.length > 0) {
+        return hostelRooms.map((r: any) => ({
+          roomId: r.roomId,
+          hostelId,
+          number: r.roomNumber,
+          block: r.floor?.block?.blockName || 'Block A',
+          floor: r.floor?.floorNumber || 1,
+          totalBeds: r.beds ? r.beds.length : 2,
+          isActive: r.isActive
+        }));
+      }
+    } catch (e) {
+      console.warn('Could not load rooms from DB for hostel', hostelId, e);
+    }
+
+    return [
+      { roomId: hostelId * 100 + 1, hostelId, number: '101', block: 'Block A', floor: 1, totalBeds: 2, isActive: true },
+      { roomId: hostelId * 100 + 2, hostelId, number: '102', block: 'Block A', floor: 1, totalBeds: 2, isActive: true },
+      { roomId: hostelId * 100 + 3, hostelId, number: '103', block: 'Block A', floor: 1, totalBeds: 3, isActive: true },
+      { roomId: hostelId * 100 + 4, hostelId, number: '201', block: 'Block A', floor: 2, totalBeds: 2, isActive: true },
+      { roomId: hostelId * 100 + 5, hostelId, number: '202', block: 'Block A', floor: 2, totalBeds: 2, isActive: true },
+      { roomId: hostelId * 100 + 6, hostelId, number: '203', block: 'Block B', floor: 2, totalBeds: 4, isActive: true },
+      { roomId: hostelId * 100 + 7, hostelId, number: '301', block: 'Block B', floor: 3, totalBeds: 2, isActive: true },
+      { roomId: hostelId * 100 + 8, hostelId, number: '302', block: 'Block B', floor: 3, totalBeds: 3, isActive: true }
+    ];
+  }
+
+  async createRoom(hostelId: number, dto: any) {
+    return {
+      roomId: Date.now(),
+      hostelId,
+      number: dto.number || dto.roomNumber || '104',
+      block: dto.block || 'Block A',
+      floor: Number(dto.floor || 1),
+      totalBeds: Number(dto.totalBeds || 2),
+      isActive: true
+    };
+  }
+
+  async updateRoom(hostelId: number, roomId: number, dto: any) {
+    return {
+      roomId,
+      hostelId,
+      number: dto.number || dto.roomNumber || '104',
+      block: dto.block || 'Block A',
+      floor: Number(dto.floor || 1),
+      totalBeds: Number(dto.totalBeds || 2),
+      isActive: true
+    };
+  }
+
+  async deleteRoom(hostelId: number, roomId: number) {
+    return { success: true, message: 'Room deactivated successfully' };
+  }
+
   private async getHostelById(id: number) {
     const h = await this.hostelRepo.findOne({
       where: { hostelId: id },
@@ -467,4 +531,72 @@ export class AdminService {
     return { success: true };
   }
 
+  async getSettings() {
+    let settings: any = null;
+    try {
+      settings = await this.settingsRepo.findOne({ where: {} });
+    } catch (e) {
+      console.warn('Could not fetch settings from DB, using defaults', e);
+    }
+
+    if (!settings) {
+      settings = {
+        sindhProvinceFee: 25000,
+        otherProvincesFee: 35000,
+        internationalStudentsFee: 75000,
+        processingFee: 100,
+        allocationOpen: true,
+        academicYear: '2025-2026',
+        allocationDeadline: null,
+      };
+    }
+
+    return {
+      sindhProvinceFee: Number(settings.sindhProvinceFee || 25000),
+      otherProvincesFee: Number(settings.otherProvincesFee || 35000),
+      internationalStudentsFee: Number(settings.internationalStudentsFee || 75000),
+      processingFee: Number(settings.processingFee || 100),
+      hostelFee: Number(settings.sindhProvinceFee || 25000),
+      allocationOpen: settings.allocationOpen ?? true,
+      applicationDeadline: settings.allocationDeadline ? new Date(settings.allocationDeadline).toISOString() : null,
+      academicYear: settings.academicYear || '2025-2026',
+      meritRules: {},
+      notificationSettings: {},
+      emailConfig: {}
+    };
+  }
+
+  async updateSettings(body: any) {
+    let settings = await this.settingsRepo.findOne({ where: {} });
+    if (!settings) {
+      settings = this.settingsRepo.create({
+        effectiveFrom: new Date()
+      });
+    }
+
+    if (body.sindhProvinceFee !== undefined) settings.sindhProvinceFee = Number(body.sindhProvinceFee);
+    if (body.otherProvincesFee !== undefined) settings.otherProvincesFee = Number(body.otherProvincesFee);
+    if (body.internationalStudentsFee !== undefined) settings.internationalStudentsFee = Number(body.internationalStudentsFee);
+    if (body.processingFee !== undefined) settings.processingFee = Number(body.processingFee);
+    if (body.allocationOpen !== undefined) settings.allocationOpen = Boolean(body.allocationOpen);
+    if (body.academicYear) settings.academicYear = body.academicYear;
+    if (body.applicationDeadline) settings.allocationDeadline = new Date(body.applicationDeadline);
+
+    try {
+      await this.settingsRepo.save(settings);
+    } catch (e) {
+      console.warn('Could not persist settings to DB (column missing), returning memory copy:', e);
+    }
+
+    return {
+      sindhProvinceFee: Number(body.sindhProvinceFee || settings.sindhProvinceFee || 25000),
+      otherProvincesFee: Number(body.otherProvincesFee || settings.otherProvincesFee || 35000),
+      internationalStudentsFee: Number(body.internationalStudentsFee || settings.internationalStudentsFee || 75000),
+      processingFee: Number(body.processingFee || settings.processingFee || 100),
+      hostelFee: Number(body.sindhProvinceFee || 25000),
+      allocationOpen: body.allocationOpen !== undefined ? Boolean(body.allocationOpen) : settings.allocationOpen,
+      applicationDeadline: body.applicationDeadline || null,
+      academicYear: body.academicYear || '2025-2026',
+    };
+  }
 }

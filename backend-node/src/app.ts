@@ -56,6 +56,21 @@ app.use('/api/hostels', hostelRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/eligibility', eligibilityRoutes);
 
+app.get('/api/fees/structure', async (req: Request, res: Response) => {
+  try {
+    const adminService = new AdminService();
+    const settings = await adminService.getSettings();
+    res.json(settings);
+  } catch (err) {
+    res.json({
+      sindhProvinceFee: 25000,
+      otherProvincesFee: 35000,
+      internationalStudentsFee: 75000,
+      processingFee: 100
+    });
+  }
+});
+
 // ── Global Error Handler ──────────────────────────────────────────────────────
 app.use(errorHandler);
 

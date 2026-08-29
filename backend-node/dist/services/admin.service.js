@@ -247,6 +247,164 @@ class AdminService {
             isActive: h.isActive,
         };
     }
+    async getResidents(filter = {}) {
+        const qb = this.residentRepo.createQueryBuilder('resident')
+            .leftJoinAndSelect('resident.allocation', 'allocation')
+            .leftJoinAndSelect('allocation.student', 'student')
+            .leftJoinAndSelect('student.user', 'user')
+            .leftJoinAndSelect('student.universityRecord', 'univRecord')
+            .leftJoinAndSelect('univRecord.department', 'dept')
+            .leftJoinAndSelect('student.district', 'district')
+            .leftJoinAndSelect('allocation.application', 'application')
+            .leftJoinAndSelect('application.academicYear', 'academicYear')
+            .leftJoinAndSelect('allocation.bed', 'bed')
+            .leftJoinAndSelect('bed.room', 'room')
+            .leftJoinAndSelect('room.floor', 'floor')
+            .leftJoinAndSelect('floor.block', 'block')
+            .leftJoinAndSelect('block.hostel', 'hostel')
+            .where('resident.isCurrentResident = :isCurrent', { isCurrent: true })
+            .andWhere('allocation.isActive = :isActive', { isActive: true });
+        if (filter.name) {
+            qb.andWhere('CONCAT(user.firstName, " ", user.lastName) LIKE :name', { name: `%${filter.name}%` });
+        }
+        if (filter.rollNumber) {
+            qb.andWhere('student.registrationNumber LIKE :roll', { roll: `%${filter.rollNumber}%` });
+        }
+        if (filter.cnic) {
+            qb.andWhere('student.cnic LIKE :cnic', { cnic: `%${filter.cnic}%` });
+        }
+        if (filter.hostelId && filter.hostelId !== 'all') {
+            qb.andWhere('hostel.hostelId = :hid', { hid: filter.hostelId });
+        }
+        const residents = await qb.getMany();
+        const challanRepo = database_1.AppDataSource.getRepository('Challans');
+        return Promise.all(residents.map(async (r) => {
+            const s = r.allocation.student;
+            const b = r.allocation.bed;
+            let feeStatus = 'Pending';
+            const yearName = r.allocation.application?.academicYear?.label || '2025-26';
+            const challan = await challanRepo.findOne({
+                where: { challanNumber: `ANNUAL-${s.studentId}-${yearName}` }
+            });
+            if (challan)
+                feeStatus = 'Unpaid'; // Simplification
+            return {
+                residentId: r.residentId,
+                studentId: s.studentId,
+                studentName: `${s.user?.firstName || ''} ${s.user?.lastName || ''}`.trim(),
+                cnic: s.cnic,
+                rollNumber: s.registrationNumber,
+                department: s.universityRecord?.department?.name || 'Unknown',
+                district: s.district?.name || 'Unknown',
+                gender: s.gender,
+                hostelId: b.room?.floor?.block?.hostel?.hostelId,
+                hostelName: b.room?.floor?.block?.hostel?.name || 'Unknown',
+                block: b.room?.floor?.block?.blockName || 'Unknown',
+                room: b.room?.roomNumber || 'Unknown',
+                bed: b.bedLabel || b.bedId.toString(),
+                academicYear: yearName,
+                annualFeeStatus: feeStatus,
+                annualFeeAmount: 25000,
+                status: 'Active'
+            };
+        }));
+    }
+    async generateAnnualChallan(studentId, amount) {
+        const s = await this.studentRepo.findOne({ where: { studentId } });
+        if (!s)
+            throw { status: 404, message: 'Student not found' };
+        const challanRepo = database_1.AppDataSource.getRepository('Challans');
+        const challanNum = `ANNUAL-${studentId}-2025-26`; // Simplified academic year logic
+        const existing = await challanRepo.findOne({ where: { challanNumber: challanNum } });
+        if (existing) {
+            throw { status: 400, message: 'Annual challan already exists for this academic year.' };
+        }
+        const newChallan = challanRepo.create({
+            feeId: 1,
+            challanNumber: challanNum,
+            dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        });
+        await challanRepo.save(newChallan);
+        return { success: true, challanNumber: challanNum };
+    }
+    async getRoomHistory(studentId) {
+        const allocations = await this.allocRepo.find({
+            where: { studentId },
+            relations: ['bed', 'bed.room', 'bed.room.floor', 'bed.room.floor.block', 'bed.room.floor.block.hostel', 'application', 'application.academicYear'],
+            order: { createdAt: 'DESC' }
+        });
+        return allocations.map(a => ({
+            historyId: a.allocationId,
+            date: a.allocatedAt ? new Date(a.allocatedAt).toLocaleDateString() : new Date().toLocaleDateString(),
+            hostel: a.bed?.room?.floor?.block?.hostel?.name || 'Unknown',
+            block: a.bed?.room?.floor?.block?.blockName || 'Unknown',
+            room: a.bed?.room?.roomNumber || 'Unknown',
+            bed: a.bed?.bedLabel || 'Unknown',
+            action: a.isActive ? 'Current Allocation' : 'Previous Allocation',
+            status: a.isActive ? 'Current' : 'Previous'
+        }));
+    }
+    async getRoomChangeRequest(studentId) {
+        const r = await this.residentRepo.findOne({
+            where: { isCurrentResident: true, allocation: { studentId } },
+            relations: ['allocation', 'allocation.bed', 'allocation.bed.room', 'allocation.bed.room.floor', 'allocation.bed.room.floor.block', 'allocation.bed.room.floor.block.hostel']
+        });
+        if (!r)
+            return null;
+        const req = await this.roomChangeRepo.findOne({
+            where: { residentId: r.residentId, status: 'Pending' }
+        });
+        if (!req)
+            return null;
+        let requestedRoomInfo = null;
+        if (req.requestedRoomId) {
+            const room = await database_1.AppDataSource.getRepository('Rooms').findOne({
+                where: { roomId: req.requestedRoomId },
+                relations: ['floor', 'floor.block', 'floor.block.hostel', 'beds']
+            });
+            if (room) {
+                requestedRoomInfo = {
+                    hostel: room.floor?.block?.hostel?.name,
+                    block: room.floor?.block?.blockName,
+                    room: room.roomNumber,
+                    bed: 'Any Available'
+                };
+            }
+        }
+        return {
+            requestId: req.requestId,
+            requestDate: req.createdAt,
+            reason: req.reason,
+            currentRoom: {
+                hostel: r.allocation?.bed?.room?.floor?.block?.hostel?.name,
+                block: r.allocation?.bed?.room?.floor?.block?.blockName,
+                room: r.allocation?.bed?.room?.roomNumber,
+                bed: r.allocation?.bed?.bedLabel
+            },
+            requestedRoom: requestedRoomInfo
+        };
+    }
+    async approveRoomChange(studentId, requestId) {
+        const req = await this.roomChangeRepo.findOne({ where: { requestId } });
+        if (!req)
+            throw { status: 404, message: 'Request not found' };
+        if (req.status !== 'Pending')
+            throw { status: 400, message: 'Request is not pending' };
+        req.status = 'Approved';
+        await this.roomChangeRepo.save(req);
+        return { success: true };
+    }
+    async rejectRoomChange(studentId, requestId, reason) {
+        const req = await this.roomChangeRepo.findOne({ where: { requestId } });
+        if (!req)
+            throw { status: 404, message: 'Request not found' };
+        if (req.status !== 'Pending')
+            throw { status: 400, message: 'Request is not pending' };
+        req.status = 'Rejected';
+        req.reason = reason;
+        await this.roomChangeRepo.save(req);
+        return { success: true };
+    }
 }
 exports.AdminService = AdminService;
 //# sourceMappingURL=admin.service.js.map

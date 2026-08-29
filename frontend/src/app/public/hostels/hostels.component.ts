@@ -6,6 +6,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PublicService } from '../public.service';
 import { HostelSummary } from '../public.model';
 
+interface KeywordFilter {
+  id: string;
+  label: string;
+  keywords: string[];
+  iconSvg: string;
+}
+
 @Component({
   selector: 'app-hostels',
   standalone: true,
@@ -18,7 +25,7 @@ import { HostelSummary } from '../public.model';
           <h1 class="page-title">University Hostel Directory</h1>
           <p class="page-subtitle">
             Explore residential blocks across the University of Sindh Jamshoro main campus.
-            Find complete information on capacity, amenities, and available beds.
+            Find complete information on capacity, amenities, and residential facilities.
           </p>
 
           <!-- Search & Filter Bar Controls -->
@@ -56,12 +63,12 @@ import { HostelSummary } from '../public.model';
               </button>
             </div>
 
-            <!-- Expandable Advanced Filter Panel -->
+            <!-- Minimal Expandable Filter Panel -->
             <div class="filter-panel" *ngIf="isFilterPanelOpen">
-              <!-- Gender Filter Section -->
+              <!-- Gender Category -->
               <div class="filter-group">
                 <label class="filter-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
@@ -95,47 +102,43 @@ import { HostelSummary } from '../public.model';
                 </div>
               </div>
 
-              <!-- Amenities Filter Section -->
+              <!-- Minimal Keyword Amenities -->
               <div class="filter-group">
                 <label class="filter-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="7" height="7"></rect>
                     <rect x="14" y="3" width="7" height="7"></rect>
                     <rect x="14" y="14" width="7" height="7"></rect>
                     <rect x="3" y="14" width="7" height="7"></rect>
                   </svg>
-                  <span>Amenities</span>
+                  <span>Key Facilities</span>
                 </label>
                 <div class="amenities-grid">
                   <button 
                     type="button"
-                    *ngFor="let amenity of availableAmenities"
+                    *ngFor="let item of keywordFilters"
                     class="amenity-chip"
-                    [class.selected]="isAmenitySelected(amenity)"
-                    (click)="toggleAmenity(amenity)"
+                    [class.selected]="isAmenitySelected(item.id)"
+                    (click)="toggleAmenity(item.id)"
                   >
-                    <span class="chip-check" *ngIf="isAmenitySelected(amenity)">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    </span>
-                    <span>{{ amenity }}</span>
+                    <span class="chip-icon" [innerHTML]="getSanitizedIcon(item.iconSvg)"></span>
+                    <span>{{ item.label }}</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Filter Action Buttons Row -->
+              <!-- Filter Action Buttons -->
               <div class="filter-actions-row">
                 <button type="button" class="btn-clear-all" (click)="clearAllFilters()">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                   </svg>
-                  <span>Clear All Filters</span>
+                  <span>Clear All</span>
                 </button>
 
                 <button type="button" class="btn-apply-filters" (click)="applyFilters()">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                   <span>Apply Filters</span>
@@ -162,7 +165,7 @@ import { HostelSummary } from '../public.model';
                 <button (click)="appliedGender = 'All'; draftGender = 'All'" class="tag-remove" aria-label="Remove Gender Filter">✕</button>
               </span>
               <span class="active-tag" *ngFor="let a of appliedAmenities">
-                {{ a }}
+                {{ getFilterLabel(a) }}
                 <button (click)="removeAmenity(a)" class="tag-remove" aria-label="Remove Amenity Filter">✕</button>
               </span>
               <span class="active-tag" *ngIf="appliedSearch">
@@ -204,10 +207,6 @@ import { HostelSummary } from '../public.model';
                       <path d="M2 4v16M2 8h20M2 17h20M22 8v9"></path>
                     </svg>
                     <span>Capacity: <strong>{{ hostel.totalCapacity }}</strong> beds</span>
-                  </p>
-                  <p class="detail-row vacancy" [class.low-beds]="hostel.availableBeds < 10">
-                    <span class="status-dot"></span>
-                    <span>Available Beds: <strong>{{ hostel.availableBeds }}</strong></span>
                   </p>
                 </div>
 
@@ -392,10 +391,10 @@ import { HostelSummary } from '../public.model';
       background: #FFFFFF;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-card);
-      padding: 1.5rem;
+      padding: 1.25rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.15rem;
       text-align: left;
       box-shadow: var(--shadow-md);
       animation: slideDown 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -409,11 +408,11 @@ import { HostelSummary } from '../public.model';
     .filter-group {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
     }
 
     .filter-label {
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--color-primary-deep);
       display: flex;
@@ -425,17 +424,17 @@ import { HostelSummary } from '../public.model';
 
     .gender-options {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
     }
 
     .gender-chip {
-      padding: 0.5rem 1.1rem;
+      padding: 0.45rem 1rem;
       background: #F7F8FA;
       border: 1px solid var(--color-border);
       border-radius: 6px;
       color: var(--color-text-muted);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 200ms ease;
@@ -467,43 +466,49 @@ import { HostelSummary } from '../public.model';
 
     /* Minimal Amenities Grid */
     .amenities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
     }
 
     .amenity-chip {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.8rem;
-      background: #F7F8FA;
-      border: 1px solid var(--color-border);
-      border-radius: 6px;
-      color: var(--color-text-muted);
-      font-size: 0.82rem;
-      font-weight: 500;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 8px;
+      color: #475569;
+      font-size: 0.84rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 200ms ease;
-      text-align: left;
     }
 
     .amenity-chip:hover {
-      background: #E2E8F0;
-      color: var(--color-text-main);
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      color: #0F172A;
     }
 
     .amenity-chip.selected {
-      background: rgba(1, 92, 58, 0.1);
-      border-color: var(--color-primary);
-      color: var(--color-primary);
+      background: #E8F5EF;
+      border-color: #015C3A;
+      color: #013828;
       font-weight: 700;
     }
 
-    .chip-check {
-      display: flex;
+    .chip-icon {
+      display: inline-flex;
       align-items: center;
-      color: var(--color-primary);
+      justify-content: center;
+      color: #64748B;
+      transition: color 200ms ease;
+    }
+
+    .amenity-chip.selected .chip-icon {
+      color: #015C3A;
     }
 
     /* Action Buttons Row */
@@ -511,7 +516,7 @@ import { HostelSummary } from '../public.model';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 0.85rem;
+      padding-top: 0.75rem;
       border-top: 1px solid var(--color-border);
       gap: 1rem;
     }
@@ -519,13 +524,13 @@ import { HostelSummary } from '../public.model';
     .btn-clear-all {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 1rem;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
       background: transparent;
       border: 1px solid var(--color-border);
       border-radius: 6px;
       color: var(--color-text-muted);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 200ms ease;
@@ -541,12 +546,12 @@ import { HostelSummary } from '../public.model';
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.65rem 1.5rem;
+      padding: 0.55rem 1.25rem;
       background: var(--color-primary);
       border: none;
       border-radius: 6px;
       color: #FFFFFF;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 200ms ease;
@@ -687,16 +692,6 @@ import { HostelSummary } from '../public.model';
       border: 1px solid #F48FB1;
     }
 
-    .rating-badge {
-      background: #FEF3C7;
-      border: 1px solid #FCD34D;
-      padding: 0.25rem 0.6rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #B45309;
-    }
-
     .card-content {
       padding: 1.35rem;
       display: flex;
@@ -731,22 +726,6 @@ import { HostelSummary } from '../public.model';
       align-items: center;
       gap: 0.5rem;
       margin: 0;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10B981;
-      display: inline-block;
-    }
-
-    .vacancy.low-beds .status-dot {
-      background: #EF4444;
-    }
-
-    .vacancy.low-beds {
-      color: #DC2626;
     }
 
     .amenities-container {
@@ -799,6 +778,7 @@ import { HostelSummary } from '../public.model';
       color: #FFFFFF;
     }
 
+    /* Empty state */
     .empty-state {
       text-align: center;
       padding: 4rem 1.5rem;
@@ -812,7 +792,6 @@ import { HostelSummary } from '../public.model';
       .search-filter-row { flex-direction: column; }
       .btn-toggle-filter { width: 100%; justify-content: center; }
       .page-title { font-size: 1.75rem; }
-      .amenities-grid { grid-template-columns: repeat(2, 1fr); }
     }
   `]
 })
@@ -822,18 +801,57 @@ export class HostelsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   hostels: HostelSummary[] = [];
-  
-  availableAmenities: string[] = [
-    'WiFi',
-    'Mess & Dining',
-    '24/7 Security',
-    'Study Room',
-    'Water Filter',
-    'Laundry Area',
-    'Generator',
-    'Attached Bathrooms',
-    'Sports Ground',
-    'Cafeteria'
+
+  // Minimal Curated Keyword Filters
+  keywordFilters: KeywordFilter[] = [
+    {
+      id: 'wifi',
+      label: 'WiFi & Internet',
+      keywords: ['wifi', 'internet'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>`
+    },
+    {
+      id: 'mess',
+      label: 'Mess & Dining',
+      keywords: ['mess', 'dining', 'cafeteria', 'food'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>`
+    },
+    {
+      id: 'security',
+      label: '24/7 Security',
+      keywords: ['security', 'cctv', 'guarded', 'gate'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`
+    },
+    {
+      id: 'study',
+      label: 'Study Room',
+      keywords: ['study', 'reading', 'library'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`
+    },
+    {
+      id: 'water',
+      label: 'Water Filter',
+      keywords: ['water', 'filter', 'ro'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>`
+    },
+    {
+      id: 'laundry',
+      label: 'Laundry',
+      keywords: ['laundry'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="2"></rect><circle cx="12" cy="13" r="5"></circle></svg>`
+    },
+    {
+      id: 'generator',
+      label: 'Power Backup',
+      keywords: ['generator', 'power', 'backup', 'solar'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`
+    },
+    {
+      id: 'sports',
+      label: 'Sports & Lawn',
+      keywords: ['sport', 'game', 'ground', 'lawn', 'gym'],
+      iconSvg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path></svg>`
+    }
   ];
 
   // Draft Filter States
@@ -860,24 +878,33 @@ export class HostelsComponent implements OnInit {
     });
   }
 
-  toggleAmenity(amenity: string) {
-    const idx = this.draftAmenities.indexOf(amenity);
+  getSanitizedIcon(svg: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
+  }
+
+  getFilterLabel(id: string): string {
+    const f = this.keywordFilters.find(k => k.id === id);
+    return f ? f.label : id;
+  }
+
+  toggleAmenity(amenityId: string) {
+    const idx = this.draftAmenities.indexOf(amenityId);
     if (idx >= 0) {
       this.draftAmenities.splice(idx, 1);
     } else {
-      this.draftAmenities.push(amenity);
+      this.draftAmenities.push(amenityId);
     }
   }
 
-  isAmenitySelected(amenity: string): boolean {
-    return this.draftAmenities.includes(amenity);
+  isAmenitySelected(amenityId: string): boolean {
+    return this.draftAmenities.includes(amenityId);
   }
 
   applyFilters() {
     this.appliedSearch = this.draftSearch;
     this.appliedGender = this.draftGender;
     this.appliedAmenities = [...this.draftAmenities];
-    this.isFilterPanelOpen = false; // Automatically vanish filter box on apply!
+    this.isFilterPanelOpen = false; // Automatically close filter panel on apply
   }
 
   clearAllFilters() {
@@ -891,9 +918,9 @@ export class HostelsComponent implements OnInit {
     this.isFilterPanelOpen = false;
   }
 
-  removeAmenity(amenity: string) {
-    this.draftAmenities = this.draftAmenities.filter(a => a !== amenity);
-    this.appliedAmenities = this.appliedAmenities.filter(a => a !== amenity);
+  removeAmenity(amenityId: string) {
+    this.draftAmenities = this.draftAmenities.filter(a => a !== amenityId);
+    this.appliedAmenities = this.appliedAmenities.filter(a => a !== amenityId);
   }
 
   get activeFilterCount(): number {
@@ -919,12 +946,17 @@ export class HostelsComponent implements OnInit {
           h.keyAmenities.some(a => a.toLowerCase().includes(q));
       }
 
-      // Amenities Filter (Hostel must match ALL applied amenities)
+      // Keyword-based Amenities Filter
       let matchesAmenities = true;
       if (this.appliedAmenities.length > 0) {
-        matchesAmenities = this.appliedAmenities.every(req => 
-          h.keyAmenities.some(a => a.toLowerCase().includes(req.toLowerCase()))
-        );
+        matchesAmenities = this.appliedAmenities.every(reqId => {
+          const filterDef = this.keywordFilters.find(k => k.id === reqId);
+          if (!filterDef) return true;
+          return h.keyAmenities.some(a => {
+            const act = a.toLowerCase();
+            return filterDef.keywords.some(kw => act.includes(kw));
+          });
+        });
       }
 
       return matchesGender && matchesSearch && matchesAmenities;

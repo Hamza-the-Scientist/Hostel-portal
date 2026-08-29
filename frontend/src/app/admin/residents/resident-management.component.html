@@ -89,7 +89,7 @@
             </td>
             <td>{{ r.block || '—' }}</td>
             <td><span class="room-chip">{{ r.room || '—' }}</span></td>
-            <td><span class="bed-chip">Bed {{ r.bed || '—' }}</span></td>
+            <td><span class="bed-chip">{{ r.bed?.startsWith('Bed') ? r.bed : 'Bed ' + (r.bed || '—') }}</span></td>
             <td>{{ r.academicYear || '—' }}</td>
             <td>
               <span class="fee-badge" [class.fee-paid]="r.annualFeeStatus === 'Paid'" [class.fee-pending]="r.annualFeeStatus === 'Pending'" [class.fee-unpaid]="r.annualFeeStatus === 'Unpaid'">
@@ -123,7 +123,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- PROFILE MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showProfileModal" (click)="showProfileModal=false">
+<div class="modal-overlay" *ngIf="showProfileModal" (click)="closeAll()">
   <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon">
@@ -133,7 +133,6 @@
         <h3 class="modal-title">Resident Profile</h3>
         <p class="modal-sub">Complete residency information</p>
       </div>
-      <button class="modal-close" (click)="showProfileModal=false">✕</button>
     </div>
     <div class="modal-body" *ngIf="selectedResident">
       <div class="profile-grid">
@@ -177,7 +176,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="showProfileModal=false">Close</button>
+      <button class="btn-secondary" (click)="closeAll()">Close</button>
     </div>
   </div>
 </div>
@@ -185,7 +184,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- CHALLAN MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showChallanModal" (click)="showChallanModal=false">
+<div class="modal-overlay" *ngIf="showChallanModal" (click)="closeAll()">
   <div class="modal-box" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon gold-icon">
@@ -195,7 +194,6 @@
         <h3 class="modal-title">Generate Annual Challan</h3>
         <p class="modal-sub">Confirm challan generation for this resident</p>
       </div>
-      <button class="modal-close" (click)="showChallanModal=false">✕</button>
     </div>
     <div class="modal-body" *ngIf="selectedResident">
       <div class="info-list">
@@ -209,7 +207,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="showChallanModal=false" [disabled]="challanLoading">Cancel</button>
+      <button class="btn-secondary" (click)="closeAll()" [disabled]="challanLoading">Cancel</button>
       <button class="btn-primary" (click)="generateChallan()" [disabled]="challanLoading">
         {{ challanLoading ? 'Generating...' : 'Generate Challan' }}
       </button>
@@ -220,7 +218,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- ROOM HISTORY MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showHistoryModal" (click)="showHistoryModal=false">
+<div class="modal-overlay" *ngIf="showHistoryModal" (click)="closeAll()">
   <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon blue-icon">
@@ -230,7 +228,6 @@
         <h3 class="modal-title">Room History</h3>
         <p class="modal-sub">{{ selectedResident?.studentName }} — All room allocations</p>
       </div>
-      <button class="modal-close" (click)="showHistoryModal=false">✕</button>
     </div>
     <div class="modal-body">
       <div class="loading-bar" *ngIf="historyLoading"><div class="loading-bar-inner"></div></div>
@@ -259,7 +256,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="showHistoryModal=false">Close</button>
+      <button class="btn-secondary" (click)="closeAll()">Close</button>
     </div>
   </div>
 </div>
@@ -267,7 +264,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- ROOM CHANGE MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showRoomChangeModal" (click)="showRoomChangeModal=false">
+<div class="modal-overlay" *ngIf="showRoomChangeModal" (click)="closeAll()">
   <div class="modal-box modal-wide" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon green-icon">
@@ -277,7 +274,6 @@
         <h3 class="modal-title">Approve Room Change</h3>
         <p class="modal-sub">Review pending room change request</p>
       </div>
-      <button class="modal-close" (click)="showRoomChangeModal=false">✕</button>
     </div>
     <div class="modal-body">
       <div class="loading-bar" *ngIf="roomChangeLoading"><div class="loading-bar-inner"></div></div>
@@ -316,11 +312,11 @@
     </div>
     <div class="modal-footer" *ngIf="!roomChangeLoading && pendingRequest">
       <button class="btn-danger" (click)="openRejectModal()">Reject</button>
-      <button class="btn-secondary" (click)="showRoomChangeModal=false">Cancel</button>
+      <button class="btn-secondary" (click)="closeAll()">Cancel</button>
       <button class="btn-primary" (click)="confirmApprove()">Approve</button>
     </div>
     <div class="modal-footer" *ngIf="!roomChangeLoading && !pendingRequest">
-      <button class="btn-secondary" (click)="showRoomChangeModal=false">Close</button>
+      <button class="btn-secondary" (click)="closeAll()">Close</button>
     </div>
   </div>
 </div>
@@ -328,7 +324,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- CONFIRM APPROVE MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showConfirmApproveModal" (click)="showConfirmApproveModal=false">
+<div class="modal-overlay" *ngIf="showConfirmApproveModal" (click)="closeAll()">
   <div class="modal-box modal-sm" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon green-icon">
@@ -337,13 +333,12 @@
       <div>
         <h3 class="modal-title">Approve Room Change?</h3>
       </div>
-      <button class="modal-close" (click)="showConfirmApproveModal=false">✕</button>
     </div>
     <div class="modal-body">
       <p class="confirm-msg">This will move the student to the requested room and update their current residency. This action cannot be undone.</p>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="showConfirmApproveModal=false" [disabled]="actionLoading">Cancel</button>
+      <button class="btn-secondary" (click)="closeAll()" [disabled]="actionLoading">Cancel</button>
       <button class="btn-primary" (click)="doApprove()" [disabled]="actionLoading">
         {{ actionLoading ? 'Processing...' : 'Confirm Approve' }}
       </button>
@@ -354,7 +349,7 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- REJECT MODAL -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<div class="modal-overlay" *ngIf="showRejectModal" (click)="showRejectModal=false">
+<div class="modal-overlay" *ngIf="showRejectModal" (click)="closeAll()">
   <div class="modal-box modal-sm" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-header-icon red-icon">
@@ -363,14 +358,13 @@
       <div>
         <h3 class="modal-title">Reject Room Change</h3>
       </div>
-      <button class="modal-close" (click)="showRejectModal=false">✕</button>
     </div>
     <div class="modal-body">
       <label class="field-label">Reason for rejection (optional)</label>
       <textarea class="reason-input" [(ngModel)]="rejectReason" placeholder="Enter reason..." rows="3"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" (click)="showRejectModal=false" [disabled]="actionLoading">Cancel</button>
+      <button class="btn-secondary" (click)="closeAll()" [disabled]="actionLoading">Cancel</button>
       <button class="btn-danger" (click)="doReject()" [disabled]="actionLoading">
         {{ actionLoading ? 'Processing...' : 'Reject Request' }}
       </button>

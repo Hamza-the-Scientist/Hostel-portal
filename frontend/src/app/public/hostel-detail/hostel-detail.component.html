@@ -9,7 +9,7 @@
 
 <div class="detail-container" *ngIf="!isLoading && hostel">
   
-  <div class="banner" [style.background-image]="hostel.images.length > 0 ? 'url(&quot;' + hostel.images[0] + '&quot;)' : 'url(assets/placeholder-hostel.jpg)'"></div>
+  <div class="banner" [style.background-image]="hostel.images && hostel.images.length > 0 && hostel.images[0] ? 'url(&quot;' + hostel.images[0] + '&quot;)' : 'url(/images/marvi-hostel.jpeg)'"></div>
   
   <div class="content">
     
@@ -17,8 +17,8 @@
       <div class="title">
         <h1>{{ hostel.name }}</h1>
         <span class="badge" [ngClass]="hostel.gender.toLowerCase()">{{ hostel.gender }} Hostel</span>
-        <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+        <p class="location-text">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
@@ -27,51 +27,71 @@
       </div>
     </div>
 
-    <div class="stats">
-      <div class="stat-item">
-        <span class="stat-label">Total Capacity</span>
-        <span class="stat-value">{{ hostel.totalCapacity }} Beds</span>
+    <!-- Stats Grid (Only Total Capacity and Provost) -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4v16"></path>
+            <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
+            <path d="M2 17h20"></path>
+            <path d="M6 8v9"></path>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Capacity</span>
+          <span class="stat-value">{{ hostel.totalCapacity }} Beds</span>
+        </div>
       </div>
-      <div class="stat-item">
-        <span class="stat-label">Available</span>
-        <span class="stat-value" style="color: #28a745;">{{ hostel.availableBeds }} Beds</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Provost</span>
-        <span class="stat-value">{{ hostel.provost || hostel.warden || 'N/A' }}</span>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Provost</span>
+          <span class="stat-value">{{ getProvostName() }}</span>
+        </div>
       </div>
     </div>
 
+    <!-- About Section -->
     <h2 class="section-title">About this Hostel</h2>
-    <p style="white-space: pre-line;">{{ hostel.description || 'No description provided.' }}</p>
+    <p class="description-text">{{ getHostelDescription() }}</p>
 
+    <!-- Facilities & Amenities Tiles -->
     <h2 class="section-title">Facilities & Amenities</h2>
     <div class="amenities-grid">
-      <div class="amenity-item" *ngFor="let am of hostel.amenities">
-        <span class="amenity-icon" [innerHTML]="getAmenityIcon(am)"></span>
-        <span>{{ am }}</span>
+      <div class="amenity-tile" *ngFor="let am of hostel.amenities">
+        <div class="amenity-icon-box" [innerHTML]="getAmenityIcon(am)"></div>
+        <span class="amenity-label">{{ am }}</span>
       </div>
-      <div *ngIf="hostel.amenities.length === 0" style="color: #666;">No specific amenities listed.</div>
+      <div *ngIf="!hostel.amenities || hostel.amenities.length === 0" class="no-amenities">
+        No specific amenities listed.
+      </div>
     </div>
 
-    <h2 class="section-title" *ngIf="hostel.eligibilitySummary.length > 0">Eligibility Requirements</h2>
-    <ul *ngIf="hostel.eligibilitySummary.length > 0">
+    <!-- Eligibility Requirements -->
+    <h2 class="section-title" *ngIf="hostel.eligibilitySummary && hostel.eligibilitySummary.length > 0">Eligibility Requirements</h2>
+    <ul class="eligibility-list" *ngIf="hostel.eligibilitySummary && hostel.eligibilitySummary.length > 0">
       <li *ngFor="let req of hostel.eligibilitySummary">{{ req }}</li>
     </ul>
 
-
-
+    <!-- Apply Callout -->
     <div class="cta-box">
       <ng-container *ngIf="hostel.isAllocationOpen; else closedState">
-        <h3 style="margin-bottom: 0.5rem;">Ready to apply?</h3>
-        <p style="margin-bottom: 1.5rem; color: var(--color-text-muted);">Applications are currently open for this hostel.</p>
-        <a routerLink="/auth/register" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.1rem;">Apply for this Hostel</a>
+        <h3>Ready to apply?</h3>
+        <p class="cta-sub">Applications are currently open for this hostel.</p>
+        <a routerLink="/auth/register" class="btn btn-primary cta-btn">Apply for this Hostel</a>
       </ng-container>
       
       <ng-template #closedState>
-        <h3 style="margin-bottom: 0.5rem; color: #dc3545;">Hostel allocation is closed for now.</h3>
-        <p style="margin-bottom: 1.5rem; color: var(--color-text-muted);">Please check back later during the official admission period.</p>
-        <a routerLink="/" class="btn btn-outline" style="padding: 1rem 3rem; font-size: 1.1rem;">View Other Hostels</a>
+        <h3 style="color: #dc3545;">Hostel allocation is closed for now.</h3>
+        <p class="cta-sub">Please check back later during the official admission period.</p>
+        <a routerLink="/" class="btn btn-outline cta-btn">View Other Hostels</a>
       </ng-template>
     </div>
 

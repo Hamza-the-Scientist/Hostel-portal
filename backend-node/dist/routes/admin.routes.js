@@ -17,5 +17,12 @@ router.get('/hostels', admin_controller_1.AdminController.getHostels);
 router.post('/hostels', admin_controller_1.AdminController.createHostel);
 router.put('/hostels/:id', admin_controller_1.AdminController.updateHostel);
 router.delete('/hostels/:id', admin_controller_1.AdminController.deleteHostel);
+// Residents
+router.get('/residents', admin_controller_1.AdminController.getResidents);
+router.post('/residents/:id/challan', admin_controller_1.AdminController.assignChallan);
+router.get('/residents/:id/room-history', admin_controller_1.AdminController.getRoomHistory);
+router.get('/residents/:id/room-change', admin_controller_1.AdminController.getRoomChangeRequest);
+router.post('/residents/:id/room-change/:requestId/approve', admin_controller_1.AdminController.approveRoomChange);
+router.post('/residents/:id/room-change/:requestId/reject', admin_controller_1.AdminController.rejectRoomChange);
 exports.default = router;
 //# sourceMappingURL=admin.routes.js.map

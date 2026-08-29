@@ -89,6 +89,48 @@ export class AdminController {
     }
   }
 
+  static async getRooms(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const hostelId = parseInt(req.params.hostelId, 10);
+      const rooms = await adminService.getRooms(hostelId);
+      res.json(rooms);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async createRoom(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const hostelId = parseInt(req.params.hostelId, 10);
+      const room = await adminService.createRoom(hostelId, req.body);
+      res.status(201).json(room);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateRoom(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const hostelId = parseInt(req.params.hostelId, 10);
+      const roomId = parseInt(req.params.roomId, 10);
+      const room = await adminService.updateRoom(hostelId, roomId, req.body);
+      res.json(room);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteRoom(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const hostelId = parseInt(req.params.hostelId, 10);
+      const roomId = parseInt(req.params.roomId, 10);
+      const result = await adminService.deleteRoom(hostelId, roomId);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getResidents(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { name, cnic, rollNumber, hostelId } = req.query;
@@ -158,6 +200,24 @@ export class AdminController {
     } catch (error: any) {
       if (error.status) res.status(error.status).json({ message: error.message });
       else next(error);
+    }
+  }
+
+  static async getSettings(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const settings = await adminService.getSettings();
+      res.json(settings);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateSettings(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const settings = await adminService.updateSettings(req.body);
+      res.json(settings);
+    } catch (error) {
+      next(error);
     }
   }
 }

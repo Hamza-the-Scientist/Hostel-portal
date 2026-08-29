@@ -852,16 +852,24 @@ export class PublicService {
 
     const hostelReviews = this.reviewsList.filter(r => r.hostelId === id);
 
+    const provostName = found.gender?.toLowerCase() === 'female'
+      ? 'Prof. Dr. Farhat Naureen Memon'
+      : 'Dr. Punhal Khan Lashari';
+
+    const defaultDesc = found.gender?.toLowerCase() === 'female'
+      ? `${found.name} offers a safe, comfortable, and supportive residential environment for female students of the University of Sindh, Jamshoro. Equipped with round-the-clock security, clean dining, and serene study areas, it fosters academic excellence and community living.`
+      : `${found.name} provides premier residential accommodation for male students at the University of Sindh, Jamshoro. It features spacious rooms, modern reading halls, high-speed connectivity, and vibrant sports grounds for holistic student development.`;
+
     return {
       hostelId: found.hostelId,
       name: found.name,
       gender: found.gender,
       location: found.location,
-      description: found.description || 'Modern and secure hostel block on the main campus.',
-      provost: (found as any).provost || found.warden,
-      provostPhone: (found as any).provostPhone || found.wardenPhone,
-      warden: (found as any).provost || found.warden,
-      wardenPhone: (found as any).provostPhone || found.wardenPhone,
+      description: found.description && found.description.length > 20 ? found.description : defaultDesc,
+      provost: provostName,
+      provostPhone: '+92 22 9213181',
+      warden: provostName,
+      wardenPhone: '+92 22 9213181',
       totalCapacity: found.totalCapacity,
       occupiedBeds: found.totalCapacity - found.availableBeds,
       availableBeds: found.availableBeds,
@@ -869,7 +877,9 @@ export class PublicService {
       reviewCount: hostelReviews.length > 0 ? hostelReviews.length : 59,
       isAllocationOpen: true,
       images: [found.mainImageUrl || ''],
-      amenities: found.keyAmenities,
+      amenities: found.keyAmenities && found.keyAmenities.length > 0 
+        ? found.keyAmenities 
+        : ['High-Speed WiFi', '24/7 Security', 'Mess & Dining Hall', 'Reading Hall', 'RO Water Plant'],
       eligibilitySummary: [
         'Must be a currently enrolled full-time student of University of Sindh.',
         'Must belong to designated quota districts outside Jamshoro/Hyderabad.',
@@ -879,7 +889,10 @@ export class PublicService {
   }
 
   getAnnouncements(): Observable<Announcement[]> {
-    return of(this.announcementsList);
+    return this.http.get<Announcement[]>(`${environment.apiUrl}/api/announcements`).pipe(
+      map(res => (res && res.length > 0) ? res : this.announcementsList),
+      catchError(() => of(this.announcementsList))
+    );
   }
 
   /**

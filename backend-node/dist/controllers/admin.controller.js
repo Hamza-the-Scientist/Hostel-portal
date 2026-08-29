@@ -88,6 +88,84 @@ class AdminController {
             next(error);
         }
     }
+    static async getResidents(req, res, next) {
+        try {
+            const { name, cnic, rollNumber, hostelId } = req.query;
+            const residents = await adminService.getResidents({
+                name: name,
+                cnic: cnic,
+                rollNumber: rollNumber,
+                hostelId: hostelId,
+            });
+            res.json(residents);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    static async assignChallan(req, res, next) {
+        try {
+            const residentId = parseInt(req.params.id, 10);
+            const { amount } = req.body;
+            const result = await adminService.generateAnnualChallan(residentId, amount);
+            res.json(result);
+        }
+        catch (error) {
+            if (error.status)
+                res.status(error.status).json({ message: error.message });
+            else
+                next(error);
+        }
+    }
+    static async getRoomHistory(req, res, next) {
+        try {
+            const studentId = parseInt(req.params.id, 10);
+            const history = await adminService.getRoomHistory(studentId);
+            res.json(history);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    static async getRoomChangeRequest(req, res, next) {
+        try {
+            const studentId = parseInt(req.params.id, 10);
+            const request = await adminService.getRoomChangeRequest(studentId);
+            res.json(request);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    static async approveRoomChange(req, res, next) {
+        try {
+            const studentId = parseInt(req.params.id, 10);
+            const requestId = parseInt(req.params.requestId, 10);
+            const result = await adminService.approveRoomChange(studentId, requestId);
+            res.json(result);
+        }
+        catch (error) {
+            if (error.status)
+                res.status(error.status).json({ message: error.message });
+            else
+                next(error);
+        }
+    }
+    static async rejectRoomChange(req, res, next) {
+        try {
+            const studentId = parseInt(req.params.id, 10);
+            const requestId = parseInt(req.params.requestId, 10);
+            const { reason } = req.body;
+            const result = await adminService.rejectRoomChange(studentId, requestId, reason);
+            res.json(result);
+        }
+        catch (error) {
+            if (error.status)
+                res.status(error.status).json({ message: error.message });
+            else
+                next(error);
+        }
+    }
 }
 exports.AdminController = AdminController;
 //# sourceMappingURL=admin.controller.js.map

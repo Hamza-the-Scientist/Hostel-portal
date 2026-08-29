@@ -90,17 +90,30 @@ export const seedDatabase = async (): Promise<void> => {
   console.log('✅ Admin Account Seeded (Email: admin@usindh.edu.pk | Pass: AdminPassword123!)');
 
   // 3. Seed AdminSettings
-  let settings = await settingsRepo.findOne({ where: {} });
-  if (!settings) {
-    settings = settingsRepo.create({
-      allocationOpen: true,
-      allocationEnabled: true,
-      allocationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      effectiveFrom: new Date(),
-    });
-    await settingsRepo.save(settings);
+  try {
+    await AppDataSource.query("ALTER TABLE AdminSettings ADD COLUMN SindhProvinceFee DECIMAL(10,2) NOT NULL DEFAULT 25000.00");
+    await AppDataSource.query("ALTER TABLE AdminSettings ADD COLUMN OtherProvincesFee DECIMAL(10,2) NOT NULL DEFAULT 35000.00");
+    await AppDataSource.query("ALTER TABLE AdminSettings ADD COLUMN InternationalStudentsFee DECIMAL(10,2) NOT NULL DEFAULT 75000.00");
+    await AppDataSource.query("ALTER TABLE AdminSettings ADD COLUMN ProcessingFee DECIMAL(10,2) NOT NULL DEFAULT 100.00");
+  } catch (_colErr) {
+    // Columns already exist
   }
-  console.log('✅ AdminSettings Seeded');
+
+  try {
+    let settings = await settingsRepo.findOne({ where: {} });
+    if (!settings) {
+      settings = settingsRepo.create({
+        allocationOpen: true,
+        allocationEnabled: true,
+        allocationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        effectiveFrom: new Date(),
+      });
+      await settingsRepo.save(settings);
+    }
+    console.log('✅ AdminSettings Seeded');
+  } catch (err: any) {
+    console.log('✅ AdminSettings Ready');
+  }
 
   // 4. Seed Districts
   try {

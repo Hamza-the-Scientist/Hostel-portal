@@ -8,5 +8,11 @@ export declare class AdminController {
     static createHostel(req: Request, res: Response, next: NextFunction): Promise<void>;
     static updateHostel(req: Request, res: Response, next: NextFunction): Promise<void>;
     static deleteHostel(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static getResidents(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static assignChallan(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static getRoomHistory(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static getRoomChangeRequest(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static approveRoomChange(req: Request, res: Response, next: NextFunction): Promise<void>;
+    static rejectRoomChange(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 //# sourceMappingURL=admin.controller.d.ts.map

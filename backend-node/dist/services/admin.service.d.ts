@@ -102,5 +102,61 @@ export declare class AdminService {
         message: string;
     }>;
     private getHostelById;
+    getResidents(filter?: any): Promise<{
+        residentId: number;
+        studentId: number;
+        studentName: string;
+        cnic: string;
+        rollNumber: string;
+        department: string;
+        district: string;
+        gender: string;
+        hostelId: number;
+        hostelName: string;
+        block: string;
+        room: string;
+        bed: string;
+        academicYear: string;
+        annualFeeStatus: string;
+        annualFeeAmount: number;
+        status: string;
+    }[]>;
+    generateAnnualChallan(studentId: number, amount: number): Promise<{
+        success: boolean;
+        challanNumber: string;
+    }>;
+    getRoomHistory(studentId: number): Promise<{
+        historyId: number;
+        date: string;
+        hostel: string;
+        block: string;
+        room: string;
+        bed: string;
+        action: string;
+        status: string;
+    }[]>;
+    getRoomChangeRequest(studentId: number): Promise<{
+        requestId: number;
+        requestDate: Date;
+        reason: string | null;
+        currentRoom: {
+            hostel: string;
+            block: string;
+            room: string;
+            bed: string;
+        };
+        requestedRoom: {
+            hostel: any;
+            block: any;
+            room: any;
+            bed: string;
+        } | null;
+    } | null>;
+    approveRoomChange(studentId: number, requestId: number): Promise<{
+        success: boolean;
+    }>;
+    rejectRoomChange(studentId: number, requestId: number, reason: string): Promise<{
+        success: boolean;
+    }>;
 }
 //# sourceMappingURL=admin.service.d.ts.map

@@ -16,6 +16,7 @@ interface ApplicationViewDto {
   department: string;
   province: string;
   district: string;
+  campus: string;
   batch: string;
   status: string;
 }
@@ -66,6 +67,13 @@ interface ApplicationViewDto {
               Department
             </span>
             <span class="value">{{data.department}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">
+              <mat-icon class="detail-icon">account_balance</mat-icon>
+              Campus
+            </span>
+            <span class="value">{{data.campus || 'Allama I.I. Kazi Campus (Main Campus)'}}</span>
           </div>
           <div class="detail-item">
             <span class="label">
@@ -244,6 +252,7 @@ export class AdminApplicationDetailDialogComponent {
     switch (status) {
       case 'Not Processed': return 'badge-neutral';
       case 'In Processing': return 'badge-info';
+      case 'Ineligible': return 'badge-danger';
       case 'Room Allocated': return 'badge-warning';
       case 'Allocation Complete': return 'badge-success';
       case 'Room Not Assigned': return 'badge-danger';
@@ -273,8 +282,9 @@ export class AdminApplicationDetailDialogComponent {
         <div class="filter-box">
           <select [formControl]="statusControl" class="status-select">
             <option value="All Statuses">All Statuses</option>
-            <option value="Not Processed">Not Processed</option>
             <option value="In Processing">In Processing</option>
+            <option value="Not Processed">Not Processed</option>
+            <option value="Ineligible">Ineligible</option>
             <option value="Room Allocated">Room Allocated</option>
             <option value="Allocation Complete">Allocation Complete</option>
             <option value="Room Not Assigned">Room Not Assigned</option>
@@ -610,11 +620,9 @@ export class AdminApplicationViewComponent implements OnInit {
   allApplications = signal<ApplicationViewDto[]>([]);
   displayed = ['cnic', 'name', 'rollNo', 'department', 'status', 'actions'];
 
-  // Combine real backend search logic with mock fallback
   ngOnInit() {
     this.loadApplications();
 
-    // Subscribe to filter changes to update signals
     this.searchControl.valueChanges.subscribe(val => {
       this.searchQuery.set(val || '');
     });
@@ -624,22 +632,22 @@ export class AdminApplicationViewComponent implements OnInit {
   }
 
   loadApplications() {
-    // Attempt to load from API.
-    // If backend returns data without student names or returns error, we fall back to robust mock data for presentation.
-    this.admin.getApplications().subscribe({
-      next: (data) => {
-        if (data && data.length > 0) {
-          // If we had a joined payload we could map it here.
-          // For now, assuming standard DTO is just { studentId, hostelId, status }, map mock names to real IDs if needed.
-          this.allApplications.set(this.getMockApplications()); // Fallback for UI demonstration
-        } else {
-          this.allApplications.set(this.getMockApplications());
+    try {
+      const stored = localStorage.getItem('sdp_all_applications');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length >= 100) {
+          this.allApplications.set(parsed);
+          return;
         }
-      },
-      error: () => {
-        this.allApplications.set(this.getMockApplications());
       }
-    });
+    } catch (e) {}
+
+    const fresh = this.getMockApplications();
+    try {
+      localStorage.setItem('sdp_all_applications', JSON.stringify(fresh));
+    } catch (e) {}
+    this.allApplications.set(fresh);
   }
 
   filteredApplications = computed(() => {
@@ -667,6 +675,7 @@ export class AdminApplicationViewComponent implements OnInit {
     switch (status) {
       case 'Not Processed': return 'badge-neutral';
       case 'In Processing': return 'badge-info';
+      case 'Ineligible': return 'badge-danger';
       case 'Room Allocated': return 'badge-warning';
       case 'Allocation Complete': return 'badge-success';
       case 'Room Not Assigned': return 'badge-danger';
@@ -677,20 +686,79 @@ export class AdminApplicationViewComponent implements OnInit {
   viewApplication(app: ApplicationViewDto) {
     this.dialog.open(AdminApplicationDetailDialogComponent, {
       data: app,
-      width: '450px'
+      width: '480px'
     });
   }
 
-  // Realistic mock data mapped to the required statuses
   private getMockApplications(): ApplicationViewDto[] {
-    return [
-      { id: 1, cnic: '41304-1234567-1', name: 'Ali Raza', rollNo: 'CS-21-001', department: 'Computer Science', province: 'Sindh', district: 'Hyderabad', batch: '2021', status: 'In Processing' },
-      { id: 2, cnic: '41304-2345678-2', name: 'Sara Khan', rollNo: 'BBA-21-042', department: 'Business Admin', province: 'Sindh', district: 'Karachi', batch: '2021', status: 'Not Processed' },
-      { id: 3, cnic: '41304-3456789-3', name: 'Hassan Ali', rollNo: 'EE-20-015', department: 'Electrical Eng', province: 'Sindh', district: 'Sukkur', batch: '2020', status: 'Room Allocated' },
-      { id: 4, cnic: '41304-4567890-4', name: 'Fatima Ahmed', rollNo: 'MBBS-22-099', department: 'Medicine', province: 'Sindh', district: 'Larkana', batch: '2022', status: 'Allocation Complete' },
-      { id: 5, cnic: '41304-5678901-5', name: 'Usman Tariq', rollNo: 'CS-21-012', department: 'Computer Science', province: 'Punjab', district: 'Lahore', batch: '2021', status: 'Room Not Assigned' },
-      { id: 6, cnic: '41304-6789012-6', name: 'Zainab Bibi', rollNo: 'ENG-21-004', department: 'English Lit', province: 'Sindh', district: 'Jamshoro', batch: '2021', status: 'Allocation Complete' },
-      { id: 7, cnic: '41304-7890123-7', name: 'Ahmed Hassan', rollNo: 'CS-22-031', department: 'Computer Science', province: 'Sindh', district: 'Mirpurkhas', batch: '2022', status: 'In Processing' }
+    const maleFirst = ['Ali', 'Muhammad', 'Zubair', 'Bilal', 'Usman', 'Hamza', 'Tariq', 'Ahmed', 'Fahad', 'Saad', 'Asad', 'Owais', 'Shahzaib', 'Noman', 'Rashid', 'Waqas', 'Hassan', 'Hussain', 'Zayan', 'Danish', 'Sheraz', 'Kashif', 'Farhan', 'Imran', 'Kamran', 'Zahir', 'Adeel', 'Waseem', 'Saeed', 'Shoaib'];
+    const femaleFirst = ['Sara', 'Fatima', 'Ayesha', 'Zainab', 'Mariam', 'Sana', 'Hira', 'Laiba', 'Anum', 'Khadija', 'Dua', 'Iqra', 'Mehreen', 'Bisma', 'Nimra', 'Mahnoor', 'Sadia', 'Syeda', 'Sidra', 'Tayyaba', 'Areeba', 'Bushra', 'Kinza', 'Nida', 'Sobiah', 'Mona', 'Sumaira', 'Mehwish', 'Samina', 'Amber'];
+    const lastNames = ['Raza', 'Khan', 'Ali', 'Ahmed', 'Tariq', 'Bibi', 'Hassan', 'Shah', 'Sheikh', 'Soomro', 'Junejo', 'Talpur', 'Kalhoro', 'Mangi', 'Syed', 'Solangi', 'Abro', 'Mahar', 'Chandio', 'Bhutto', 'Larik', 'Khoso', 'Buriro', 'Memon'];
+
+    const departments = [
+      { name: 'Computer Science', code: 'CS' },
+      { name: 'Software Engineering', code: 'SWE' },
+      { name: 'Information Technology', code: 'IT' },
+      { name: 'Business Administration', code: 'BBA' },
+      { name: 'Electrical Engineering', code: 'EE' },
+      { name: 'Civil Engineering', code: 'CE' },
+      { name: 'Physics', code: 'PHY' },
+      { name: 'Chemistry', code: 'CHEM' },
+      { name: 'English Literature', code: 'ENG' },
+      { name: 'Economics', code: 'ECO' },
+      { name: 'Law', code: 'LAW' },
+      { name: 'Pharmacy', code: 'PHARM' },
+      { name: 'Medicine', code: 'MBBS' }
     ];
+
+    const campuses = [
+      'Allama I.I. Kazi Campus (Main Campus)',
+      'Elsa Kazi Campus (Old Campus)',
+      'Laar Campus (Badin)',
+      'Mohtarma Benazir Bhutto Shaheed Campus (Dadu)',
+      'Khan Bahadur Syed Allahndo Shah Campus (Naushahro Feroze)',
+      'Thatta Campus (Thatta)',
+      'Thar Campus (Tharparkar)'
+    ];
+
+    const districts = [
+      'Hyderabad', 'Jamshoro', 'Sukkur', 'Larkana', 'Badin', 'Dadu',
+      'Naushahro Feroze', 'Thatta', 'Tharparkar', 'Mirpurkhas', 'Nawabshah',
+      'Khairpur', 'Sanghar', 'Shikarpur', 'Jacobabad', 'Ghotki', 'Kashmore',
+      'Umerkot', 'Tando Allahyar', 'Tando Muhammad Khan', 'Matiari', 'Karachi'
+    ];
+
+    const list: ApplicationViewDto[] = [];
+    const statuses = [
+      'In Processing', 'In Processing', 'In Processing', 'In Processing', 'In Processing',
+      'Not Processed', 'Room Allocated', 'Allocation Complete', 'Room Not Assigned'
+    ];
+
+    for (let i = 1; i <= 207; i++) {
+      const isFemale = i % 3 === 0;
+      const firstName = isFemale ? femaleFirst[(i - 1) % femaleFirst.length] : maleFirst[(i - 1) % maleFirst.length];
+      const lastName = lastNames[(i * 7) % lastNames.length];
+      const dept = departments[(i - 1) % departments.length];
+      const dist = districts[(i * 3) % districts.length];
+      const camp = campuses[(i - 1) % campuses.length];
+      const batchYear = 2020 + (i % 5);
+      const rollSeq = String(1 + ((i * 5) % 99)).padStart(3, '0');
+      const status = statuses[(i - 1) % statuses.length];
+
+      list.push({
+        id: i,
+        cnic: `41304-${1000000 + i * 11111}-${(i % 9) + 1}`,
+        name: `${firstName} ${lastName}`,
+        rollNo: `${dept.code}-${String(batchYear).slice(2)}-${rollSeq}`,
+        department: dept.name,
+        province: 'Sindh',
+        district: dist,
+        campus: camp,
+        batch: `${batchYear}`,
+        status: status
+      });
+    }
+
+    return list;
   }
 }

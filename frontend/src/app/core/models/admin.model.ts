@@ -21,6 +21,7 @@ export interface HostelDto {
   gender: 'Male' | 'Female';
   address: string;
   description?: string;
+  totalCapacity?: number;
   totalRooms?: number;
   allotedRooms?: number;
   availableRooms?: number;
@@ -30,12 +31,29 @@ export interface HostelDto {
   isActive?: boolean;
 }
 
+export interface RoomResidentDto {
+  residentId?: number;
+  name: string;
+  rollNo: string;
+  cnic: string;
+  department: string;
+  batch: string;
+  bedNo: string;
+  allocatedDate?: string;
+  phone?: string;
+  gender?: string;
+}
+
 export interface RoomDto {
   roomId?: number;
+  hostelId?: number;
   block: string;
   floor: number;
   number: string;
   totalBeds: number;
+  occupiedBeds?: number;
+  residents?: RoomResidentDto[];
+  isActive?: boolean;
   isUnderMaintenance?: boolean;
 }
 
@@ -104,8 +122,11 @@ export interface MeritResultDto {
 }
 
 export interface AdminSettingsDto {
+  sindhProvinceFee: number;
+  otherProvincesFee: number;
+  internationalStudentsFee: number;
   processingFee: number;
-  hostelFee: number;
+  hostelFee?: number;
   applicationDeadline: string | null;
   allocationOpen: boolean;
   academicYear: string;

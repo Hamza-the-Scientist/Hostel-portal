@@ -42,14 +42,14 @@ export class AnnouncementService {
     }));
   }
 
-  async createAnnouncement(adminId: number, body: { title: string; content: string; targetAudience?: string }) {
+  async createAnnouncement(adminId: number, body: { title: string; content: string; isPublished?: boolean }) {
+    const isPublished = body.isPublished !== undefined ? body.isPublished : true;
     const announcement = this.announcementRepo.create({
       adminId,
       title: body.title,
       content: body.content,
-      isPublished: true,
-      publishedAt: new Date(),
-      targetAudience: body.targetAudience || 'All',
+      isPublished: isPublished,
+      publishedAt: isPublished ? new Date() : undefined,
     });
 
     await this.announcementRepo.save(announcement);
