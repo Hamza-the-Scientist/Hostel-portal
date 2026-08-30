@@ -220,4 +220,13 @@ export class AdminController {
       next(error);
     }
   }
+
+  static async revertAllocation(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await adminService.revertAllocation();
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

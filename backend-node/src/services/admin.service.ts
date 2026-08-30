@@ -599,4 +599,69 @@ export class AdminService {
       academicYear: body.academicYear || '2025-2026',
     };
   }
+
+  async revertAllocation() {
+    const queryRunner = AppDataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      // Find all active allocation records
+      const activeAllocations = await queryRunner.manager.find(Allocation, {
+        where: { isActive: true }
+      });
+
+      if (activeAllocations.length === 0) {
+        await queryRunner.rollbackTransaction();
+        await queryRunner.release();
+        return {
+          revertedCount: 0,
+          message: 'No active allocations found to revert.'
+        };
+      }
+
+      const allocationIds = activeAllocations.map(a => a.allocationId);
+
+      // Deactivate current residents linked to these allocations
+      if (allocationIds.length > 0) {
+        await queryRunner.manager
+          .createQueryBuilder()
+          .update(Resident)
+          .set({ isCurrentResident: false, checkOutDate: new Date().toISOString().split('T')[0] })
+          .where('AllocationId IN (:...ids)', { ids: allocationIds })
+          .execute();
+      }
+
+      // Mark allocations as inactive
+      await queryRunner.manager
+        .createQueryBuilder()
+        .update(Allocation)
+        .set({ isActive: false })
+        .where('AllocationId IN (:...ids)', { ids: allocationIds })
+        .execute();
+
+      // Reset application status from Room Allocated / Allocation Complete back to In Processing / Eligible
+      const applicationIds = activeAllocations.map(a => a.applicationId).filter(Boolean);
+      if (applicationIds.length > 0) {
+        await queryRunner.manager
+          .createQueryBuilder()
+          .update(Application)
+          .set({ status: 'UnderReview' })
+          .where('ApplicationId IN (:...ids)', { ids: applicationIds })
+          .execute();
+      }
+
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+
+      return {
+        revertedCount: activeAllocations.length,
+        message: 'All current allocations have been reverted successfully.'
+      };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw error;
+    }
+  }
 }

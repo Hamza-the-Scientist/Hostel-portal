@@ -38,4 +38,7 @@ router.post('/residents/:id/room-change/:requestId/reject', AdminController.reje
 router.get('/settings', AdminController.getSettings);
 router.put('/settings', AdminController.updateSettings);
 
+// Allocation Revert
+router.post('/allocation/revert', AdminController.revertAllocation);
+
 export default router;

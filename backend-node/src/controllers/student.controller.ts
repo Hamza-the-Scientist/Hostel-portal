@@ -78,4 +78,35 @@ export class StudentController {
       next(error);
     }
   }
+
+  static async getMeritResult(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return;
+      }
+
+      const result = await studentService.getMeritResult(userId);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getChallans(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return;
+      }
+
+      const challans = await studentService.getChallans(userId);
+      res.json(challans);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
+

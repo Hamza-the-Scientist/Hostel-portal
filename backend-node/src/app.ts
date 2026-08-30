@@ -12,6 +12,7 @@ import adminRoutes from './routes/admin.routes';
 import hostelRoutes from './routes/hostel.routes';
 import announcementRoutes from './routes/announcement.routes';
 import eligibilityRoutes from './routes/eligibility.routes';
+import paymentRoutes from './routes/payment.routes';
 
 dotenv.config();
 
@@ -55,6 +56,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/hostels', hostelRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/eligibility', eligibilityRoutes);
+app.use('/api/payments', paymentRoutes);
 
 app.get('/api/fees/structure', async (req: Request, res: Response) => {
   try {

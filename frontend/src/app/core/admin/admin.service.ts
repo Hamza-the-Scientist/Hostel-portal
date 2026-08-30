@@ -113,6 +113,9 @@ export class AdminService {
   startSecondRound(): Observable<void> {
     return this.http.post<void>(`${this.base}/merit/second-round`, {});
   }
+  revertAllocation(): Observable<{ revertedCount: number; message: string }> {
+    return this.http.post<{ revertedCount: number; message: string }>(`${this.base}/allocation/revert`, {});
+  }
   getMeritResults(): Observable<MeritResultDto[]> {
     return this.http.get<MeritResultDto[]>(`${this.base}/merit/results`);
   }

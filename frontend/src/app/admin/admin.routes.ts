@@ -9,6 +9,7 @@ import { StudentManagementComponent } from './students/student-management.compon
 import { ResidentManagementComponent } from './residents/resident-management.component';
 import { AdminApplicationViewComponent } from './applications/admin-application-view.component';
 import { AdminMeritAllocationComponent } from './merit/admin-merit-allocation.component';
+import { DistrictDistributionComponent } from './merit/district-distribution.component';
 import { AdminSettingsComponent } from './settings/admin-settings.component';
 import { AdminControlsComponent } from './controls/admin-controls.component';
 
@@ -26,6 +27,7 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'residents', component: ResidentManagementComponent },
       { path: 'applications', component: AdminApplicationViewComponent },
       { path: 'merit', component: AdminMeritAllocationComponent },
+      { path: 'district-distribution', component: DistrictDistributionComponent },
       { path: 'settings', component: AdminSettingsComponent },
       { path: 'controls', component: AdminControlsComponent }
     ]

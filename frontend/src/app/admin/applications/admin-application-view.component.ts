@@ -19,6 +19,7 @@ interface ApplicationViewDto {
   campus: string;
   batch: string;
   status: string;
+  eligibilityReason?: string;
 }
 
 @Component({
@@ -95,6 +96,13 @@ interface ApplicationViewDto {
               District
             </span>
             <span class="value">{{data.district}}</span>
+          </div>
+          <div class="detail-item" *ngIf="data.eligibilityReason">
+            <span class="label">
+              <mat-icon class="detail-icon">verified_user</mat-icon>
+              Eligibility Details
+            </span>
+            <span class="value reason-text">{{data.eligibilityReason}}</span>
           </div>
           <div class="detail-item">
             <span class="label">
