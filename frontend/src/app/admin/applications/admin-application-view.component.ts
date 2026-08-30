@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { AdminService } from '../../core/admin/admin.service';
+import { getUniformApplicationsDtos } from '../../core/models/uniform-data';
 
 interface ApplicationViewDto {
   id: number;
@@ -644,7 +645,7 @@ export class AdminApplicationViewComponent implements OnInit {
       const stored = localStorage.getItem('sdp_all_applications');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length >= 100) {
+        if (Array.isArray(parsed) && parsed.length >= 30) {
           this.allApplications.set(parsed);
           return;
         }
@@ -699,74 +700,6 @@ export class AdminApplicationViewComponent implements OnInit {
   }
 
   private getMockApplications(): ApplicationViewDto[] {
-    const maleFirst = ['Ali', 'Muhammad', 'Zubair', 'Bilal', 'Usman', 'Hamza', 'Tariq', 'Ahmed', 'Fahad', 'Saad', 'Asad', 'Owais', 'Shahzaib', 'Noman', 'Rashid', 'Waqas', 'Hassan', 'Hussain', 'Zayan', 'Danish', 'Sheraz', 'Kashif', 'Farhan', 'Imran', 'Kamran', 'Zahir', 'Adeel', 'Waseem', 'Saeed', 'Shoaib'];
-    const femaleFirst = ['Sara', 'Fatima', 'Ayesha', 'Zainab', 'Mariam', 'Sana', 'Hira', 'Laiba', 'Anum', 'Khadija', 'Dua', 'Iqra', 'Mehreen', 'Bisma', 'Nimra', 'Mahnoor', 'Sadia', 'Syeda', 'Sidra', 'Tayyaba', 'Areeba', 'Bushra', 'Kinza', 'Nida', 'Sobiah', 'Mona', 'Sumaira', 'Mehwish', 'Samina', 'Amber'];
-    const lastNames = ['Raza', 'Khan', 'Ali', 'Ahmed', 'Tariq', 'Bibi', 'Hassan', 'Shah', 'Sheikh', 'Soomro', 'Junejo', 'Talpur', 'Kalhoro', 'Mangi', 'Syed', 'Solangi', 'Abro', 'Mahar', 'Chandio', 'Bhutto', 'Larik', 'Khoso', 'Buriro', 'Memon'];
-
-    const departments = [
-      { name: 'Computer Science', code: 'CS' },
-      { name: 'Software Engineering', code: 'SWE' },
-      { name: 'Information Technology', code: 'IT' },
-      { name: 'Business Administration', code: 'BBA' },
-      { name: 'Electrical Engineering', code: 'EE' },
-      { name: 'Civil Engineering', code: 'CE' },
-      { name: 'Physics', code: 'PHY' },
-      { name: 'Chemistry', code: 'CHEM' },
-      { name: 'English Literature', code: 'ENG' },
-      { name: 'Economics', code: 'ECO' },
-      { name: 'Law', code: 'LAW' },
-      { name: 'Pharmacy', code: 'PHARM' },
-      { name: 'Medicine', code: 'MBBS' }
-    ];
-
-    const campuses = [
-      'Allama I.I. Kazi Campus (Main Campus)',
-      'Elsa Kazi Campus (Old Campus)',
-      'Laar Campus (Badin)',
-      'Mohtarma Benazir Bhutto Shaheed Campus (Dadu)',
-      'Khan Bahadur Syed Allahndo Shah Campus (Naushahro Feroze)',
-      'Thatta Campus (Thatta)',
-      'Thar Campus (Tharparkar)'
-    ];
-
-    const districts = [
-      'Hyderabad', 'Jamshoro', 'Sukkur', 'Larkana', 'Badin', 'Dadu',
-      'Naushahro Feroze', 'Thatta', 'Tharparkar', 'Mirpurkhas', 'Nawabshah',
-      'Khairpur', 'Sanghar', 'Shikarpur', 'Jacobabad', 'Ghotki', 'Kashmore',
-      'Umerkot', 'Tando Allahyar', 'Tando Muhammad Khan', 'Matiari', 'Karachi'
-    ];
-
-    const list: ApplicationViewDto[] = [];
-    const statuses = [
-      'In Processing', 'In Processing', 'In Processing', 'In Processing', 'In Processing',
-      'Not Processed', 'Room Allocated', 'Allocation Complete', 'Room Not Assigned'
-    ];
-
-    for (let i = 1; i <= 207; i++) {
-      const isFemale = i % 3 === 0;
-      const firstName = isFemale ? femaleFirst[(i - 1) % femaleFirst.length] : maleFirst[(i - 1) % maleFirst.length];
-      const lastName = lastNames[(i * 7) % lastNames.length];
-      const dept = departments[(i - 1) % departments.length];
-      const dist = districts[(i * 3) % districts.length];
-      const camp = campuses[(i - 1) % campuses.length];
-      const batchYear = 2020 + (i % 5);
-      const rollSeq = String(1 + ((i * 5) % 99)).padStart(3, '0');
-      const status = statuses[(i - 1) % statuses.length];
-
-      list.push({
-        id: i,
-        cnic: `41304-${1000000 + i * 11111}-${(i % 9) + 1}`,
-        name: `${firstName} ${lastName}`,
-        rollNo: `${dept.code}-${String(batchYear).slice(2)}-${rollSeq}`,
-        department: dept.name,
-        province: 'Sindh',
-        district: dist,
-        campus: camp,
-        batch: `${batchYear}`,
-        status: status
-      });
-    }
-
-    return list;
+    return getUniformApplicationsDtos();
   }
 }

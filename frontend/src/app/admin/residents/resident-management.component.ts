@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AdminService } from '../../core/admin/admin.service';
 import { ResidentDto } from '../../core/models/admin.model';
+import { getUniformResidentDtos } from '../../core/models/uniform-data';
 
 @Component({
   selector: 'app-resident-management',
@@ -72,108 +73,7 @@ export class ResidentManagementComponent implements OnInit {
   }
 
   private getFallbackResidents(): ResidentDto[] {
-    const maleFirst = ['Ali', 'Muhammad', 'Zubair', 'Bilal', 'Usman', 'Hamza', 'Tariq', 'Ahmed', 'Fahad', 'Saad', 'Asad', 'Owais', 'Shahzaib', 'Noman', 'Rashid', 'Waqas', 'Hassan', 'Hussain', 'Zayan', 'Danish', 'Sheraz', 'Kashif', 'Farhan', 'Imran', 'Kamran', 'Zahir', 'Adeel', 'Waseem', 'Saeed', 'Shoaib'];
-    const femaleFirst = ['Sara', 'Fatima', 'Ayesha', 'Zainab', 'Mariam', 'Sana', 'Hira', 'Laiba', 'Anum', 'Khadija', 'Dua', 'Iqra', 'Mehreen', 'Bisma', 'Nimra', 'Mahnoor', 'Sadia', 'Syeda', 'Sidra', 'Tayyaba', 'Areeba', 'Bushra', 'Kinza', 'Nida', 'Sobiah', 'Mona', 'Sumaira', 'Mehwish', 'Samina', 'Amber'];
-    const lastNames = ['Ahmed', 'Khan', 'Raza', 'Shah', 'Sheikh', 'Soomro', 'Junejo', 'Talpur', 'Kalhoro', 'Mangi', 'Syed', 'Solangi', 'Abro', 'Mahar', 'Chandio', 'Bhutto', 'Larik', 'Khoso', 'Buriro', 'Memon', 'Kazi', 'Palh', 'Mallah', 'Panhwar', 'Chang', 'Qureshi', 'Soomrani', 'Brohi', 'Jatoi', 'Unar'];
-
-    const departmentsUG = [
-      { name: 'Computer Science', code: 'CSM' },
-      { name: 'Software Engineering', code: 'SWE' },
-      { name: 'Information Technology', code: 'IT' },
-      { name: 'Business Administration', code: 'BBA' },
-      { name: 'Electrical Engineering', code: 'EE' },
-      { name: 'Civil Engineering', code: 'CE' },
-      { name: 'Physics', code: 'PHY' },
-      { name: 'Chemistry', code: 'CHEM' },
-      { name: 'English Literature', code: 'ENG' },
-      { name: 'Economics', code: 'ECO' },
-      { name: 'Law', code: 'LAW' },
-      { name: 'Pharmacy', code: 'PHARM' }
-    ];
-
-    const departmentsPG = [
-      { name: 'Computer Science (M.Phil)', code: 'MPHIL-CS' },
-      { name: 'Software Engineering (MS)', code: 'MS-SWE' },
-      { name: 'Information Technology (MS)', code: 'MS-IT' },
-      { name: 'Business Administration (MBA PG)', code: 'MBA-PG' },
-      { name: 'Physics (Ph.D)', code: 'PHD-PHY' },
-      { name: 'Chemistry (M.Phil)', code: 'MPHIL-CHM' },
-      { name: 'English Literature (M.Phil)', code: 'MPHIL-ENG' },
-      { name: 'Economics (MS)', code: 'MS-ECO' },
-      { name: 'Computer Science (Ph.D)', code: 'PHD-CS' }
-    ];
-
-    const districts = ['Hyderabad', 'Jamshoro', 'Sukkur', 'Larkana', 'Badin', 'Dadu', 'Naushahro Feroze', 'Thatta', 'Tharparkar', 'Mirpurkhas', 'Nawabshah', 'Khairpur', 'Sanghar', 'Shikarpur', 'Jacobabad', 'Ghotki', 'Kashmore', 'Umerkot', 'Tando Allahyar', 'Tando Muhammad Khan', 'Matiari'];
-
-    const hostels = [
-      { id: 1, name: 'Marvi Girls Hostel', gender: 'Female', isPg: false },
-      { id: 2, name: 'Lal Shahbaz Hostel', gender: 'Male', isPg: false },
-      { id: 3, name: 'Post Graduate (P.G) Girls Hostel', gender: 'Female', isPg: true },
-      { id: 4, name: 'Under Graduate (U.G) Girls Hostel', gender: 'Female', isPg: false },
-      { id: 5, name: 'Allama Iqbal Hostel', gender: 'Male', isPg: false },
-      { id: 6, name: 'Sindh University Teachers Hostel', gender: 'Male', isPg: false },
-      { id: 7, name: 'Sindh University Employees Hostel', gender: 'Male', isPg: false },
-      { id: 8, name: 'Blocks Hostel', gender: 'Male', isPg: false },
-      { id: 9, name: 'Shaheed Benazir Bhutto International Hostel', gender: 'Male', isPg: true },
-      { id: 10, name: 'Government Federal Hostel', gender: 'Male', isPg: false },
-      { id: 11, name: 'Shaheed Zulfiqar Ali Bhutto Hostel', gender: 'Male', isPg: false },
-      { id: 12, name: 'Khan Bahadur Syed Allahando Shah Hostel', gender: 'Male', isPg: false },
-      { id: 13, name: 'Makhdoom Ameen Fahmeen Hostel', gender: 'Male', isPg: false }
-    ];
-
-    const blocks = ['Block A', 'Block B', 'Block C', 'Block D'];
-    const feeStatuses: ('Paid' | 'Pending' | 'Unpaid')[] = ['Paid', 'Paid', 'Paid', 'Pending', 'Pending', 'Unpaid'];
-
-    const list: ResidentDto[] = [];
-
-    for (let i = 1; i <= 500; i++) {
-      const h = hostels[(i - 1) % hostels.length];
-      const isFemale = h.gender === 'Female';
-      const firstName = isFemale ? femaleFirst[(i - 1) % femaleFirst.length] : maleFirst[(i - 1) % maleFirst.length];
-      const lastName = lastNames[(i * 13) % lastNames.length];
-      
-      const deptList = h.isPg ? departmentsPG : departmentsUG;
-      const dept = deptList[(i - 1) % deptList.length];
-      const dist = districts[(i * 5) % districts.length];
-      const blk = blocks[(i - 1) % blocks.length];
-      const roomNum = 101 + ((i - 1) % 45);
-      const bedNum = 1 + ((i - 1) % 4);
-      
-      let rollNumber = '';
-      if (h.isPg) {
-        const pgBatch = 23 + ((i - 1) % 2);
-        const rollSeq = String(1 + ((i * 3) % 49)).padStart(2, '0');
-        rollNumber = `2K${pgBatch}/${dept.code}/${rollSeq}`;
-      } else {
-        const ugBatch = 21 + ((i - 1) % 4);
-        const rollSeq = String(10 + ((i * 3) % 89)).padStart(2, '0');
-        rollNumber = `2K${ugBatch}/${dept.code}/${rollSeq}`;
-      }
-
-      const feeStatus = feeStatuses[(i - 1) % feeStatuses.length];
-
-      list.push({
-        residentId: 100 + i,
-        studentId: i,
-        studentName: `${firstName} ${lastName}`,
-        cnic: `4130${(i % 9) + 1}-${1000000 + i * 43}-${(i % 9) + 1}`,
-        rollNumber: rollNumber,
-        department: dept.name,
-        district: dist,
-        gender: h.gender,
-        hostelId: h.id,
-        hostelName: h.name,
-        block: blk,
-        room: `${roomNum}`,
-        bed: `Bed-${bedNum}`,
-        academicYear: '2025-2026',
-        annualFeeStatus: feeStatus,
-        annualFeeAmount: h.isPg ? 32000 : 25000,
-        status: 'Active'
-      });
-    }
-
-    return list;
+    return getUniformResidentDtos();
   }
 
   loadHostels() {
